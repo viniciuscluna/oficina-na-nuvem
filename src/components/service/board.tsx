@@ -6,7 +6,7 @@ const Board = () => (
       <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
         Aberta/Análise
       </h3>
-      <div className="flex flex-col gap-y-4 px-2 max-h-[35vh] md:max-h-[75vh] overflow-auto">
+      <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
         <Card />
         <Card />
         <Card />
@@ -16,14 +16,30 @@ const Board = () => (
       </div>
     </div>
     <div className="border rounded border-gray-700 w-full">
-      <h3 className="text-2xl text-center my-2 font-bold dark:text-white">
+      <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
         Andamento/Teste
       </h3>
+      <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
     </div>
     <div className="border rounded border-gray-700 w-full">
-      <h3 className="text-2xl text-center my-2 font-bold dark:text-white">
+      <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
         Concluídas
       </h3>
+      <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
     </div>
   </div>
 );

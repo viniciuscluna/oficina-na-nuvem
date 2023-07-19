@@ -1,22 +1,26 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 import classNames from "classnames";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 
-import { useIncludeServiceStore } from "../../stores/includeServiceStore";
-import { PrestacaoServico } from "../../domain/prestacaoServico";
-import { getAll as getAllSubServico } from "../../services/subServicoService";
-import { getAll as getAllCliente } from "../../services/clienteService";
-import { getAll as getPrestador } from "../../services/prestadorService";
-import { getAll as getVeiculo } from "../../services/veiculoService";
-import { add as addPrestacaoServico } from "../../services/prestacaoServicoService";
+import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
+import { PrestacaoServico } from "../../../domain/prestacaoServico";
+import { getAll as getAllSubServico } from "../../../services/subServicoService";
+import { getAll as getAllCliente } from "../../../services/clienteService";
+import { getAll as getPrestador } from "../../../services/prestadorService";
+import { getAll as getVeiculo } from "../../../services/veiculoService";
+import { add as addPrestacaoServico } from "../../../services/prestacaoServicoService";
+import { usePageStore } from "../../../stores/pageStore";
 
 const Include = () => {
   const { changeIsOpened, isOpened } = useIncludeServiceStore((state) => ({
     changeIsOpened: state.changeIsOpened,
     isOpened: state.isOpened,
   }));
+
+  const changePrestadorId = usePageStore((state) => state.changePrestadorId);
+
   const subServicoResult = useQuery({
     queryKey: ["subServico"],
     queryFn: getAllSubServico,
@@ -61,6 +65,13 @@ const Include = () => {
       prestacaoServico.isLoading,
     ]
   );
+
+  useEffect(() => {
+    if (!isLoading)
+      changePrestadorId(
+        (prestadorResult.data && prestadorResult.data[0]?.id) || ""
+      );
+  }, [isLoading, prestadorResult.data, changePrestadorId]);
 
   const { register, handleSubmit, control, reset } =
     useForm<PrestacaoServico>();

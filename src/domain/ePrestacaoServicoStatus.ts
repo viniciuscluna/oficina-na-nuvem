@@ -4,5 +4,6 @@ export enum EPrestacaoServicoStatus {
     aprovado,
     rejeitado,
     andamento,
+    teste,
     concluido,
 }

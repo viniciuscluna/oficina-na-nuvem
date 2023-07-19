@@ -1,5 +1,5 @@
-import Board from "../components/service/board";
-import Include from "../components/service/include";
+import Board from "../components/service/kanban/board";
+import Include from "../components/service/inclusion/include";
 import { useIncludeServiceStore } from "../stores/includeServiceStore";
 
 const Service = () => {

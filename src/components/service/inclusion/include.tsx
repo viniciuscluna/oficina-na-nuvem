@@ -27,26 +27,31 @@ const Include = () => {
   const subServicoResult = useQuery({
     queryKey: ["subServico"],
     queryFn: getAllSubServico,
+    refetchOnWindowFocus: false,
   });
 
   const clienteResult = useQuery({
     queryKey: ["cliente"],
     queryFn: getAllCliente,
+    refetchOnWindowFocus: false,
   });
 
   const prestadorResult = useQuery({
     queryKey: ["prestador"],
     queryFn: getPrestador,
+    refetchOnWindowFocus: false,
   });
 
   const veiculoResult = useQuery({
     queryKey: ["veiculo"],
     queryFn: getVeiculo,
+    refetchOnWindowFocus: false,
   });
 
   const marcaResult = useQuery({
     queryKey: ["veiculoMarcas"],
     queryFn: getMarcas,
+    refetchOnWindowFocus: false,
   });
 
   const prestacaoServico = useMutation({

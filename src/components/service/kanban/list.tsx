@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
-import { Servico } from "../../domain/servico";
 import classNames from "classnames";
+
+import { Servico } from "../../../domain/servico";
 
 type ListProps = {
   servicos: Servico[];

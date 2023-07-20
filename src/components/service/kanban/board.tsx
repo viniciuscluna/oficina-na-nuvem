@@ -38,12 +38,8 @@ const Board = () => {
   });
 
   useEffect(() => {
-    if (prestadorId !== "") mutateAsync();
-  }, [prestadorId, mutateAsync]);
-
-  useEffect(() => {
-    if (!isInsertOpened) mutateAsync();
-  }, [isInsertOpened, mutateAsync]);
+    if (prestadorId !== "" || (!isInsertOpened && prestadorId !== "")) mutateAsync();
+  }, [prestadorId,isInsertOpened, mutateAsync]);
 
   const abertaAnalise = useMemo(
     () =>

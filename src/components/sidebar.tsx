@@ -4,9 +4,10 @@ import { useLocalStorage } from "usehooks-ts";
 import { useServiceStore } from "../stores/servicosStore";
 import { useMemo } from "react";
 import { EPrestacaoServicoStatus } from "../domain/ePrestacaoServicoStatus";
+import { STORAGE_KEY } from "../constants/key";
 
 const Sidebar = () => {
-  const [, setLocalStorage] = useLocalStorage<string>("apiKey", "");
+  const [, setLocalStorage] = useLocalStorage<string>(STORAGE_KEY, "");
   const servicos = useServiceStore((state) => state.servicos);
 
   const openedServices = useMemo(() => {

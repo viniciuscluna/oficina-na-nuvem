@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
+import { STORAGE_KEY } from "../constants/key";
 
 const Root = () => {
-  const [apiKey] = useLocalStorage("apiKey", "");
+  const [apiKey] = useLocalStorage(STORAGE_KEY, "");
   const navigate = useNavigate();
 
   useEffect(() => {

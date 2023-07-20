@@ -9,10 +9,10 @@ export interface PrestacaoServico extends Base {
     referencia: string;
     status: EPrestacaoServicoStatus;
     prestador: Prestador;
-    prestadorId: string;
+    prestadorId?: string;
     cliente: Cliente;
     clienteId: string;
     veiculo: Veiculo;
-    veiculoId: string;
+    veiculoId?: string;
     servicos: Servico[];
 }

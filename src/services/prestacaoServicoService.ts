@@ -1,5 +1,4 @@
 import { EPrestacaoServicoStatus } from "../domain/ePrestacaoServicoStatus";
-import { EveiculoTipo } from "../domain/eVeiculoTipo";
 import { PrestacaoServico } from "../domain/prestacaoServico";
 import { instanceApi } from "./axiosConfig";
 

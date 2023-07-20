@@ -11,9 +11,13 @@ import Loader from "../../loader";
 import { EPrestacaoServicoStatus } from "../../../domain/ePrestacaoServicoStatus";
 import { usePageStore } from "../../../stores/pageStore";
 import { ChangeStatus } from "../../../types/changeStatusRequest";
+import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
+import { useServiceStore } from "../../../stores/servicosStore";
 
 const Board = () => {
   const prestadorId = usePageStore((state) => state.prestadorId);
+  const isInsertOpened = useIncludeServiceStore((state) => state.isOpened);
+  const setServicos = useServiceStore((state) => state.setServicos);
 
   const {
     mutateAsync,
@@ -22,6 +26,9 @@ const Board = () => {
   } = useMutation({
     mutationKey: ["prestacaoServico"],
     mutationFn: () => getByPrestador(prestadorId),
+    onSuccess: (resp) => {
+      setServicos(resp);
+    },
   });
 
   const { mutateAsync: mutateStatusAsync } = useMutation({
@@ -33,6 +40,10 @@ const Board = () => {
   useEffect(() => {
     if (prestadorId !== "") mutateAsync();
   }, [prestadorId, mutateAsync]);
+
+  useEffect(() => {
+    if (!isInsertOpened) mutateAsync();
+  }, [isInsertOpened, mutateAsync]);
 
   const abertaAnalise = useMemo(
     () =>

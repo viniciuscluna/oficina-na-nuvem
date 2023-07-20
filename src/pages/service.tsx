@@ -8,7 +8,7 @@ const Service = () => {
   );
 
   return (
-    <div>
+    <div className="grow flex flex-col">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-extrabold dark:text-white my-6">
           Prestação de Serviços

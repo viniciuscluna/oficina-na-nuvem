@@ -6,3 +6,7 @@ export const instanceApi = axios.create({
     "X-API-Key": JSON.parse(localStorage.getItem("apiKey") || ""),
   },
 });
+
+export const instanceFipe = axios.create({
+  baseURL: "https://parallelum.com.br/fipe/api/v1",
+});

@@ -78,7 +78,7 @@ const Board = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="flex flex-grow my-2 flex-col md:flex-row gap-6 w-full">
+    <div className="flex flex-grow flex-col md:flex-row gap-6 w-full">
       <div className="border rounded border-gray-700 w-full">
         <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
           Aberta/Análise

@@ -31,7 +31,7 @@ const Board = () => {
     },
   });
 
-  const { mutateAsync: mutateStatusAsync } = useMutation({
+  const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } = useMutation({
     mutationKey: ["cardButtons"],
     mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status),
     onSuccess: () => mutateAsync(),
@@ -75,7 +75,7 @@ const Board = () => {
     [prestacaoData]
   );
 
-  if (isLoading) return <Loader />;
+  if (isLoading || isStatusLoading) return <Loader />;
 
   return (
     <div className="flex flex-grow flex-col md:flex-row gap-6 w-full">

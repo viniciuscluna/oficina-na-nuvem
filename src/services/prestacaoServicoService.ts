@@ -19,7 +19,7 @@ export const edit = async (
 ): Promise<PrestacaoServico> => {
   const other = "other";
 
-  if (form.prestadorId === other) form.prestadorId = undefined;
+  if (form.clienteId === other) form.clienteId = undefined;
   if (form.veiculoId === other) form.veiculoId = undefined;
 
   return (await instanceApi.put<PrestacaoServico>("/prestacaoServico", form))

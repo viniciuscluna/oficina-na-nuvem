@@ -11,7 +11,7 @@ export interface PrestacaoServico extends Base {
     prestador?: Prestador;
     prestadorId?: string;
     cliente?: Cliente;
-    clienteId: string;
+    clienteId?: string;
     veiculo?: Veiculo;
     veiculoId?: string;
     servicos: Servico[];

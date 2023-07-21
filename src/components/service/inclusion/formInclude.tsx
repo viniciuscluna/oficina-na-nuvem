@@ -7,27 +7,35 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import ClienteForm from "./clienteForm";
 import VeiculoForm from "./veiculoForm";
 import { Marca } from "../../../domain/fipe/marca";
+import { useEffect, useMemo } from "react";
+import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 
-type FormProps = {
+type FormIncludeProps = {
   prestadores: Prestador[];
   veiculos: Veiculo[];
   subServicos: SubServico[];
   clientes: Cliente[];
   marcas: Marca[];
   submitCallback: (servico: PrestacaoServico) => void;
-  changeIsOpened: () => void;
+  isOpened: boolean;
 };
 
-const Form = ({
+const FormInclude = ({
   prestadores,
   veiculos,
   subServicos,
   clientes,
   marcas,
+  isOpened,
   submitCallback,
-  changeIsOpened,
-}: FormProps) => {
-  const { register, handleSubmit, control, reset, watch } =
+}: FormIncludeProps) => {
+  const { prestacaoServico, changeIsOpened } =
+    useIncludeServiceStore((state) => ({
+      prestacaoServico: state.prestacaoServico,
+      changeIsOpened: state.changeIsIncludeOpened,
+    }));
+
+  const { register, handleSubmit, control, reset, setValue, watch } =
     useForm<PrestacaoServico>();
 
   const {
@@ -38,6 +46,12 @@ const Form = ({
     control,
     name: "servicos",
   });
+
+  useEffect(() => {
+    if (!isOpened) {
+      reset();
+    }
+  }, [reset, setValue, register, prestacaoServico, isOpened]);
 
   const showClienteForm = watch("clienteId") === "other";
   const showVeiculoForm = watch("veiculoId") === "other";
@@ -226,4 +240,4 @@ const Form = ({
   );
 };
 
-export default Form;
+export default FormInclude;

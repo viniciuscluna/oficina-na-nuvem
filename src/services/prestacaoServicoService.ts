@@ -14,6 +14,18 @@ export const add = async (
     .data;
 };
 
+export const edit = async (
+  form: PrestacaoServico
+): Promise<PrestacaoServico> => {
+  const other = "other";
+
+  if (form.prestadorId === other) form.prestadorId = undefined;
+  if (form.veiculoId === other) form.veiculoId = undefined;
+
+  return (await instanceApi.put<PrestacaoServico>("/prestacaoServico", form))
+    .data;
+};
+
 export const getAllByPrestador = async (
   prestadorId: string
 ): Promise<PrestacaoServico[]> =>

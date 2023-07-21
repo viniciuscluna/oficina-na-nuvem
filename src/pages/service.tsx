@@ -1,14 +1,15 @@
 import Board from "../components/service/kanban/board";
 import Include from "../components/service/inclusion/include";
 import { useIncludeServiceStore } from "../stores/includeServiceStore";
+import Update from "../components/service/inclusion/update";
 
 const Service = () => {
   const changeIsOpened = useIncludeServiceStore(
-    (state) => state.changeIsOpened
+    (state) => state.changeIsIncludeOpened
   );
 
   return (
-    <div className="grow flex flex-col">
+    <>
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-extrabold dark:text-white my-6">
           Prestação de Serviços
@@ -23,7 +24,8 @@ const Service = () => {
       </div>
       <Board />
       <Include />
-    </div>
+      <Update />
+    </>
   );
 };
 

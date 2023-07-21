@@ -8,11 +8,11 @@ import { Veiculo } from "./veiculo";
 export interface PrestacaoServico extends Base {
     referencia: string;
     status: EPrestacaoServicoStatus;
-    prestador: Prestador;
+    prestador?: Prestador;
     prestadorId?: string;
-    cliente: Cliente;
+    cliente?: Cliente;
     clienteId: string;
-    veiculo: Veiculo;
+    veiculo?: Veiculo;
     veiculoId?: string;
     servicos: Servico[];
 }

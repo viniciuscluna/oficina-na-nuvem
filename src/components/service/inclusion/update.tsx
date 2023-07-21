@@ -17,14 +17,16 @@ import {
 import { getMarcas } from "../../../services/fipeService";
 import { usePageStore } from "../../../stores/pageStore";
 
-import FormInclude from "./formInclude";
+import FormUpdate from "./formUpdate";
 import Loader from "../../loader";
 
-const Include = () => {
-  const { changeIsOpened, isOpened } = useIncludeServiceStore((state) => ({
-    changeIsOpened: state.changeIsIncludeOpened,
-    isOpened: state.isIncludeOpened,
-  }));
+const Update = () => {
+  const { changeIsOpened, isOpened } = useIncludeServiceStore(
+    (state) => ({
+      changeIsOpened: state.changeIsUpdateOpened,
+      isOpened: state.isUpdateOpened,
+    })
+  );
 
   const changePrestadorId = usePageStore((state) => state.changePrestadorId);
 
@@ -99,6 +101,9 @@ const Include = () => {
   const onSubmit: SubmitHandler<PrestacaoServico> = (data) =>
     addPrestacaoServicoMut.mutateAsync(data);
 
+  const onEdit: SubmitHandler<PrestacaoServico> = (data) =>
+    editPrestacaoServicoMut.mutateAsync(data);
+
   return (
     <>
       <div
@@ -143,13 +148,13 @@ const Include = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <FormInclude
+          <FormUpdate
             clientes={clienteResult.data || []}
             prestadores={prestadorResult.data || []}
             veiculos={veiculoResult.data || []}
             subServicos={subServicoResult.data || []}
             marcas={marcaResult.data || []}
-            submitCallback={onSubmit}
+            submitCallback={onEdit}
             isOpened={isOpened}
           />
         )}
@@ -166,4 +171,4 @@ const Include = () => {
   );
 };
 
-export default Include;
+export default Update;

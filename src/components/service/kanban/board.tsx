@@ -13,10 +13,16 @@ import { usePageStore } from "../../../stores/pageStore";
 import { ChangeStatus } from "../../../types/changeStatusRequest";
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 import { useServiceStore } from "../../../stores/servicosStore";
+import { PrestacaoServico } from "../../../domain/prestacaoServico";
 
 const Board = () => {
   const prestadorId = usePageStore((state) => state.prestadorId);
-  const isInsertOpened = useIncludeServiceStore((state) => state.isOpened);
+  const { isInsertOpened, setPrestacaoEdit } = useIncludeServiceStore(
+    (state) => ({
+      isInsertOpened: state.isIncludeOpened || state.isUpdateOpened,
+      setPrestacaoEdit: state.setPrestacao,
+    })
+  );
   const setServicos = useServiceStore((state) => state.setServicos);
 
   const {
@@ -31,15 +37,16 @@ const Board = () => {
     },
   });
 
-  const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } = useMutation({
-    mutationKey: ["cardButtons"],
-    mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status),
-    onSuccess: () => mutateAsync(),
-  });
+  const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } =
+    useMutation({
+      mutationKey: ["cardButtons"],
+      mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status),
+      onSuccess: () => mutateAsync(),
+    });
 
   useEffect(() => {
-    if (prestadorId !== "" || (!isInsertOpened && prestadorId !== "")) mutateAsync();
-  }, [prestadorId,isInsertOpened, mutateAsync]);
+    if (isInsertOpened === false && prestadorId !== "") mutateAsync();
+  }, [prestadorId, isInsertOpened, mutateAsync]);
 
   const abertaAnalise = useMemo(
     () =>
@@ -75,20 +82,25 @@ const Board = () => {
     [prestacaoData]
   );
 
+  const onEdit = (prestacao: PrestacaoServico) => {
+    setPrestacaoEdit(prestacao);
+  };
+
   if (isLoading || isStatusLoading) return <Loader />;
 
   return (
-    <div className="flex flex-grow flex-col md:flex-row gap-6 w-full">
+    <div className="flex flex-col grow md:flex-row gap-6 w-full">
       <div className="border rounded border-gray-700 w-full">
         <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
           Aberta/Análise
         </h3>
-        <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
+        <div className="flex flex-col gap-y-4 px-2  max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
           {abertaAnalise?.map((prestacao, index) => (
             <Card
               prestacao={prestacao}
               keyProp={index}
-              changeStatusCallback={(status) => mutateStatusAsync(status)}
+              changeStatusCallback={mutateStatusAsync}
+              editCallback={onEdit}
             />
           ))}
         </div>
@@ -102,7 +114,8 @@ const Board = () => {
             <Card
               prestacao={prestacao}
               keyProp={index}
-              changeStatusCallback={(status) => mutateStatusAsync(status)}
+              changeStatusCallback={mutateStatusAsync}
+              editCallback={onEdit}
             />
           ))}
         </div>
@@ -116,7 +129,8 @@ const Board = () => {
             <Card
               prestacao={prestacao}
               keyProp={index}
-              changeStatusCallback={(status) => mutateStatusAsync(status)}
+              changeStatusCallback={mutateStatusAsync}
+              editCallback={onEdit}
             />
           ))}
         </div>

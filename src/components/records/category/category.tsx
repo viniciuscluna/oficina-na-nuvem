@@ -1,14 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAll } from "../services/subServicoService";
-import Loader from "../components/loader";
+import { getAll } from "../../../services/categoriaService";
+import Loader from "../../loader";
+import { useNavigate } from "react-router-dom";
 
-const SubService = () => {
-  const subServicoResult = useQuery({
-    queryKey: ["subServico"],
+const Category = () => {
+  const navigate = useNavigate();
+  const categoriaResult = useQuery({
+    queryKey: ["categoria"],
     queryFn: getAll,
   });
 
-  if (subServicoResult.isLoading) <Loader />;
+  if (categoriaResult.isLoading) <Loader />;
 
   return (
     <div className="flex flex-col mt-8">
@@ -16,6 +18,7 @@ const SubService = () => {
         <div>
           <button
             type="button"
+            onClick={() => navigate("add")}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
             Incluir
@@ -31,22 +34,21 @@ const SubService = () => {
                 <th scope="col" className="px-6 py-3">
                   Descrição
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Categoria
-                </th>
               </tr>
             </thead>
             <tbody>
-              {subServicoResult.data?.map((subServico, index) => (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              {categoriaResult.data?.map((categoria, index) => (
+                <tr
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                  key={index}
+                >
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {subServico.titulo}
+                    {categoria.titulo}
                   </th>
-                  <td className="px-6 py-4">{subServico.desc}</td>
-                  <td className="px-6 py-4">{subServico.categoria.titulo}</td>
+                  <td className="px-6 py-4">{categoria.desc}</td>
                 </tr>
               ))}
             </tbody>
@@ -57,4 +59,4 @@ const SubService = () => {
   );
 };
 
-export default SubService;
+export default Category;

@@ -1,35 +1,30 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { getAll } from "../../../services/categoriaService";
 import Loader from "../../loader";
-import { SubServico } from "../../../domain/subServico";
-import { add } from "../../../services/subServicoService";
+import { add } from "../../../services/categoriaService";
+import { CategoriaServico } from "../../../domain/categoriaServico";
 
-const AddSubService = () => {
-  const backPage = "/logged/records/subService";
+const AddCategory = () => {
+  const backPage = "/logged/records/category";
   const navigate = useNavigate();
-  const categoriaResult = useQuery({
-    queryKey: ["categoria"],
-    queryFn: getAll,
-  });
 
-  const subServicoResult = useMutation({
-    mutationKey: ["addSubServico"],
+  const categoriaResult = useMutation({
+    mutationKey: ["addCategoria"],
     mutationFn: add,
     onSuccess: () => {
       navigate(backPage);
     },
   });
 
-  const { register, handleSubmit } = useForm<SubServico>();
+  const { register, handleSubmit } = useForm<CategoriaServico>();
 
-  const onSubmit = (subServico: SubServico) => {
-    subServicoResult.mutateAsync(subServico);
+  const onSubmit = (subServico: CategoriaServico) => {
+    categoriaResult.mutateAsync(subServico);
   };
 
-  if (categoriaResult.isLoading || subServicoResult.isLoading) <Loader />;
+  if (categoriaResult.isLoading) <Loader />;
   return (
     <div>
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
@@ -64,25 +59,6 @@ const AddSubService = () => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
-        <div className="mb-6">
-          <label
-            htmlFor="categoria"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Categoria
-          </label>
-          <select
-            id="categoria"
-            {...register("categoriaId")}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            {categoriaResult.data?.map((categoria, index) => (
-              <option key={index} value={categoria.id}>
-                {categoria.titulo}
-              </option>
-            ))}
-          </select>
-        </div>
         <div className="flex gap-4">
           <button
             type="button"
@@ -103,4 +79,4 @@ const AddSubService = () => {
   );
 };
 
-export default AddSubService;
+export default AddCategory;

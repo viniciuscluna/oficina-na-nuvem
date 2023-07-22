@@ -11,6 +11,8 @@ import Service from "./pages/service";
 import Records from "./pages/records";
 
 import "./index.css";
+import SubService from "./pages/subService";
+import AddSubService from "./components/records/subService/addSubService";
 
 //Configure routes
 const router = createBrowserRouter([
@@ -33,6 +35,16 @@ const router = createBrowserRouter([
           {
             path: "/logged/records",
             element: <Records />,
+            children: [
+              {
+                path: "/logged/records/subService",
+                element: <SubService />
+              },
+              {
+                path: "/logged/records/subService/add",
+                element: <AddSubService />
+              }
+            ]
           },
         ],
       },

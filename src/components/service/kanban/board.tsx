@@ -90,7 +90,7 @@ const Board = () => {
 
   return (
     <div className="flex flex-col grow md:flex-row gap-6 w-full">
-      <div className="border rounded border-gray-700 w-full">
+      <div className="border rounded border-gray-200 dark:border-gray-700 w-full">
         <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
           Aberta/Análise
         </h3>
@@ -105,7 +105,7 @@ const Board = () => {
           ))}
         </div>
       </div>
-      <div className="border rounded border-gray-700 w-full">
+      <div className="border rounded  border-gray-200 dark:border-gray-700 w-full">
         <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
           Andamento/Teste
         </h3>
@@ -120,7 +120,7 @@ const Board = () => {
           ))}
         </div>
       </div>
-      <div className="border rounded border-gray-700 w-full">
+      <div className="border rounded border-gray-200 dark:border-gray-700 w-full">
         <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
           Concluídas
         </h3>

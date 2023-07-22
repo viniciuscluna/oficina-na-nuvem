@@ -10,10 +10,7 @@ import { getAll as getAllSubServico } from "../../../services/subServicoService"
 import { getAll as getAllCliente } from "../../../services/clienteService";
 import { getAll as getPrestador } from "../../../services/prestadorService";
 import { getAll as getVeiculo } from "../../../services/veiculoService";
-import {
-  add as addPrestacaoServico,
-  edit as editPrestacaoServico,
-} from "../../../services/prestacaoServicoService";
+import { edit as editPrestacaoServico } from "../../../services/prestacaoServicoService";
 import { getMarcas } from "../../../services/fipeService";
 import { usePageStore } from "../../../stores/pageStore";
 
@@ -21,12 +18,11 @@ import FormUpdate from "./formUpdate";
 import Loader from "../../loader";
 
 const Update = () => {
-  const { changeIsOpened, isOpened } = useIncludeServiceStore(
-    (state) => ({
-      changeIsOpened: state.changeIsUpdateOpened,
-      isOpened: state.isUpdateOpened,
-    })
-  );
+  const { changeIsOpened, isOpened, prestacaoServico } = useIncludeServiceStore((state) => ({
+    changeIsOpened: state.changeIsUpdateOpened,
+    isOpened: state.isUpdateOpened,
+    prestacaoServico: state.prestacaoServico,
+  }));
 
   const changePrestadorId = usePageStore((state) => state.changePrestadorId);
 
@@ -55,14 +51,6 @@ const Update = () => {
     queryFn: getMarcas,
   });
 
-  const addPrestacaoServicoMut = useMutation({
-    mutationKey: ["prestacaoServico"],
-    mutationFn: addPrestacaoServico,
-    onSuccess: () => {
-      changeIsOpened();
-    },
-  });
-
   const editPrestacaoServicoMut = useMutation({
     mutationKey: ["prestacaoServico"],
     mutationFn: editPrestacaoServico,
@@ -77,7 +65,6 @@ const Update = () => {
       clienteResult.isLoading ||
       subServicoResult.isLoading ||
       veiculoResult.isLoading ||
-      addPrestacaoServicoMut.isLoading ||
       editPrestacaoServicoMut.isLoading ||
       marcaResult.isLoading,
     [
@@ -85,7 +72,6 @@ const Update = () => {
       clienteResult.isLoading,
       subServicoResult.isLoading,
       veiculoResult.isLoading,
-      addPrestacaoServicoMut.isLoading,
       editPrestacaoServicoMut.isLoading,
       marcaResult.isLoading,
     ]
@@ -97,9 +83,6 @@ const Update = () => {
         (prestadorResult.data && prestadorResult.data[0]?.id) || ""
       );
   }, [isLoading, prestadorResult.data, changePrestadorId]);
-
-  const onSubmit: SubmitHandler<PrestacaoServico> = (data) =>
-    addPrestacaoServicoMut.mutateAsync(data);
 
   const onEdit: SubmitHandler<PrestacaoServico> = (data) =>
     editPrestacaoServicoMut.mutateAsync(data);
@@ -120,7 +103,7 @@ const Update = () => {
           id="drawer-label"
           className="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400"
         >
-          Novo Serviço
+          Editar Serviço - {prestacaoServico?.referencia}
         </h5>
         <button
           type="button"

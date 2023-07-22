@@ -32,7 +32,7 @@ const Sidebar = () => {
               className={(props) =>
                 classNames(
                   "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group",
-                  props.isActive ? "bg-gray-700" : ""
+                  props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
                 )
               }
             >
@@ -58,7 +58,7 @@ const Sidebar = () => {
               className={(props) =>
                 classNames(
                   "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group",
-                  props.isActive ? "bg-gray-700" : ""
+                  props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
                 )
               }
             >

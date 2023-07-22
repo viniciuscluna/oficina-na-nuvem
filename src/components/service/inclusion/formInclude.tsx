@@ -145,7 +145,7 @@ const FormInclude = ({
               {servicos.map((servico, index) => (
                 <div
                   key={index}
-                  className="flex w-full justify-between flex-wrap border border-gray-600 rounded-lg p-4"
+                  className="flex w-full justify-between flex-wrap border border-gray-200 rounded-lg shadow dark:border-gray-600 rounded-lg p-4"
                 >
                   <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -206,7 +206,7 @@ const FormInclude = ({
         <div className="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute">
           <button
             type="submit"
-            className="text-white w-full justify-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            className="text-white w-full justify-center bg-green-700 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-primary-800"
           >
             Criar Ordem
           </button>

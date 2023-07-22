@@ -152,7 +152,7 @@ const FormUpdate = ({
               Serviços
             </label>
             <div className="flex gap-2 flex-col">
-              {servicos.map((servico, index) => (
+              {servicos.map((__,index) => (
                 <div
                   key={index}
                   className="flex w-full justify-between flex-wrap border border-gray-200 rounded-lg shadow dark:border-gray-600 rounded-lg p-4"

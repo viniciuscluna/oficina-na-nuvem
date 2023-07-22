@@ -7,7 +7,7 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import ClienteForm from "./clienteForm";
 import VeiculoForm from "./veiculoForm";
 import { Marca } from "../../../domain/fipe/marca";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 
 type FormIncludeProps = {
@@ -29,11 +29,12 @@ const FormInclude = ({
   isOpened,
   submitCallback,
 }: FormIncludeProps) => {
-  const { prestacaoServico, changeIsOpened } =
-    useIncludeServiceStore((state) => ({
+  const { prestacaoServico, changeIsOpened } = useIncludeServiceStore(
+    (state) => ({
       prestacaoServico: state.prestacaoServico,
       changeIsOpened: state.changeIsIncludeOpened,
-    }));
+    })
+  );
 
   const { register, handleSubmit, control, reset, setValue, watch } =
     useForm<PrestacaoServico>();
@@ -142,7 +143,7 @@ const FormInclude = ({
               Serviços
             </label>
             <div className="flex gap-2 flex-col">
-              {servicos.map((servico, index) => (
+              {servicos.map((__, index) => (
                 <div
                   key={index}
                   className="flex w-full justify-between flex-wrap border border-gray-200 rounded-lg shadow dark:border-gray-600 rounded-lg p-4"

@@ -1,13 +1,20 @@
 import classNames from "classnames";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 import { useServiceStore } from "../stores/servicosStore";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { EPrestacaoServicoStatus } from "../domain/ePrestacaoServicoStatus";
 import { STORAGE_KEY } from "../constants/key";
 
 const Sidebar = () => {
   const [, setLocalStorage] = useLocalStorage<string>(STORAGE_KEY, "");
+  const [recordsClicked, setRecordsClicked] = useState<boolean>(false);
+  const location = useLocation();
+  const recordsExpanded = useMemo(
+    () => location.pathname.startsWith("/logged/records") || recordsClicked,
+    [location.pathname, recordsClicked]
+  );
+
   const servicos = useServiceStore((state) => state.servicos);
 
   const openedServices = useMemo(() => {
@@ -52,15 +59,10 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              end
-              to="/logged/records"
-              className={(props) =>
-                classNames(
-                  "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group",
-                  props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
-                )
-              }
+            <a
+              href="#"
+              onClick={() => setRecordsClicked((clk) => !clk)}
+              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <svg
                 className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -74,7 +76,55 @@ const Sidebar = () => {
                 <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z" />
               </svg>
               <span className="flex-1 ml-3 whitespace-nowrap">Cadastros</span>
-            </NavLink>
+              <svg
+                className="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </a>
+            <ul
+              className={classNames(
+                "py-2 space-y-2",
+                recordsExpanded ? "" : "hidden"
+              )}
+            >
+              <li>
+                <NavLink
+                  to="records/category"
+                  className={(props) =>
+                    classNames(
+                      "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
+                      props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
+                    )
+                  }
+                >
+                  Categoria
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="records/subService"
+                  className={(props) =>
+                    classNames(
+                      "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
+                      props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
+                    )
+                  }
+                >
+                  Sub-Serviço
+                </NavLink>
+              </li>
+            </ul>
           </li>
           <li>
             <a

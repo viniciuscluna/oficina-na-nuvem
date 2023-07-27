@@ -12,3 +12,11 @@ export const add = async (
     await instanceApi.post<CategoriaServico>("/categoriaServico", categoria)
   ).data;
 };
+
+export const edit = async (categoria: CategoriaServico): Promise<CategoriaServico> => {
+  return (await instanceApi.put<CategoriaServico>("/categoriaServico", categoria)).data;
+};
+
+export const getId = async (id: string): Promise<CategoriaServico> => {
+  return (await instanceApi.get<CategoriaServico>(`/categoriaServico/${id}`)).data;
+};

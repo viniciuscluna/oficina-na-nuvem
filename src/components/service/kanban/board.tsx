@@ -1,5 +1,5 @@
-import { useMemo, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import {
   changeStatus,
@@ -26,27 +26,23 @@ const Board = () => {
   const setServicos = useServiceStore((state) => state.setServicos);
 
   const {
-    mutateAsync,
     data: prestacaoData,
     isLoading,
-  } = useMutation({
-    mutationKey: ["prestacaoServico"],
-    mutationFn: () => getByPrestador(prestadorId),
+  } = useQuery({
+    queryKey: ["prestacaoServico"],
+    queryFn: () => getByPrestador(prestadorId),
     onSuccess: (resp) => {
       setServicos(resp);
     },
+    enabled:  prestadorId !== "" && !isInsertOpened,
+    refetchInterval: 10000,
   });
 
   const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } =
     useMutation({
       mutationKey: ["cardButtons"],
-      mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status),
-      onSuccess: () => mutateAsync(),
+      mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status)
     });
-
-  useEffect(() => {
-    if (isInsertOpened === false && prestadorId !== "") mutateAsync();
-  }, [prestadorId, isInsertOpened, mutateAsync]);
 
   const abertaAnalise = useMemo(
     () =>
@@ -60,24 +56,18 @@ const Board = () => {
     [prestacaoData]
   );
 
-  const andamentoTeste = useMemo(
+  const andamento = useMemo(
     () =>
       prestacaoData?.filter((f) =>
-        [
-          EPrestacaoServicoStatus.andamento,
-          EPrestacaoServicoStatus.teste,
-        ].includes(f.status)
+        [EPrestacaoServicoStatus.andamento].includes(f.status)
       ),
     [prestacaoData]
   );
 
-  const concluido = useMemo(
+  const teste = useMemo(
     () =>
       prestacaoData?.filter((f) =>
-        [
-          EPrestacaoServicoStatus.concluido,
-          EPrestacaoServicoStatus.rejeitado,
-        ].includes(f.status)
+        [EPrestacaoServicoStatus.teste].includes(f.status)
       ),
     [prestacaoData]
   );
@@ -107,10 +97,10 @@ const Board = () => {
       </div>
       <div className="border rounded  border-gray-200 dark:border-gray-700 w-full">
         <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
-          Andamento/Teste
+          Andamento
         </h3>
         <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
-          {andamentoTeste?.map((prestacao, index) => (
+          {andamento?.map((prestacao, index) => (
             <Card
               prestacao={prestacao}
               keyProp={index}
@@ -122,10 +112,10 @@ const Board = () => {
       </div>
       <div className="border rounded border-gray-200 dark:border-gray-700 w-full">
         <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
-          Concluídas
+          Teste
         </h3>
         <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
-          {concluido?.map((prestacao, index) => (
+          {teste?.map((prestacao, index) => (
             <Card
               prestacao={prestacao}
               keyProp={index}

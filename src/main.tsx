@@ -9,15 +9,17 @@ import Root from "./pages/root";
 import Login from "./pages/login";
 import Logged from "./pages/logged";
 import Service from "./pages/service";
-import Records from "./pages/records";
+import Records from "./pages/records/records";
 
 // SubPages
-import SubService from "./components/records/subService/subService";
-import AddSubService from "./components/records/subService/addSubService";
-import Category from "./components/records/category/category";
-import AddCategory from "./components/records/category/addCategory";
+import SubService from "./pages/records/subService/subService";
+import AddSubService from "./pages/records/subService/addSubService";
+import Category from "./pages/records/category/category";
+import AddCategory from "./pages/records/category/addCategory";
 
 import "./index.css";
+import EditSubService from "./pages/records/subService/editSubService";
+import EditCategory from "./pages/records/category/editCategory";
 
 
 //Configure routes
@@ -51,12 +53,20 @@ const router = createBrowserRouter([
                 element: <AddSubService />
               },
               {
+                path: "/logged/records/subService/edit/:id",
+                element: <EditSubService />
+              },
+              {
                 path: "/logged/records/category",
                 element: <Category />
               },
               {
                 path: "/logged/records/category/add",
                 element: <AddCategory />
+              },
+              {
+                path: "/logged/records/category/edit/:id",
+                element: <EditCategory />
               }
             ]
           },

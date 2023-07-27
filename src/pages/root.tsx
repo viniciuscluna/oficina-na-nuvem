@@ -10,9 +10,9 @@ const Root = () => {
 
   useEffect(() => {
     if(apiKey === "") navigate("/login");
-    else navigate("/logged/services");
   }, [apiKey, navigate]);
 
+  
   return <Outlet />;
 };
 

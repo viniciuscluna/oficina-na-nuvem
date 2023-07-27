@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useLocalStorage } from "usehooks-ts";
 import { STORAGE_KEY } from "../constants/key";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
   chave: string;
@@ -8,10 +9,12 @@ type FormData = {
 
 const Login = () => {
   const { register, handleSubmit } = useForm<FormData>();
+  const navigate = useNavigate();
   const [, setApiKey] = useLocalStorage<string>(STORAGE_KEY, "");
 
   const onSubmit = (data: FormData) => {
     setApiKey(data.chave);
+    navigate("/logged/services");
   };
 
   return (

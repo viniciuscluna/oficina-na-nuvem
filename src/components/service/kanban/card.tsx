@@ -12,7 +12,6 @@ type CardProps = {
   keyProp: number;
   changeStatusCallback?: (changeStatus: ChangeStatus) => void;
   editCallback?: (prestacao: PrestacaoServico) => void;
-  viewOnly?: boolean;
 };
 
 const Card = ({
@@ -20,7 +19,6 @@ const Card = ({
   keyProp,
   changeStatusCallback,
   editCallback,
-  viewOnly,
 }: CardProps) => {
   const total = useMemo(
     () =>

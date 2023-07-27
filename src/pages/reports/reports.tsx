@@ -1,8 +1,9 @@
+import { useMemo } from "react";
+
 import { useQuery } from "@tanstack/react-query";
-import { useIncludeServiceStore } from "../../stores/includeServiceStore";
+
 import { usePageStore } from "../../stores/pageStore";
 import { useServiceStore } from "../../stores/servicosStore";
-import { useMemo } from "react";
 import { EPrestacaoServicoStatus } from "../../domain/ePrestacaoServicoStatus";
 import { getAllByPrestador as getByPrestador } from "../../services/prestacaoServicoService";
 import Card from "../../components/service/kanban/card";

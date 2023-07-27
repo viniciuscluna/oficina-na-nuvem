@@ -28,6 +28,7 @@ const Board = () => {
   const {
     data: prestacaoData,
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: ["prestacaoServico"],
     queryFn: () => getByPrestador(prestadorId),
@@ -41,7 +42,8 @@ const Board = () => {
   const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } =
     useMutation({
       mutationKey: ["cardButtons"],
-      mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status)
+      mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status),
+      onSuccess: () => refetch()
     });
 
   const abertaAnalise = useMemo(

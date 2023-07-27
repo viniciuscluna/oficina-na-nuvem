@@ -20,6 +20,7 @@ import AddCategory from "./pages/records/category/addCategory";
 import "./index.css";
 import EditSubService from "./pages/records/subService/editSubService";
 import EditCategory from "./pages/records/category/editCategory";
+import Reports from "./pages/reports/reports";
 
 
 //Configure routes
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
               }
             ]
           },
+          {
+            path: "/logged/reports",
+            element: <Reports />,
+          }
         ],
       },
     ],

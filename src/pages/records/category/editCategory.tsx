@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -6,7 +8,6 @@ import { getId, edit } from "../../../services/categoriaService";
 import { CategoriaServico } from "../../../domain/categoriaServico";
 import CategoryForm from "../../../components/records/categoryForm";
 import { PathCrudProps } from "../../../types/pathCrudProps";
-import { useMemo } from "react";
 
 const EditCategory = () => {
   const params = useParams<PathCrudProps>();

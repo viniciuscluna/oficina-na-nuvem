@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 
 import classNames from "classnames";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -15,7 +15,6 @@ import {
   edit as editPrestacaoServico,
 } from "../../../services/prestacaoServicoService";
 import { getMarcas } from "../../../services/fipeService";
-import { usePageStore } from "../../../stores/pageStore";
 
 import FormInclude from "./formInclude";
 import Loader from "../../loader";
@@ -25,8 +24,6 @@ const Include = () => {
     changeIsOpened: state.changeIsIncludeOpened,
     isOpened: state.isIncludeOpened,
   }));
-
-  const changePrestadorId = usePageStore((state) => state.changePrestadorId);
 
   const subServicoResult = useQuery({
     queryKey: ["subServico"],
@@ -88,13 +85,6 @@ const Include = () => {
       marcaResult.isLoading,
     ]
   );
-
-  useEffect(() => {
-    if (!isLoading)
-      changePrestadorId(
-        (prestadorResult.data && prestadorResult.data[0]?.id) || ""
-      );
-  }, [isLoading, prestadorResult.data, changePrestadorId]);
 
   const onSubmit: SubmitHandler<PrestacaoServico> = (data) =>
     addPrestacaoServicoMut.mutateAsync(data);

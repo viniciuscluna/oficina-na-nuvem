@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 
 import classNames from "classnames";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -12,7 +12,6 @@ import { getAll as getPrestador } from "../../../services/prestadorService";
 import { getAll as getVeiculo } from "../../../services/veiculoService";
 import { edit as editPrestacaoServico } from "../../../services/prestacaoServicoService";
 import { getMarcas } from "../../../services/fipeService";
-import { usePageStore } from "../../../stores/pageStore";
 
 import FormUpdate from "./formUpdate";
 import Loader from "../../loader";
@@ -23,8 +22,6 @@ const Update = () => {
     isOpened: state.isUpdateOpened,
     prestacaoServico: state.prestacaoServico,
   }));
-
-  const changePrestadorId = usePageStore((state) => state.changePrestadorId);
 
   const subServicoResult = useQuery({
     queryKey: ["subServico"],
@@ -76,13 +73,6 @@ const Update = () => {
       marcaResult.isLoading,
     ]
   );
-
-  useEffect(() => {
-    if (!isLoading)
-      changePrestadorId(
-        (prestadorResult.data && prestadorResult.data[0]?.id) || ""
-      );
-  }, [isLoading, prestadorResult.data, changePrestadorId]);
 
   const onEdit: SubmitHandler<PrestacaoServico> = (data) =>
     editPrestacaoServicoMut.mutateAsync(data);

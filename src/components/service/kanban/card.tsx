@@ -10,8 +10,9 @@ import { EPrestacaoServicoStatus } from "../../../domain/ePrestacaoServicoStatus
 type CardProps = {
   prestacao: PrestacaoServico;
   keyProp: number;
-  changeStatusCallback: (changeStatus: ChangeStatus) => void;
-  editCallback: (prestacao: PrestacaoServico) => void;
+  changeStatusCallback?: (changeStatus: ChangeStatus) => void;
+  editCallback?: (prestacao: PrestacaoServico) => void;
+  viewOnly?: boolean;
 };
 
 const Card = ({
@@ -19,6 +20,7 @@ const Card = ({
   keyProp,
   changeStatusCallback,
   editCallback,
+  viewOnly,
 }: CardProps) => {
   const total = useMemo(
     () =>
@@ -46,7 +48,7 @@ const Card = ({
           {prestacao.referencia}
         </h5>
         <Badge status={prestacao.status} />
-        {canEdit ? (
+        {canEdit && editCallback ? (
           <button
             title="Editar"
             type="button"
@@ -86,13 +88,17 @@ const Card = ({
       <div className="block">
         <List servicos={prestacao.servicos} />
       </div>
-      <div className="flex flex-wrap mt-4 gap-1">
-        <Buttons
-          status={prestacao.status}
-          id={prestacao.id}
-          changeStatusCallback={changeStatusCallback}
-        />
-      </div>
+      {changeStatusCallback ? (
+        <div className="flex flex-wrap mt-4 gap-1">
+          <Buttons
+            status={prestacao.status}
+            id={prestacao.id}
+            changeStatusCallback={changeStatusCallback}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

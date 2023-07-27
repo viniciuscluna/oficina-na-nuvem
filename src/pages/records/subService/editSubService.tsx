@@ -1,13 +1,13 @@
+import { useMemo } from "react";
+
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
 
 import { getAll } from "../../../services/categoriaService";
 import Loader from "../../../components/loader";
 import { SubServico } from "../../../domain/subServico";
 import { edit, getId } from "../../../services/subServicoService";
 import SubServiceForm from "../../../components/records/subServiceForm";
-import { useMemo } from "react";
 import { PathCrudProps } from "../../../types/pathCrudProps";
 
 const EditSubService = () => {
@@ -25,7 +25,6 @@ const EditSubService = () => {
     queryKey: ["subServico", params.id],
     queryFn: () => getId(params.id || ""),
   });
-
 
   const editSubServicoResult = useMutation({
     mutationKey: ["editSubServico"],

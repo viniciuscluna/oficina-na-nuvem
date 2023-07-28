@@ -90,7 +90,7 @@ const Board = () => {
           {abertaAnalise?.map((prestacao, index) => (
             <Card
               prestacao={prestacao}
-              keyProp={index}
+              key={index}
               changeStatusCallback={mutateStatusAsync}
               editCallback={onEdit}
             />
@@ -105,7 +105,7 @@ const Board = () => {
           {andamento?.map((prestacao, index) => (
             <Card
               prestacao={prestacao}
-              keyProp={index}
+              key={index}
               changeStatusCallback={mutateStatusAsync}
               editCallback={onEdit}
             />
@@ -120,7 +120,7 @@ const Board = () => {
           {teste?.map((prestacao, index) => (
             <Card
               prestacao={prestacao}
-              keyProp={index}
+              key={index}
               changeStatusCallback={mutateStatusAsync}
               editCallback={onEdit}
             />

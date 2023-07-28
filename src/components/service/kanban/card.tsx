@@ -9,14 +9,12 @@ import { EPrestacaoServicoStatus } from "../../../domain/ePrestacaoServicoStatus
 
 type CardProps = {
   prestacao: PrestacaoServico;
-  keyProp: number;
   changeStatusCallback?: (changeStatus: ChangeStatus) => void;
   editCallback?: (prestacao: PrestacaoServico) => void;
 };
 
 const Card = ({
   prestacao,
-  keyProp,
   changeStatusCallback,
   editCallback,
 }: CardProps) => {
@@ -38,7 +36,6 @@ const Card = ({
 
   return (
     <div
-      key={keyProp}
       className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
     >
       <div className="flex justify-between items-center w-full mb-2">

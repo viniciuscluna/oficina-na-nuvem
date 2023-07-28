@@ -81,7 +81,7 @@ const Board = () => {
   if (isLoading || isStatusLoading) return <Loader />;
 
   return (
-    <div className="flex flex-col grow md:flex-row gap-6 w-full">
+    <div className="flex flex-col grow md:flex-row gap-3 w-full">
       <div className="border rounded border-gray-200 dark:border-gray-700 w-full">
         <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
           Aberta/Análise

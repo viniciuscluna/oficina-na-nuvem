@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useLocalStorage } from "usehooks-ts";
-import { STORAGE_KEY } from "../constants/key";
 import { useNavigate } from "react-router-dom";
-import { useCallback, useEffect } from "react";
+import { useLocalStorage } from "usehooks-ts";
+
+import { STORAGE_KEY } from "../constants/key";
 
 type FormData = {
   chave: string;
@@ -13,17 +14,15 @@ const Login = () => {
   const navigate = useNavigate();
   const [apiKey, setApiKey] = useLocalStorage<string>(STORAGE_KEY, "");
 
-  const navigateServices = useCallback(() => {
-    navigate("/logged/services");
-  }, [navigate]);
 
   useEffect(() => {
-    if (apiKey !== "") navigateServices();
-  }, [apiKey, navigateServices]);
+    if (apiKey !== "")   navigate("/logged/services");
+  }, [apiKey, navigate]);
 
   const onSubmit = (data: FormData) => {
     setApiKey(data.chave);
-    navigateServices();
+    //Refresh page
+    navigate(0);
   };
 
   return (

@@ -16,11 +16,13 @@ import SubService from "./pages/records/subService/subService";
 import AddSubService from "./pages/records/subService/addSubService";
 import Category from "./pages/records/category/category";
 import AddCategory from "./pages/records/category/addCategory";
-
-import "./index.css";
 import EditSubService from "./pages/records/subService/editSubService";
 import EditCategory from "./pages/records/category/editCategory";
 import Reports from "./pages/reports/reports";
+import Product from "./pages/records/product/product";
+import Employee from "./pages/records/employee/employee";
+
+import "./index.css";
 
 
 //Configure routes
@@ -68,7 +70,15 @@ const router = createBrowserRouter([
               {
                 path: "/logged/records/category/edit/:id",
                 element: <EditCategory />
-              }
+              },
+              {
+                path: "/logged/records/product",
+                element: <Product />
+              },
+              {
+                path: "/logged/records/employee",
+                element: <Employee />
+              },
             ]
           },
           {

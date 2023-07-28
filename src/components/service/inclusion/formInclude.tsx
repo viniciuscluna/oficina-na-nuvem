@@ -1,14 +1,17 @@
+import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+
+import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
+
 import { Cliente } from "../../../domain/cliente";
 import { Prestador } from "../../../domain/prestador";
 import { SubServico } from "../../../domain/subServico";
 import { Veiculo } from "../../../domain/veiculo";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
+import { Marca } from "../../../domain/fipe/marca";
+
 import ClienteForm from "./clienteForm";
 import VeiculoForm from "./veiculoForm";
-import { Marca } from "../../../domain/fipe/marca";
-import { useEffect } from "react";
-import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 
 type FormIncludeProps = {
   prestadores: Prestador[];
@@ -146,14 +149,14 @@ const FormInclude = ({
               {servicos.map((__, index) => (
                 <div
                   key={index}
-                  className="flex w-full justify-between flex-wrap border border-gray-200 rounded-lg shadow dark:border-gray-600 rounded-lg p-4"
+                  className="flex w-full justify-between flex-wrap border border-gray-200 rounded-lg shadow dark:border-gray-600 rounded-lg p-4 gap-4"
                 >
-                  <div>
+                  <div className="w-[65%]">
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Categoria do Serviço
                     </label>
                     <select
-                      className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       {...register(`servicos.${index}.subServicoId`)}
                     >
                       {subServicos?.map((subServico, index) => (
@@ -164,7 +167,7 @@ const FormInclude = ({
                       ))}
                     </select>
                   </div>
-                  <div>
+                  <div className="w-[30%]">
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Valor
                     </label>
@@ -175,7 +178,7 @@ const FormInclude = ({
                       {...register(`servicos.${index}.valor`)}
                     ></input>
                   </div>
-                  <div>
+                  <div className="w-full">
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Descrição Serviço
                     </label>

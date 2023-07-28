@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useLocalStorage } from "usehooks-ts";
 import { STORAGE_KEY } from "../constants/key";
 import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect } from "react";
 
 type FormData = {
   chave: string;
@@ -10,11 +11,19 @@ type FormData = {
 const Login = () => {
   const { register, handleSubmit } = useForm<FormData>();
   const navigate = useNavigate();
-  const [, setApiKey] = useLocalStorage<string>(STORAGE_KEY, "");
+  const [apiKey, setApiKey] = useLocalStorage<string>(STORAGE_KEY, "");
+
+  const navigateServices = useCallback(() => {
+    navigate("/logged/services");
+  }, [navigate]);
+
+  useEffect(() => {
+    if (apiKey !== "") navigateServices();
+  }, [apiKey, navigateServices]);
 
   const onSubmit = (data: FormData) => {
     setApiKey(data.chave);
-    navigate("/logged/services");
+    navigateServices();
   };
 
   return (

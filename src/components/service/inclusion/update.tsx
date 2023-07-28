@@ -1,52 +1,33 @@
-import { useMemo } from "react";
-
 import classNames from "classnames";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { SubmitHandler } from "react-hook-form";
 
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
-import { getAll as getAllSubServico } from "../../../services/subServicoService";
-import { getAll as getAllCliente } from "../../../services/clienteService";
-import { getAll as getPrestador } from "../../../services/prestadorService";
-import { getAll as getVeiculo } from "../../../services/veiculoService";
+
 import { edit as editPrestacaoServico } from "../../../services/prestacaoServicoService";
-import { getMarcas } from "../../../services/fipeService";
 
 import FormUpdate from "./formUpdate";
 import Loader from "../../loader";
+import { useCacheStore } from "../../../stores/cacheStore";
 
 const Update = () => {
-  const { changeIsOpened, isOpened, prestacaoServico } = useIncludeServiceStore((state) => ({
-    changeIsOpened: state.changeIsUpdateOpened,
-    isOpened: state.isUpdateOpened,
-    prestacaoServico: state.prestacaoServico,
-  }));
+  const { changeIsOpened, isOpened, prestacaoServico } = useIncludeServiceStore(
+    (state) => ({
+      changeIsOpened: state.changeIsUpdateOpened,
+      isOpened: state.isUpdateOpened,
+      prestacaoServico: state.prestacaoServico,
+    })
+  );
 
-  const subServicoResult = useQuery({
-    queryKey: ["subServico"],
-    queryFn: getAllSubServico,
-  });
-
-  const clienteResult = useQuery({
-    queryKey: ["cliente"],
-    queryFn: getAllCliente,
-  });
-
-  const prestadorResult = useQuery({
-    queryKey: ["prestador"],
-    queryFn: getPrestador,
-  });
-
-  const veiculoResult = useQuery({
-    queryKey: ["veiculo"],
-    queryFn: getVeiculo,
-  });
-
-  const marcaResult = useQuery({
-    queryKey: ["veiculoMarcas"],
-    queryFn: getMarcas,
-  });
+  const { clientes, marcas, veiculos, prestadores, subServicos } =
+    useCacheStore((state) => ({
+      clientes: state.clientes,
+      marcas: state.marcas,
+      veiculos: state.veiculos,
+      prestadores: state.prestadores,
+      subServicos: state.subServico,
+    }));
 
   const editPrestacaoServicoMut = useMutation({
     mutationKey: ["prestacaoServico"],
@@ -55,24 +36,6 @@ const Update = () => {
       changeIsOpened();
     },
   });
-
-  const isLoading = useMemo(
-    () =>
-      prestadorResult.isLoading ||
-      clienteResult.isLoading ||
-      subServicoResult.isLoading ||
-      veiculoResult.isLoading ||
-      editPrestacaoServicoMut.isLoading ||
-      marcaResult.isLoading,
-    [
-      prestadorResult.isLoading,
-      clienteResult.isLoading,
-      subServicoResult.isLoading,
-      veiculoResult.isLoading,
-      editPrestacaoServicoMut.isLoading,
-      marcaResult.isLoading,
-    ]
-  );
 
   const onEdit: SubmitHandler<PrestacaoServico> = (data) =>
     editPrestacaoServicoMut.mutateAsync(data);
@@ -118,15 +81,15 @@ const Update = () => {
           <span className="sr-only">Close menu</span>
         </button>
 
-        {isLoading ? (
+        {editPrestacaoServicoMut.isLoading ? (
           <Loader />
         ) : (
           <FormUpdate
-            clientes={clienteResult.data || []}
-            prestadores={prestadorResult.data || []}
-            veiculos={veiculoResult.data || []}
-            subServicos={subServicoResult.data || []}
-            marcas={marcaResult.data || []}
+            clientes={clientes}
+            prestadores={prestadores}
+            veiculos={veiculos}
+            subServicos={subServicos}
+            marcas={marcas}
             submitCallback={onEdit}
             isOpened={isOpened}
           />

@@ -1,7 +1,9 @@
 import { Base } from "./base";
 import { Cliente } from "./cliente";
 import { EPrestacaoServicoStatus } from "./ePrestacaoServicoStatus";
+import { FuncionarioPrestador } from "./funcionarioPrestador";
 import { Prestador } from "./prestador";
+import { Produto } from "./produto";
 import { Servico } from "./servico";
 import { Veiculo } from "./veiculo";
 
@@ -14,5 +16,8 @@ export interface PrestacaoServico extends Base {
     clienteId?: string;
     veiculo?: Veiculo;
     veiculoId?: string;
+    funcionario?: FuncionarioPrestador;
+    funcionarioId?: string;
     servicos: Servico[];
+    produtos: Produto[];
 }

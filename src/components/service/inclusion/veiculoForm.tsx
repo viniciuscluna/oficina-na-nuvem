@@ -1,25 +1,64 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
-import { UseFormRegister, UseFormWatch } from "react-hook-form";
+import {
+  Control,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import { useMutation } from "@tanstack/react-query";
 import { Marca } from "../../../domain/fipe/marca";
-import { getModelosByMarca } from "../../../services/fipeService";
+import {
+  getAnosByModelosAndMarca,
+  getModelosByMarca,
+} from "../../../services/fipeService";
+import SelectFilter from "../../selectFilter";
 
 type VeiculoFormProps = {
   register: UseFormRegister<PrestacaoServico>;
+  control: Control<PrestacaoServico>;
   watch: UseFormWatch<PrestacaoServico>;
+  setValue: UseFormSetValue<PrestacaoServico>;
   marcas: Marca[];
 };
 
-const VeiculoForm = ({ register, marcas, watch }: VeiculoFormProps) => {
-  const marcaSelecionada = marcas.find(
-    (f) => f.nome == watch("veiculo.marca")
-  )?.codigo;
+const VeiculoForm = ({
+  register,
+  control,
+  marcas,
+  watch,
+  setValue,
+}: VeiculoFormProps) => {
+  const marca = watch("veiculo.marca");
+  const marcaSelecionada = useMemo(
+    () => marcas.find((f) => f.nome == marca)?.codigo,
+    [marca, marcas]
+  );
 
   const { mutateAsync, data: modelos } = useMutation({
     mutationKey: ["veiculoModelos"],
     mutationFn: () => getModelosByMarca(marcaSelecionada || ""),
+  });
+
+  const modelo = watch("veiculo.modelo");
+  const modeloSelecionado = useMemo(
+    () => modelos?.modelos.find((f) => f.nome == modelo)?.codigo,
+    [modelo, modelos]
+  );
+
+  const anoSelect = watch("veiculo.anoSelect");
+
+  useEffect(() => {
+    const anoComb = anoSelect?.split(" ") || ["0", "-"];
+    setValue("veiculo.ano", parseInt(anoComb[0]));
+    setValue("veiculo.tipoCombustivel", anoComb[1]);
+  }, [anoSelect, setValue]);
+
+  const { mutateAsync: mutateAnoAsync, data: anos } = useMutation({
+    mutationKey: ["veiculoAnos"],
+    mutationFn: () =>
+      getAnosByModelosAndMarca(marcaSelecionada || "", modeloSelecionado || ""),
   });
 
   useEffect(() => {
@@ -31,6 +70,15 @@ const VeiculoForm = ({ register, marcas, watch }: VeiculoFormProps) => {
       mutateAsync();
   }, [marcaSelecionada, mutateAsync]);
 
+  useEffect(() => {
+    if (
+      modeloSelecionado !== "" &&
+      modeloSelecionado !== undefined &&
+      modeloSelecionado !== null
+    )
+      mutateAnoAsync();
+  }, [modeloSelecionado, mutateAnoAsync]);
+
   return (
     <div className="border  border-gray-700 rounded-lg my-2 p-4">
       <div>
@@ -38,38 +86,74 @@ const VeiculoForm = ({ register, marcas, watch }: VeiculoFormProps) => {
           htmlFor="marcaVeiculo"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Marca
+          Selecione a Marca
         </label>
-        <select
-          id="marcaVeiculo"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("veiculo.marca")}
-        >
-          {marcas.map((marca, index) => (
-            <option key={index} value={marca.nome}>
-              {marca.nome}
-            </option>
-          ))}
-        </select>
+        <SelectFilter
+          name="veiculo.marca"
+          search="test"
+          control={control}
+          searchPlaceholder="Procurar"
+          values={marcas.map((marca) => ({
+            name: marca.nome,
+            value: marca.nome,
+          }))}
+          emptyPlaceholder="Escolha a marca"
+        />
       </div>
-      <div>
+      <div className="mt-1">
         <label
           htmlFor="modeloVeiculo"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Modelo
+          Selecione o Modelo
         </label>
-        <select
-          id="modeloVeiculo"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("veiculo.modelo")}
+        <SelectFilter
+          name="veiculo.modelo"
+          search="test"
+          control={control}
+          searchPlaceholder="Procurar"
+          values={
+            modelos?.modelos.map((modelo) => ({
+              name: modelo.nome,
+              value: modelo.nome,
+            })) || []
+          }
+          emptyPlaceholder="Escolha a marca"
+        />
+      </div>
+      <div className="mt-1">
+        <label
+          htmlFor="anoVeiculo"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          {modelos?.modelos.map((modelo, index) => (
-            <option key={index} value={modelo.nome}>
-              {modelo.nome}
-            </option>
-          ))}
-        </select>
+          Selecione o Ano
+        </label>
+        <SelectFilter
+          name="veiculo.anoSelect"
+          search="Procure por ano"
+          control={control}
+          searchPlaceholder="Procurar"
+          values={
+            anos?.map((ano) => ({
+              name: ano.nome,
+              value: ano.nome,
+            })) || []
+          }
+          emptyPlaceholder="Escolha o ano"
+        />
+      </div>
+      <div className="mt-2">
+        <label
+          htmlFor="chassiVeiculo"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Chassi
+        </label>
+        <input
+          id="chassiVeiculo"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          {...register("veiculo.chassi")}
+        />{" "}
       </div>
       <div className="mt-2">
         <label
@@ -82,6 +166,34 @@ const VeiculoForm = ({ register, marcas, watch }: VeiculoFormProps) => {
           id="placaVeiculo"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
           {...register("veiculo.placa")}
+        />{" "}
+      </div>
+      <div className="mt-2">
+        <label
+          htmlFor="tipoCombustivelVeiculo"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Tipo Combustível
+        </label>
+        <input
+          id="tipoCombustivelVeiculo"
+          disabled
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          {...register("veiculo.tipoCombustivel")}
+        />{" "}
+      </div>
+      <div className="mt-2">
+        <label
+          htmlFor="anoVeiculo"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Ano
+        </label>
+        <input
+          id="anoVeiculo"
+          disabled
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          {...register("veiculo.ano")}
         />{" "}
       </div>
       <div className="mt-2">

@@ -12,6 +12,10 @@ import { Marca } from "../../../domain/fipe/marca";
 
 import ClienteForm from "./clienteForm";
 import VeiculoForm from "./veiculoForm";
+import ServicoForm from "./servicoForm";
+import ProdutoForm from "./produtoForm";
+import { Produto } from "../../../domain/produto";
+import SelectFilter from "../../selectFilter";
 
 type FormIncludeProps = {
   prestadores: Prestador[];
@@ -51,6 +55,15 @@ const FormInclude = ({
     name: "servicos",
   });
 
+  const {
+    fields: produtos,
+    append: appendProduto,
+    remove: removeProduto,
+  } = useFieldArray<PrestacaoServico>({
+    control,
+    name: "produtos",
+  });
+
   useEffect(() => {
     if (!isOpened) {
       reset();
@@ -62,6 +75,15 @@ const FormInclude = ({
 
   const addServico = () => {
     appendServico({ nome: "", valor: 0, subServicoId: "" });
+  };
+
+  const addProduto = () => {
+    appendProduto({
+      nome: "",
+      marca: "",
+      valor_compra: 0,
+      valor_venda: 0,
+    } as Produto);
   };
 
   const submit = (form: PrestacaoServico) => {
@@ -99,18 +121,20 @@ const FormInclude = ({
             >
               Cliente
             </label>
-            <select
-              id="clienteId"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              {...register("clienteId")}
-            >
-              {clientes.map((cliente, index) => (
-                <option key={index} value={cliente.id}>
-                  {cliente.nome}
-                </option>
-              ))}
-              <option value="other">Incluir</option>
-            </select>
+            <SelectFilter
+              name="clienteId"
+              search="Procure por Cliente"
+              control={control}
+              searchPlaceholder="Procurar"
+              values={[
+                ...clientes.map((cliente) => ({
+                  name: cliente.nome,
+                  value: cliente.id?.toString() || "",
+                })),
+                ...[{ name: "Inserir", value: "other" }],
+              ]}
+              emptyPlaceholder="Escolha o cliente"
+            />
             {showClienteForm ? <ClienteForm register={register} /> : <></>}
           </div>
           <div>
@@ -120,20 +144,28 @@ const FormInclude = ({
             >
               Veículo
             </label>
-            <select
-              id="veiculoId"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              {...register("veiculoId")}
-            >
-              {veiculos.map((veiculo, index) => (
-                <option key={index} value={veiculo.id}>
-                  {veiculo.marca} - {veiculo.modelo}
-                </option>
-              ))}
-              <option value="other">Incluir</option>
-            </select>
+            <SelectFilter
+              name="veiculoId"
+              search="Procure por Cliente"
+              control={control}
+              searchPlaceholder="Procurar"
+              values={[
+                ...veiculos.map((veiculo) => ({
+                  name: `${veiculo.marca} - ${veiculo.modelo}`,
+                  value: veiculo.id?.toString() || "",
+                })),
+                ...[{ name: "Inserir", value: "other" }],
+              ]}
+              emptyPlaceholder="Escolha o veículo"
+            />
             {showVeiculoForm ? (
-              <VeiculoForm marcas={marcas} register={register} watch={watch} />
+              <VeiculoForm
+                marcas={marcas}
+                register={register}
+                watch={watch}
+                control={control}
+                setValue={setValue}
+              />
             ) : (
               <></>
             )}
@@ -146,57 +178,12 @@ const FormInclude = ({
               Serviços
             </label>
             <div className="flex gap-2 flex-col">
-              {servicos.map((__, index) => (
-                <div
-                  key={index}
-                  className="flex w-full justify-between flex-wrap border border-gray-200 rounded-lg shadow dark:border-gray-600 rounded-lg p-4 gap-4"
-                >
-                  <div className="w-[65%]">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Categoria do Serviço
-                    </label>
-                    <select
-                      className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      {...register(`servicos.${index}.subServicoId`)}
-                    >
-                      {subServicos?.map((subServico, index) => (
-                        <option key={index} value={subServico.id}>
-                          {subServico.titulo} - {subServico.desc} -{" "}
-                          {subServico.categoria.titulo}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="w-[30%]">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Valor
-                    </label>
-                    <input
-                      type="number"
-                      id="small-input"
-                      className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      {...register(`servicos.${index}.valor`)}
-                    ></input>
-                  </div>
-                  <div className="w-full">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                      Descrição Serviço
-                    </label>
-                    <textarea
-                      id="small-input"
-                      className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      {...register(`servicos.${index}.nome`)}
-                    ></textarea>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => removeServico(index)}
-                    className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    Remover
-                  </button>
-                </div>
-              ))}
+              <ServicoForm
+                removeServicoCallback={removeServico}
+                register={register}
+                servicos={servicos}
+                subServicos={subServicos}
+              />
             </div>
             <button
               type="button"
@@ -204,6 +191,28 @@ const FormInclude = ({
               className="px-3 py-2 my-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Adicionar Serviço
+            </button>
+          </div>
+          <div>
+            <label
+              htmlFor="produtos"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Produtos
+            </label>
+            <div className="flex gap-2 flex-col">
+              <ProdutoForm
+                removeServicoCallback={removeProduto}
+                register={register}
+                produtos={produtos}
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => addProduto()}
+              className="px-3 py-2 my-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Adicionar Produto
             </button>
           </div>
         </div>

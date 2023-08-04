@@ -5,5 +5,9 @@ export interface Veiculo extends Base {
     placa: string;
     marca: string;
     modelo: string;
+    chassi?: string;
+    ano?: number;
+    anoSelect?: string;
+    tipoCombustivel?: string;
     tipo: EveiculoTipo;
 }

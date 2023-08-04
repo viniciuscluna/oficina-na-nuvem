@@ -1,5 +1,5 @@
 export interface Modelo {
-    codigo: number;
+    codigo: string;
     nome: string;
 }
 

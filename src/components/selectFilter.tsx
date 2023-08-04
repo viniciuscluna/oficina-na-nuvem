@@ -27,6 +27,7 @@ const SelectFilter = ({
 }: SelectFilterProps) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
+  const firstButtonRef = useRef<HTMLButtonElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const [filterList, setFilterList] = useState<SelectValue[]>(values);
 
@@ -61,6 +62,13 @@ const SelectFilter = ({
     () => values.find((f) => f.value === value)?.name || emptyPlaceholder,
     [value, values, emptyPlaceholder]
   );
+
+  const handleInputKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+      firstButtonRef.current?.click();
+    }
+  };
 
   return (
     <>
@@ -122,6 +130,7 @@ const SelectFilter = ({
               className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder={searchPlaceholder}
               onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => handleInputKey(e)}
               ref={searchRef}
               autoComplete="off"
               onFocus={(e) => (e.target.value = "")}
@@ -132,22 +141,29 @@ const SelectFilter = ({
           className="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
           aria-labelledby="dropdownSearchButton"
         >
-          {filterList.map((value, index) => (
-            <li key={index}>
-              <button
-                type="button"
-                className="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
-                onClick={() => selectItem(value)}
-              >
-                <label
-                  htmlFor="checkbox-item-11"
-                  className="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+          {filterList.map((value, index) => {
+            const isFirstOption = index === 0;
+            return (
+              <li key={index}>
+                <button
+                  type="button"
+                  className={classNames(
+                    "flex items-center pl-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left",
+                    isFirstOption ? "bg-gray-100 dark:bg-gray-600" : ""
+                  )}
+                  onClick={() => selectItem(value)}
+                  ref={isFirstOption ? firstButtonRef : undefined}
                 >
-                  {value.name}
-                </label>
-              </button>
-            </li>
-          ))}
+                  <label
+                    htmlFor="checkbox-item-11"
+                    className="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                  >
+                    {value.name}
+                  </label>
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </>

@@ -1,29 +1,33 @@
 import classNames from "classnames";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler } from "react-hook-form";
 
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
+import { Cliente } from "../../../domain/cliente";
+import { Marca } from "../../../domain/fipe/marca";
+import { Veiculo } from "../../../domain/veiculo";
+import { Prestador } from "../../../domain/prestador";
+import { SubServico } from "../../../domain/subServico";
+
 import { add as addPrestacaoServico } from "../../../services/prestacaoServicoService";
 
 import FormInclude from "./formInclude";
 import Loader from "../../loader";
-import { useCacheStore } from "../../../stores/cacheStore";
 
 const Include = () => {
+  const queryClient = useQueryClient();
   const { changeIsOpened, isOpened } = useIncludeServiceStore((state) => ({
     changeIsOpened: state.changeIsIncludeOpened,
     isOpened: state.isIncludeOpened,
   }));
 
-  const { clientes, marcas, veiculos, prestadores, subServicos } =
-    useCacheStore((state) => ({
-      clientes: state.clientes,
-      marcas: state.marcas,
-      veiculos: state.veiculos,
-      prestadores: state.prestadores,
-      subServicos: state.subServico,
-    }));
+  const clientes = queryClient.getQueryData<Cliente[]>(["cliente"]) || [];
+  const marcas = queryClient.getQueryData<Marca[]>(["veiculoMarcas"]) || [];
+  const veiculos = queryClient.getQueryData<Veiculo[]>(["veiculo"]) || [];
+  const prestadores = queryClient.getQueryData<Prestador[]>(["prestador"]) || [];
+  const subServicos = queryClient.getQueryData<SubServico[]>(["subServico"]) || [];
+
 
   const addPrestacaoServicoMut = useMutation({
     mutationKey: ["prestacaoServico"],

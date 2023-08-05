@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   changeStatus,
@@ -17,6 +17,7 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 
 const Board = () => {
   const prestadorId = usePageStore((state) => state.prestadorId);
+  const queryClient = useQueryClient();
   const { isInsertOpened, setPrestacaoEdit } = useIncludeServiceStore(
     (state) => ({
       isInsertOpened: state.isIncludeOpened || state.isUpdateOpened,
@@ -24,6 +25,8 @@ const Board = () => {
     })
   );
   const setServicos = useServiceStore((state) => state.setServicos);
+
+  const enableFetch = useMemo(() => prestadorId !== "" && !isInsertOpened, [prestadorId, isInsertOpened]);
 
   const {
     data: prestacaoData,
@@ -35,9 +38,17 @@ const Board = () => {
     onSuccess: (resp) => {
       setServicos(resp);
     },
-    enabled:  prestadorId !== "" && !isInsertOpened,
+    enabled:  enableFetch,
     refetchInterval: 10000,
   });
+
+  useEffect(() => {
+    if(enableFetch){
+      queryClient.invalidateQueries({ queryKey: ["prestador"]});
+      queryClient.invalidateQueries({ queryKey: ["cliente"]});
+      queryClient.invalidateQueries({ queryKey: ["veiculo"]});
+    }
+  }, [enableFetch, queryClient]);
 
   const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } =
     useMutation({

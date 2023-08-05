@@ -4,7 +4,6 @@ import Footer from "../components/footer";
 import { usePageStore } from "../stores/pageStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
-import { useCacheStore } from "../stores/cacheStore";
 import { getAll as getAllSubServico } from "../services/subServicoService";
 import { getAll as getAllCliente } from "../services/clienteService";
 import { getAll as getPrestador } from "../services/prestadorService";
@@ -14,7 +13,6 @@ import Loader from "../components/loader";
 
 const Logged = () => {
   const changePrestadorId = usePageStore((state) => state.changePrestadorId);
-  const populateCache = useCacheStore((state) => state.populate);
 
   const prestadorResult = useQuery({
     queryKey: ["prestador"],
@@ -62,24 +60,8 @@ const Logged = () => {
       changePrestadorId(
         (prestadorResult.data && prestadorResult.data[0]?.id) || ""
       );
-      populateCache(
-        clienteResult.data || [],
-        prestadorResult.data || [],
-        subServicoResult.data || [],
-        veiculoResult.data || [],
-        marcaResult.data || []
-      );
     }
-  }, [
-    isLoading,
-    changePrestadorId,
-    populateCache,
-    prestadorResult.data,
-    clienteResult.data,
-    subServicoResult.data,
-    veiculoResult.data,
-    marcaResult.data,
-  ]);
+  }, [isLoading, changePrestadorId, prestadorResult.data]);
 
   if (isLoading) return <Loader />;
   return (

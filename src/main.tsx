@@ -21,9 +21,10 @@ import EditCategory from "./pages/records/category/editCategory";
 import Reports from "./pages/reports/reports";
 import Product from "./pages/records/product/product";
 import Employee from "./pages/records/employee/employee";
+import AddProduct from "./pages/records/product/addProduct";
+import EditProduct from "./pages/records/product/editProduct";
 
 import "./index.css";
-
 
 //Configure routes
 const router = createBrowserRouter([
@@ -49,42 +50,50 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "/logged/records/subService",
-                element: <SubService />
+                element: <SubService />,
               },
               {
                 path: "/logged/records/subService/add",
-                element: <AddSubService />
+                element: <AddSubService />,
               },
               {
                 path: "/logged/records/subService/edit/:id",
-                element: <EditSubService />
+                element: <EditSubService />,
               },
               {
                 path: "/logged/records/category",
-                element: <Category />
+                element: <Category />,
               },
               {
                 path: "/logged/records/category/add",
-                element: <AddCategory />
+                element: <AddCategory />,
               },
               {
                 path: "/logged/records/category/edit/:id",
-                element: <EditCategory />
+                element: <EditCategory />,
               },
               {
                 path: "/logged/records/product",
-                element: <Product />
+                element: <Product />,
+              },
+              {
+                path: "/logged/records/product/add",
+                element: <AddProduct />,
+              },
+              {
+                path: "/logged/records/product/edit/:id",
+                element: <EditProduct />,
               },
               {
                 path: "/logged/records/employee",
-                element: <Employee />
+                element: <Employee />,
               },
-            ]
+            ],
           },
           {
             path: "/logged/reports",
             element: <Reports />,
-          }
+          },
         ],
       },
     ],

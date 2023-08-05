@@ -1,4 +1,7 @@
-export interface Produto {
+import { ETipoMedidaItem } from "./ETipoMedidaItem";
+import { Base } from "./base";
+
+export interface Produto extends Base {
     nome: string;
     marca: string;
     modelo?: string;
@@ -9,4 +12,5 @@ export interface Produto {
     quantidade: number;
     prestadorId: string;
     prestacaoServicoId?: string;
+    tipoMedidaItem: ETipoMedidaItem;
 }

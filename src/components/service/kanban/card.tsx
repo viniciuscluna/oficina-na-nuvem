@@ -13,11 +13,7 @@ type CardProps = {
   editCallback?: (prestacao: PrestacaoServico) => void;
 };
 
-const Card = ({
-  prestacao,
-  changeStatusCallback,
-  editCallback,
-}: CardProps) => {
+const Card = ({ prestacao, changeStatusCallback, editCallback }: CardProps) => {
   const total = useMemo(
     () =>
       prestacao.servicos?.reduce(
@@ -34,10 +30,12 @@ const Card = ({
     [prestacao.status]
   );
 
+  const view = () => {
+    window.open(`/print/${prestacao.id}`, "_blank");
+  };
+
   return (
-    <div
-      className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-    >
+    <div className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex justify-between items-center w-full mb-2">
         <h5 className="text-sm font-bold tracking-tight text-gray-900 dark:text-white">
           {prestacao.referencia}
@@ -51,7 +49,7 @@ const Card = ({
             className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             <svg
-              className="w-3 h-3text-gray-800 dark:text-white"
+              className="w-3 h-3 text-gray-800 dark:text-white"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -64,6 +62,24 @@ const Card = ({
         ) : (
           <></>
         )}
+
+        <button
+          title="Visualizar"
+          type="button"
+          onClick={() => view()}
+          className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          <svg
+            className="w-3 h-3 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 18 18"
+          >
+            <path d="M17 0h-5.768a1 1 0 1 0 0 2h3.354L8.4 8.182A1.003 1.003 0 1 0 9.818 9.6L16 3.414v3.354a1 1 0 0 0 2 0V1a1 1 0 0 0-1-1Z"></path>
+            <path d="m14.258 7.985-3.025 3.025A3 3 0 1 1 6.99 6.768l3.026-3.026A3.01 3.01 0 0 1 8.411 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V9.589a3.011 3.011 0 0 1-1.742-1.604Z"></path>
+          </svg>
+        </button>
       </div>
       <div className="flex flex-wrap gap-x-5">
         <p className="mb-3 text-gray-700 dark:text-gray-400 ">

@@ -1,0 +1,48 @@
+.prestacao-print-model {
+    .logo {
+        max-width: 100px;
+        height: auto;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .order-details {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-top: 5px solid red;
+        border-bottom: 5px solid red;
+        border-left: 5px solid red;
+        border-right: 5px solid red;
+    }
+    .footer {
+        text-align: center;
+        font-size: 12px;
+    }
+       table {
+         width: 100%;
+         border-collapse: collapse;
+     }
+     
+     th, td {
+         border: 1px solid #ccc;
+         padding: 8px;
+         text-align: left;
+     }
+     
+     th {
+         background-color: red;
+         color: white;
+     }
+     
+     .total {
+         margin-top: 10px;
+         font-weight: bold;
+     }
+}

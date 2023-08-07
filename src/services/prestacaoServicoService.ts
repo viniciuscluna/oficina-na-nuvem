@@ -14,6 +14,12 @@ export const add = async (
     .data;
 };
 
+export const getId = async (prestacaoId: string): Promise<PrestacaoServico> => {
+  return (
+    await instanceApi.get<PrestacaoServico>(`/prestacaoServico/${prestacaoId}`)
+  ).data;
+};
+
 export const edit = async (
   form: PrestacaoServico
 ): Promise<PrestacaoServico> => {

@@ -25,6 +25,7 @@ import AddProduct from "./pages/records/product/addProduct";
 import EditProduct from "./pages/records/product/editProduct";
 
 import "./index.css";
+import Print from "./components/service/print/print";
 
 //Configure routes
 const router = createBrowserRouter([
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
             element: <Reports />,
           },
         ],
+      },
+      {
+        path: "/print/:id",
+        element: <Print />,
       },
     ],
   },

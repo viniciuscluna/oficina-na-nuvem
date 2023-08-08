@@ -23,9 +23,9 @@ import Product from "./pages/records/product/product";
 import Employee from "./pages/records/employee/employee";
 import AddProduct from "./pages/records/product/addProduct";
 import EditProduct from "./pages/records/product/editProduct";
+import Print from "./components/service/print/print";
 
 import "./index.css";
-import Print from "./components/service/print/print";
 
 //Configure routes
 const router = createBrowserRouter([

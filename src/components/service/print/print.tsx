@@ -1,121 +1,48 @@
-import { useQuery } from "@tanstack/react-query";
-import { getId } from "../../../services/prestacaoServicoService";
-import Loader from "../../loader";
+import { useEffect, useRef } from "react";
 
-import "./print.scss";
+import { useReactToPrint } from "react-to-print";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { getId } from "../../../services/prestacaoServicoService";
+import ComponentPrint from "./componentPrint";
+import Loader from "../../loader";
 
 const Print = () => {
   const { id } = useParams();
+  const componentRef = useRef<HTMLElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const { isLoading, data } = useQuery({
     queryKey: ["prestacaoById", id],
     queryFn: () => getId(id || ""),
   });
 
-  if (isLoading) return <Loader />;
+  useEffect(() => {
+    if (!isLoading) document.title = `OS: ${data?.referencia}`;
+  }, [isLoading, data?.referencia]);
 
-  return (
-    <section className="prestacao-print-model">
-      <div>
-        <img
-          src="caminho/do/seu/logo.png"
-          alt="Logo da Minha Empresa"
-          className="logo"
-        />
-      </div>
-
-      <div style={{ marginTop: "-6%", marginLeft: "60%" }}>
-        <p>
-          Rua Cyro Maia de Carvalho, 284 - JD das Palmas /SP 05749-270.
-          <br />
-          (11) 98349-4218.
-          <br />
-          avr_autoservice@outlook.com.
-        </p>
-      </div>
-
-      <div className="container">
-        <div className="header">
-          <h1>ORDEM DE SERVIÇO</h1>
-          <p>Data: {data?.dataCadastro?.toString()} </p>
+  if (isLoading && data) return <Loader />;
+  else
+    return (
+      <section className="flex flex-col gap-5 w-full items-center">
+        <div className="my-5 text-center">
+          <button
+            onClick={() => handlePrint()}
+            className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+          >
+            Imprimir!
+          </button>
         </div>
-
-        <h4>INFORMAÇÕES GERAIS</h4>
-        <div className="order-details">
-          <p style={{ paddingLeft: "1%" }}>
-            <strong>NUMERO DA ORDEM: {data?.referencia}</strong>
-          </p>
-          <hr />
-          <p style={{ paddingLeft: "1%" }}>
-            <strong>CLIENTE: {data?.cliente?.nome}</strong>
-          </p>
-          <hr />
-          <p style={{ paddingLeft: "1%" }}>
-            <strong>VEICULO: {data?.veiculo?.marca}</strong>{" "}
-          </p>
-          <hr />
-          <p style={{ paddingLeft: "1%" }}>
-            <strong>
-              Modelo: {data?.veiculo?.modelo} - {data?.veiculo?.ano}
-            </strong>{" "}
-          </p>
-          <hr />
-          <p style={{ paddingLeft: "1%" }}>
-            <strong>PLACA: {data?.veiculo?.placa}</strong>{" "}
-          </p>
-        </div>
-
-        <h4>SERVIÇÕS REALIZADOS</h4>
-        <table>
-          <thead>
-            <tr>
-              <th>Descrição</th>
-              <th>Valor</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data?.servicos.map((servico, index) => (
-              <tr key={index}>
-                <td>{servico.descricao}</td>
-                <td>{servico.valor}</td>
-              </tr>
-            ))}
-
-            <tr>
-              <td>
-                <strong>
-                  Total:{" "}
-                  {data?.servicos.reduce(
-                    (accumulator, currentValue) =>
-                      accumulator + currentValue.valor,
-                    0
-                  )}{" "}
-                </strong>
-              </td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <br />
-        <h4>PRODUTOS UTILIDADOS</h4>
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Descrição</th>
-              <th>Valor Unitario</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-
-        <div className="footer">
-          <p>Este é um modelo de ordem de serviço.</p>
-        </div>
-      </div>
-    </section>
-  );
+        <section className="block w-[60%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+          {data ? (
+            <ComponentPrint ref={componentRef} prestacao={data} />
+          ) : (
+            <></>
+          )}
+        </section>
+      </section>
+    );
 };
-
 export default Print;

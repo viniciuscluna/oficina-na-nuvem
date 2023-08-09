@@ -48,7 +48,7 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
         <main>
           <section className="header_document">
             <img
-              src="/documents/regis.png"
+              src={`/logos/${prestacao.prestadorId}.png`}
               alt="Logo da Minha Empresa"
               className="logo"
             />

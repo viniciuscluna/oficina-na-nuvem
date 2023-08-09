@@ -1,7 +1,7 @@
 .prestacao-print-model {
   margin: 1rem;
   font-size: 14px;
-  
+
   .logo {
     max-width: 150px;
   }
@@ -57,13 +57,20 @@
     align-items: flex-start;
     justify-content: space-between;
   }
+}
+@media print {
+  html,
+  body {
+    border: 1px solid white;
+    page-break-after: avoid;
+    page-break-before: avoid;
+  }
+  main {
+    background: white;
+    width: 20cm;
+  }
 
-  @media print {
-    main {
-      background: white;
-      width: 20cm;
-      display: block;
-      margin: 0 auto;
-    }
+  :last-child {
+    page-break-after: auto;
   }
 }

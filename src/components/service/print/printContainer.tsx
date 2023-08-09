@@ -2,21 +2,23 @@ import { useEffect, useRef } from "react";
 
 import { useReactToPrint } from "react-to-print";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
 import { getId } from "../../../services/prestacaoServicoService";
 import ComponentPrint from "./componentPrint";
 import Loader from "../../loader";
 
-const Print = () => {
-  const { id } = useParams();
+type PrintContainerProps = {
+  prestacaoId: string;
+}
+const PrintContainer = ({prestacaoId} : PrintContainerProps) => {
+  
   const componentRef = useRef<HTMLElement>(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
 
   const { isLoading, data } = useQuery({
-    queryKey: ["prestacaoById", id],
-    queryFn: () => getId(id || ""),
+    queryKey: ["prestacaoById", prestacaoId],
+    queryFn: () => getId(prestacaoId || ""),
   });
 
   useEffect(() => {
@@ -45,4 +47,4 @@ const Print = () => {
       </section>
     );
 };
-export default Print;
+export default PrintContainer;

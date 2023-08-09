@@ -12,4 +12,5 @@ export interface Prestador extends Base {
     emailEmpresa: string;
     emailRepresentante?: string;
     situacaoCadastral?: number;
+    endereco?: string;
 }

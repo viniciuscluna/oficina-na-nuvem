@@ -1,4 +1,4 @@
 export interface Base {
     id?: string;
-    dataCadastro?: Date;
+    dataCadastro?: string;
 }

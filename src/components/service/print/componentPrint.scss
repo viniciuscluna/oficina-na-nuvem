@@ -1,48 +1,69 @@
 .prestacao-print-model {
-    .logo {
-        max-width: 100px;
-        height: auto;
+  margin: 1rem;
+  font-size: 14px;
+  
+  .logo {
+    max-width: 150px;
+  }
+  .container {
+    margin-top: 3rem;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .order-details,
+  .details-total {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc (0, 0, 0);
+    border-right: 1px solid #ccc (0, 0, 0);
+  }
+  .footer {
+    text-align: center;
+    font-size: 12px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #ccc;
+    color: black;
+  }
+
+  .total {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  h4 {
+    margin: 0;
+  }
+
+  .header_document {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  @media print {
+    main {
+      background: white;
+      width: 20cm;
+      display: block;
+      margin: 0 auto;
     }
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-    .header {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .order-details {
-        border: 1px solid #ccc;
-        padding: 10px;
-        margin-bottom: 20px;
-        border-top: 5px solid red;
-        border-bottom: 5px solid red;
-        border-left: 5px solid red;
-        border-right: 5px solid red;
-    }
-    .footer {
-        text-align: center;
-        font-size: 12px;
-    }
-       table {
-         width: 100%;
-         border-collapse: collapse;
-     }
-     
-     th, td {
-         border: 1px solid #ccc;
-         padding: 8px;
-         text-align: left;
-     }
-     
-     th {
-         background-color: red;
-         color: white;
-     }
-     
-     .total {
-         margin-top: 10px;
-         font-weight: bold;
-     }
+  }
 }

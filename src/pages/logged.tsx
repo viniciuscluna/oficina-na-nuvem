@@ -1,24 +1,18 @@
+import { useMemo } from "react";
+
 import { Outlet } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
 import Sidebar from "../components/sidebar";
 import Footer from "../components/footer";
-import { usePageStore } from "../stores/pageStore";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
-import { getAll as getAllSubServico } from "../services/subServicoService";
-import { getAll as getAllCliente } from "../services/clienteService";
-import { getAll as getPrestador } from "../services/prestadorService";
-import { getAll as getVeiculo } from "../services/veiculoService";
-import { getMarcas } from "../services/fipeService";
 import Loader from "../components/loader";
 
+import { getAll as getAllSubServico } from "../services/subServicoService";
+import { getAll as getAllCliente } from "../services/clienteService";
+import { getAll as getVeiculo } from "../services/veiculoService";
+import { getMarcas } from "../services/fipeService";
+
 const Logged = () => {
-  const changePrestadorId = usePageStore((state) => state.changePrestadorId);
-
-  const prestadorResult = useQuery({
-    queryKey: ["prestador"],
-    queryFn: getPrestador,
-  });
-
   const subServicoResult = useQuery({
     queryKey: ["subServico"],
     queryFn: getAllSubServico,
@@ -41,27 +35,17 @@ const Logged = () => {
 
   const isLoading = useMemo(
     () =>
-      prestadorResult.isLoading ||
       clienteResult.isLoading ||
       subServicoResult.isLoading ||
       veiculoResult.isLoading ||
       marcaResult.isLoading,
     [
-      prestadorResult.isLoading,
       clienteResult.isLoading,
       subServicoResult.isLoading,
       veiculoResult.isLoading,
       marcaResult.isLoading,
     ]
   );
-
-  useEffect(() => {
-    if (!isLoading) {
-      changePrestadorId(
-        (prestadorResult.data && prestadorResult.data[0]?.id) || ""
-      );
-    }
-  }, [isLoading, changePrestadorId, prestadorResult.data]);
 
   if (isLoading) return <Loader />;
   return (

@@ -1,7 +1,5 @@
 import { useForm } from "react-hook-form";
 import { Produto } from "../../domain/produto";
-import { usePageStore } from "../../stores/pageStore";
-import { useEffect } from "react";
 
 type ProductFormProps = {
   submitCallback: (produto: Produto) => void;
@@ -18,15 +16,9 @@ const ProdutoForm = ({
   label,
   editMode,
 }: ProductFormProps) => {
-  const prestadorId = usePageStore((state) => state.prestadorId);
-
-  const { register, handleSubmit, setValue } = useForm<Produto>({
+  const { register, handleSubmit, } = useForm<Produto>({
     defaultValues: defaultValues,
   });
-
-  useEffect(() => {
-    if (prestadorId) setValue("prestadorId", prestadorId);
-  }, [prestadorId, setValue]);
 
   return (
     <form onSubmit={handleSubmit(submitCallback)}>

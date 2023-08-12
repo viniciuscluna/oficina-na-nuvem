@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 
-import { usePageStore } from "../../stores/pageStore";
 import { useServiceStore } from "../../stores/servicosStore";
 import { EPrestacaoServicoStatus } from "../../domain/ePrestacaoServicoStatus";
 import { getAllByPrestador as getByPrestador } from "../../services/prestacaoServicoService";
@@ -12,18 +11,15 @@ import SubTitle from "../../components/subTitle";
 import Filter from "../../components/reports/filter";
 
 const Reports = () => {
-  const prestadorId = usePageStore((state) => state.prestadorId);
   const [refFilter, setRefFilter] = useState<string>("");
   const setServicos = useServiceStore((state) => state.setServicos);
 
-  const { data: prestacaoData, isLoading } = useQuery({
+  const { data: prestacaoData, isLoading, refetch } = useQuery({
     queryKey: ["prestacaoServico"],
-    queryFn: () => getByPrestador(prestadorId),
+    queryFn: () => getByPrestador(),
     onSuccess: (resp) => {
       setServicos(resp);
     },
-    enabled: prestadorId !== "",
-    refetchInterval: 10000,
   });
 
   const concluidas = useMemo(
@@ -45,7 +41,7 @@ const Reports = () => {
         Serviços Finalizados
       </h2>
       <SubTitle>
-        <Filter inputCallback={setRefFilter} />
+        <Filter inputCallback={setRefFilter} updateCallback={() => refetch()} />
       </SubTitle>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
         {concluidas?.map((prestacao, index) => (

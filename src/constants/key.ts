@@ -1,1 +1,1 @@
-export const STORAGE_KEY = "apiKey";
+export const STORAGE_KEY = "bearer";

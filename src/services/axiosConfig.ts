@@ -4,8 +4,14 @@ import { STORAGE_KEY } from "../constants/key";
 export const instanceApi = axios.create({
   baseURL: import.meta.env.PROD ? "TBD" : "https://localhost:7291/api",
   headers: {
-    "X-API-Key": JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"),
+    Authorization: `Bearer ${JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "{}"
+    )}`,
   },
+});
+
+export const instanceAuthApi = axios.create({
+  baseURL: import.meta.env.PROD ? "TBD" : "https://localhost:7056/api",
 });
 
 export const instanceFipe = axios.create({

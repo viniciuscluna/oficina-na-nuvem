@@ -1,7 +1,5 @@
 import { useForm } from "react-hook-form";
 import { CategoriaServico } from "../../domain/categoriaServico";
-import { usePageStore } from "../../stores/pageStore";
-import { useEffect } from "react";
 
 type CategoryFormProps = {
   submitCallback: (categoriaServico: CategoriaServico) => void;
@@ -16,15 +14,10 @@ const CategoryForm = ({
   defaultValues,
   label,
 }: CategoryFormProps) => {
-  const prestadorId = usePageStore((state) => state.prestadorId);
 
-  const { register, handleSubmit, setValue } = useForm<CategoriaServico>({
+  const { register, handleSubmit } = useForm<CategoriaServico>({
     defaultValues: defaultValues,
   });
-
-  useEffect(() => {
-    if (prestadorId) setValue("prestadorId", prestadorId);
-  }, [prestadorId, setValue]);
 
   return (
     <form onSubmit={handleSubmit(submitCallback)}>

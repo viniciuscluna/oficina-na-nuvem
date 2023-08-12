@@ -18,7 +18,6 @@ import { Produto } from "../../../domain/produto";
 import SelectFilter from "../../selectFilter";
 
 type FormIncludeProps = {
-  prestadores: Prestador[];
   veiculos: Veiculo[];
   subServicos: SubServico[];
   clientes: Cliente[];
@@ -28,7 +27,6 @@ type FormIncludeProps = {
 };
 
 const FormInclude = ({
-  prestadores,
   veiculos,
   subServicos,
   clientes,
@@ -74,7 +72,7 @@ const FormInclude = ({
   const showVeiculoForm = watch("veiculoId") === "other";
 
   const addServico = () => {
-    appendServico({ nome: "", valor: 0, subServicoId: "" });
+    appendServico({ descricao: "", valor: 0, subServicoId: "" });
   };
 
   const addProduto = () => {
@@ -95,25 +93,6 @@ const FormInclude = ({
     <form onSubmit={handleSubmit(submit)}>
       <div className="space-y-4">
         <div className="overflow-auto max-h-[80dvh]">
-          <div>
-            <label
-              htmlFor="prestadorId"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Prestador
-            </label>
-            <select
-              id="prestadorId"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              {...register("prestadorId")}
-            >
-              {prestadores.map((prestador, index) => (
-                <option key={index} value={prestador.id}>
-                  {prestador.nome}
-                </option>
-              ))}
-            </select>
-          </div>
           <div>
             <label
               htmlFor="clienteId"

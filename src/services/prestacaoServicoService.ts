@@ -32,12 +32,10 @@ export const edit = async (
     .data;
 };
 
-export const getAllByPrestador = async (
-  prestadorId: string
-): Promise<PrestacaoServico[]> =>
+export const getAllByPrestador = async (): Promise<PrestacaoServico[]> =>
   (
     await instanceApi.get(
-      `/prestacaoServico/PrestacaoServicoEnriquecidoPrestador/${prestadorId}`
+      `/prestacaoServico/PrestacaoServicoEnriquecidoPrestador`
     )
   ).data;
 

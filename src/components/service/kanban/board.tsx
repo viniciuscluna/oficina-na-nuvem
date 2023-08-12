@@ -9,14 +9,12 @@ import {
 import Card from "./card";
 import Loader from "../../loader";
 import { EPrestacaoServicoStatus } from "../../../domain/ePrestacaoServicoStatus";
-import { usePageStore } from "../../../stores/pageStore";
 import { ChangeStatus } from "../../../types/changeStatusRequest";
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 import { useServiceStore } from "../../../stores/servicosStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 
 const Board = () => {
-  const prestadorId = usePageStore((state) => state.prestadorId);
   const queryClient = useQueryClient();
   const { isInsertOpened, setPrestacaoEdit } = useIncludeServiceStore(
     (state) => ({
@@ -26,7 +24,7 @@ const Board = () => {
   );
   const setServicos = useServiceStore((state) => state.setServicos);
 
-  const enableFetch = useMemo(() => prestadorId !== "" && !isInsertOpened, [prestadorId, isInsertOpened]);
+  const enableFetch = useMemo(() => !isInsertOpened, [isInsertOpened]);
 
   const {
     data: prestacaoData,
@@ -34,7 +32,7 @@ const Board = () => {
     refetch,
   } = useQuery({
     queryKey: ["prestacaoServico"],
-    queryFn: () => getByPrestador(prestadorId),
+    queryFn: () => getByPrestador(),
     onSuccess: (resp) => {
       setServicos(resp);
     },

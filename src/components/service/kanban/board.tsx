@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
@@ -16,9 +16,8 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 
 const Board = () => {
   const queryClient = useQueryClient();
-  const { isInsertOpened, setPrestacaoEdit, updateQuery } = useIncludeServiceStore(
+  const { setPrestacaoEdit, updateQuery } = useIncludeServiceStore(
     (state) => ({
-      isInsertOpened: state.isIncludeOpened || state.isUpdateOpened,
       updateQuery: state.updateQuery,
       setPrestacaoEdit: state.setPrestacao,
     })

@@ -1,11 +1,12 @@
 import { useMemo } from "react";
 
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
-import List from "./list";
 import Badge from "./badge";
 import Buttons from "./buttons";
 import { ChangeStatus } from "../../../types/changeStatusRequest";
 import { EPrestacaoServicoStatus } from "../../../domain/ePrestacaoServicoStatus";
+import ListServicos from "./listServicos";
+import ListProdutos from "./listProdutos";
 
 type CardProps = {
   prestacao: PrestacaoServico;
@@ -97,7 +98,13 @@ const Card = ({ prestacao, changeStatusCallback, editCallback }: CardProps) => {
         </p>
       </div>
       <div className="block">
-        <List servicos={prestacao.servicos} />
+        <h4 className="text-gray-700 dark:text-gray-400 font-bold">Serviços</h4>
+        <ListServicos servicos={prestacao.servicos} />
+      </div>
+      
+      <div className="block mt-2">
+        <h4 className="text-gray-700 dark:text-gray-400 font-bold">Produtos</h4>
+        <ListProdutos produtos={prestacao.produtos} />
       </div>
       {changeStatusCallback ? (
         <div className="flex flex-wrap mt-4 gap-1">

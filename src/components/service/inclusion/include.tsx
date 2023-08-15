@@ -43,7 +43,7 @@ const Include = () => {
   return (
     <>
       <div
-        id="drawer-create-product-default"
+        id="drawer-update-product-default"
         className={classNames(
           "fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-full max-w-4xl dark:bg-gray-800",
           isOpened ? "transform-none" : "translate-x-full"

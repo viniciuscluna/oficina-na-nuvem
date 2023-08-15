@@ -1,31 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import classNames from "classnames";
 
-import { Servico } from "../../../domain/servico";
+import { Produto } from "../../../domain/produto";
 
 type ListProps = {
-  servicos: Servico[];
+  produtos: Produto[];
 };
 
-interface ServicoList extends Servico {
+interface ProdutoList extends Produto {
   isOpened: boolean;
 }
 
-const List = ({ servicos }: ListProps) => {
-  const [servicosList, setServicosList] = useState<ServicoList[]>(
-    servicos as ServicoList[]
+const ListProdutos = ({ produtos }: ListProps) => {
+  const [produtosList, setProdutosList] = useState<ProdutoList[]>(
+    produtos as ProdutoList[]
   );
 
   useEffect(
-    () => setServicosList(servicos as ServicoList[]),
-    [servicos, setServicosList]
+    () => setProdutosList(produtos as ProdutoList[]),
+    [produtos, setProdutosList]
   );
 
   const openMenu = (index: number) => {
-    const list = [...servicosList];
+    const list = [...produtosList];
     list[index].isOpened = !list[index].isOpened;
-    setServicosList(list);
+    setProdutosList(list);
   };
 
   return (
@@ -35,8 +35,8 @@ const List = ({ servicos }: ListProps) => {
       data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
       data-inactive-classes="text-gray-500 dark:text-gray-400"
     >
-      {servicosList.map((servico, index) => {
-        const isOpened = servico.isOpened;
+      {produtosList.map((produto, index) => {
+        const isOpened = produto.isOpened;
         return (
           <div key={index}>
             <h3>
@@ -52,8 +52,7 @@ const List = ({ servicos }: ListProps) => {
                 onClick={() => openMenu(index)}
               >
                 <span>
-                  {servico.subServico?.categoria.titulo} -{" "}
-                  {servico.subServico?.titulo}
+                  {produto.marca} - {produto.modelo} - {produto.valor_Venda}
                 </span>
                 <svg
                   data-accordion-icon
@@ -79,16 +78,13 @@ const List = ({ servicos }: ListProps) => {
             <div className={isOpened ? "" : "hidden"}>
               <div className="py-5 border-b border-gray-200 dark:border-gray-700">
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Serviço executado: </strong> {servico.nome}
+                  <strong>Valor Compra: </strong> {produto.valor_Compra}
                 </p>
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Valor R$: </strong> {servico.valor}
+                  <strong>Nome: </strong> {produto.nome}
                 </p>
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Sobre o que se refere: </strong> {servico.subServico?.desc}
-                </p>
-                <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Sobre o tipo de serviço que se refere: </strong> {servico.subServico?.categoria.desc}
+                  <strong>Garantia: </strong> {produto.garantia}
                 </p>
               </div>
             </div>
@@ -99,4 +95,4 @@ const List = ({ servicos }: ListProps) => {
   );
 };
 
-export default List;
+export default ListProdutos;

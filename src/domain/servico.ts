@@ -6,5 +6,5 @@ export interface Servico extends Base{
     descricao: string;
     valor: number;
     subServicoId: string;
-    subServico?: SubServico;
+    subCategoriaServico?: SubServico;
 }

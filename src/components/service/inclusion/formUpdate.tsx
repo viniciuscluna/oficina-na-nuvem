@@ -11,6 +11,8 @@ import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 import { useEffect } from "react";
 import ServicoForm from "./servicoForm";
 import SelectFilter from "../../selectFilter";
+import ProdutoForm from "./produtoForm";
+import { Produto } from "../../../domain/produto";
 
 type FormUpdateProps = {
   veiculos: Veiculo[];
@@ -48,6 +50,15 @@ const FormUpdate = ({
     name: "servicos",
   });
 
+  const {
+    fields: produtos,
+    append: appendProduto,
+    remove: removeProduto,
+  } = useFieldArray<PrestacaoServico>({
+    control,
+    name: "produtos",
+  });
+
   const showClienteForm = watch("clienteId") === "other";
   const showVeiculoForm = watch("veiculoId") === "other";
 
@@ -67,6 +78,15 @@ const FormUpdate = ({
 
   const addServico = () => {
     appendServico({ descricao: "", valor: 0, subServicoId: "" });
+  };
+
+  const addProduto = () => {
+    appendProduto({
+      nome: "",
+      marca: "",
+      valor_Compra: 0,
+      valor_Venda: 0,
+    } as Produto);
   };
 
   const submit = (form: PrestacaoServico) => {
@@ -156,6 +176,29 @@ const FormUpdate = ({
               className="px-3 py-2 my-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Adicionar Serviço
+            </button>
+          </div>
+
+          <div>
+            <label
+              htmlFor="produtos"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Produtos
+            </label>
+            <div className="flex gap-2 flex-col">
+              <ProdutoForm
+                removeServicoCallback={removeProduto}
+                register={register}
+                produtos={produtos}
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => addProduto()}
+              className="px-3 py-2 my-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Adicionar Produto
             </button>
           </div>
         </div>

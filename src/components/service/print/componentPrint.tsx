@@ -23,7 +23,7 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
     const totalProduto = useMemo(
       () =>
         prestacao?.produtos?.reduce(
-          (accumulator, currentValue) => accumulator + currentValue.valor_venda,
+          (accumulator, currentValue) => accumulator + currentValue.valor_Venda,
           0
         ) || 0,
       [prestacao.produtos]
@@ -101,9 +101,9 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
                   const descr =
                     servico.descricao +
                     "\n" +
-                    servico.subServico?.desc +
+                    servico.subCategoriaServico?.desc +
                     "\n" +
-                    servico.subServico?.categoria.titulo;
+                    servico.subCategoriaServico?.categoria.titulo;
                   return (
                     <tr key={index}>
                       <td className="whitespace-pre-line">{descr}</td>
@@ -138,7 +138,7 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
                     const arr = produtoAgrupado[produto];
                     const first = arr[0];
                     const total = arr.reduce(
-                      (accumulator, currentValue) => accumulator + currentValue.valor_venda,
+                      (accumulator, currentValue) => accumulator + currentValue.valor_Venda,
                       0
                     ) || 0
                     return (
@@ -146,7 +146,7 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
                         <td>{arr.length}</td>
                         <td>{first.tipoMedidaItem.toString()}</td>
                         <td>{first.marca} - {first.modelo}</td>
-                        <td>{first.valor_venda}</td>
+                        <td>{first.valor_Venda}</td>
                         <td>{total}</td>
                       </tr>
                     );

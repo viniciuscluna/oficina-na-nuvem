@@ -79,8 +79,8 @@ const FormInclude = ({
     appendProduto({
       nome: "",
       marca: "",
-      valor_compra: 0,
-      valor_venda: 0,
+      valor_Compra: 0,
+      valor_Venda: 0,
     } as Produto);
   };
 

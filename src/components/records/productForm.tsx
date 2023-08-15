@@ -66,29 +66,29 @@ const ProdutoForm = ({
       </div>
       <div className="mb-6">
         <label
-          htmlFor="valor_compra"
+          htmlFor="valor_Compra"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Valor Compra
         </label>
         <input
           type="number"
-          id="valor_compra"
-          {...register("valor_compra")}
+          id="valor_Compra"
+          {...register("valor_Compra")}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
       <div className="mb-6">
         <label
-          htmlFor="valor_venda"
+          htmlFor="valor_Venda"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Valor Venda
         </label>
         <input
           type="number"
-          id="valor_venda"
-          {...register("valor_venda")}
+          id="valor_Venda"
+          {...register("valor_Venda")}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>

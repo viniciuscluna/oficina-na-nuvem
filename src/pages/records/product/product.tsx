@@ -63,8 +63,8 @@ const Product = () => {
                   </th>
                   <td className="px-6 py-4">{produto.marca}</td>
                   <td className="px-6 py-4">{produto.modelo}</td>
-                  <td className="px-6 py-4">{produto.valor_venda}</td>
-                  <td className="px-6 py-4">{produto.valor_compra}</td>
+                  <td className="px-6 py-4">{produto.valor_Venda}</td>
+                  <td className="px-6 py-4">{produto.valor_Compra}</td>
                   <td className="px-6 py-4">
                     <NavLink title="Editar" to={`edit/${produto.id}`}>
                       <svg

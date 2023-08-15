@@ -7,8 +7,8 @@ export interface Produto extends Base {
     modelo?: string;
     data_validade?: Date;
     garantia?: string;
-    valor_compra: number;
-    valor_venda: number;
+    valor_Compra: number;
+    valor_Venda: number;
     qtd: number;
     prestadorId: string;
     prestacaoServicoId?: string;

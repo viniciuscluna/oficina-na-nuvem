@@ -32,10 +32,17 @@ export const edit = async (
     .data;
 };
 
-export const getAllByPrestador = async (): Promise<PrestacaoServico[]> =>
+export const getAllInProgress = async (): Promise<PrestacaoServico[]> =>
   (
     await instanceApi.get(
-      `/prestacaoServico/PrestacaoServicoEnriquecidoPrestador`
+      `/prestacaoServico/PrestacaoServicoAbertoPrestador`
+    )
+  ).data;
+
+  export const getAllInDone = async (): Promise<PrestacaoServico[]> =>
+  (
+    await instanceApi.get(
+      `/prestacaoServico/PrestacaoServicoFechadosPrestador`
     )
   ).data;
 

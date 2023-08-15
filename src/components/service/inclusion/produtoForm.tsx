@@ -102,13 +102,31 @@ const ProdutoForm = ({
               type="number"
               id="small-input"
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`produtos.${index}.quantidade`)}
+              {...register(`produtos.${index}.qtd`)}
             ></input>
+          </div>
+          <div className="mb-6">
+            <label
+              htmlFor="tipoMedida"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Tipo Medida
+            </label>
+            <select
+              id="tipoMedida"
+              {...register(`produtos.${index}.tipoMedidaItem`, {
+                valueAsNumber: true,
+              })}
+              className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="0">Litro</option>
+              <option value="1">Peça</option>
+            </select>
           </div>
           <button
             type="button"
             onClick={() => removeServicoCallback(index)}
-            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="px-3 py-1 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Remover
           </button>

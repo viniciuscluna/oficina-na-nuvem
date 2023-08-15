@@ -1,9 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   changeStatus,
-  getAllByPrestador as getByPrestador,
+  getAllInProgress,
 } from "../../../services/prestacaoServicoService";
 
 import Card from "./card";
@@ -16,43 +16,40 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 
 const Board = () => {
   const queryClient = useQueryClient();
-  const { isInsertOpened, setPrestacaoEdit } = useIncludeServiceStore(
+  const { isInsertOpened, setPrestacaoEdit, updateQuery } = useIncludeServiceStore(
     (state) => ({
       isInsertOpened: state.isIncludeOpened || state.isUpdateOpened,
+      updateQuery: state.updateQuery,
       setPrestacaoEdit: state.setPrestacao,
     })
   );
   const setServicos = useServiceStore((state) => state.setServicos);
-
-  const enableFetch = useMemo(() => !isInsertOpened, [isInsertOpened]);
 
   const {
     data: prestacaoData,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["prestacaoServico"],
-    queryFn: () => getByPrestador(),
+    queryKey: ["getAllInProgressPrestador"],
+    queryFn: () => getAllInProgress(),
     onSuccess: (resp) => {
       setServicos(resp);
     },
-    enabled:  enableFetch,
-    refetchInterval: 10000,
   });
 
   useEffect(() => {
-    if(enableFetch){
-      queryClient.invalidateQueries({ queryKey: ["prestador"]});
-      queryClient.invalidateQueries({ queryKey: ["cliente"]});
-      queryClient.invalidateQueries({ queryKey: ["veiculo"]});
+    if (updateQuery) {
+      queryClient.invalidateQueries({ queryKey: ["prestador"] });
+      queryClient.invalidateQueries({ queryKey: ["cliente"] });
+      queryClient.invalidateQueries({ queryKey: ["veiculo"] });
+      refetch();
     }
-  }, [enableFetch, queryClient]);
+  }, [updateQuery, queryClient, refetch]);
 
   const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } =
     useMutation({
-      mutationKey: ["cardButtons"],
       mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status),
-      onSuccess: () => refetch()
+      onSuccess: () => refetch(),
     });
 
   const abertaAnalise = useMemo(

@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useServiceStore } from "../../stores/servicosStore";
 import { EPrestacaoServicoStatus } from "../../domain/ePrestacaoServicoStatus";
-import { getAllByPrestador as getByPrestador } from "../../services/prestacaoServicoService";
+import { getAllInDone } from "../../services/prestacaoServicoService";
 import Card from "../../components/service/kanban/card";
 import Loader from "../../components/loader";
 import SubTitle from "../../components/subTitle";
@@ -16,7 +16,7 @@ const Reports = () => {
 
   const { data: prestacaoData, isLoading, refetch } = useQuery({
     queryKey: ["prestacaoServico"],
-    queryFn: () => getByPrestador(),
+    queryFn: () => getAllInDone(),
     onSuccess: (resp) => {
       setServicos(resp);
     },

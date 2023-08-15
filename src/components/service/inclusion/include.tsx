@@ -7,7 +7,6 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import { Cliente } from "../../../domain/cliente";
 import { Marca } from "../../../domain/fipe/marca";
 import { Veiculo } from "../../../domain/veiculo";
-import { Prestador } from "../../../domain/prestador";
 import { SubServico } from "../../../domain/subServico";
 
 import { add as addPrestacaoServico } from "../../../services/prestacaoServicoService";
@@ -17,15 +16,15 @@ import Loader from "../../loader";
 
 const Include = () => {
   const queryClient = useQueryClient();
-  const { changeIsOpened, isOpened } = useIncludeServiceStore((state) => ({
+  const { changeIsOpened, isOpened, setUpdateQuery } = useIncludeServiceStore((state) => ({
     changeIsOpened: state.changeIsIncludeOpened,
+    setUpdateQuery: state.setUpdateQuery,
     isOpened: state.isIncludeOpened,
   }));
 
   const clientes = queryClient.getQueryData<Cliente[]>(["cliente"]) || [];
   const marcas = queryClient.getQueryData<Marca[]>(["veiculoMarcas"]) || [];
   const veiculos = queryClient.getQueryData<Veiculo[]>(["veiculo"]) || [];
-  const prestadores = queryClient.getQueryData<Prestador[]>(["prestador"]) || [];
   const subServicos = queryClient.getQueryData<SubServico[]>(["subServico"]) || [];
 
 
@@ -34,6 +33,7 @@ const Include = () => {
     mutationFn: addPrestacaoServico,
     onSuccess: () => {
       changeIsOpened();
+      setUpdateQuery(true);
     },
   });
 
@@ -86,7 +86,6 @@ const Include = () => {
         ) : (
           <FormInclude
             clientes={clientes}
-            prestadores={prestadores}
             veiculos={veiculos}
             subServicos={subServicos}
             marcas={marcas}

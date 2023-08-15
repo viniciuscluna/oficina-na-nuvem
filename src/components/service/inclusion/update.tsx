@@ -7,7 +7,6 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import { Cliente } from "../../../domain/cliente";
 import { Marca } from "../../../domain/fipe/marca";
 import { Veiculo } from "../../../domain/veiculo";
-import { Prestador } from "../../../domain/prestador";
 import { SubServico } from "../../../domain/subServico";
 
 import { edit as editPrestacaoServico } from "../../../services/prestacaoServicoService";
@@ -18,9 +17,10 @@ import Loader from "../../loader";
 
 const Update = () => {
   const queryClient = useQueryClient();
-  const { changeIsOpened, isOpened, prestacaoServico } = useIncludeServiceStore(
+  const { changeIsOpened, isOpened, prestacaoServico, setUpdateQuery } = useIncludeServiceStore(
     (state) => ({
       changeIsOpened: state.changeIsUpdateOpened,
+      setUpdateQuery: state.setUpdateQuery,
       isOpened: state.isUpdateOpened,
       prestacaoServico: state.prestacaoServico,
     })
@@ -29,7 +29,6 @@ const Update = () => {
   const clientes = queryClient.getQueryData<Cliente[]>(["cliente"]) || [];
   const marcas = queryClient.getQueryData<Marca[]>(["veiculoMarcas"]) || [];
   const veiculos = queryClient.getQueryData<Veiculo[]>(["veiculo"]) || [];
-  const prestadores = queryClient.getQueryData<Prestador[]>(["prestador"]) || [];
   const subServicos = queryClient.getQueryData<SubServico[]>(["subServico"]) || [];
 
   const editPrestacaoServicoMut = useMutation({
@@ -37,6 +36,7 @@ const Update = () => {
     mutationFn: editPrestacaoServico,
     onSuccess: () => {
       changeIsOpened();
+      setUpdateQuery(true);
     },
   });
 
@@ -89,7 +89,6 @@ const Update = () => {
         ) : (
           <FormUpdate
             clientes={clientes}
-            prestadores={prestadores}
             veiculos={veiculos}
             subServicos={subServicos}
             marcas={marcas}

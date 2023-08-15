@@ -1,7 +1,8 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import { Outlet } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useLocalStorage } from "usehooks-ts";
 
 import Sidebar from "../components/sidebar";
 import Footer from "../components/footer";
@@ -11,8 +12,10 @@ import { getAll as getAllSubServico } from "../services/subServicoService";
 import { getAll as getAllCliente } from "../services/clienteService";
 import { getAll as getVeiculo } from "../services/veiculoService";
 import { getMarcas } from "../services/fipeService";
+import { STORAGE_KEY } from "../constants/key";
 
 const Logged = () => {
+  const [, setLocalStorage] = useLocalStorage<string>(STORAGE_KEY, "");
   const subServicoResult = useQuery({
     queryKey: ["subServico"],
     queryFn: getAllSubServico,
@@ -32,6 +35,12 @@ const Logged = () => {
     queryKey: ["veiculoMarcas"],
     queryFn: getMarcas,
   });
+
+  useEffect(() => {
+    if (subServicoResult.isError) {
+      setLocalStorage("");
+    }
+  }, [subServicoResult.isError, setLocalStorage]);
 
   const isLoading = useMemo(
     () =>

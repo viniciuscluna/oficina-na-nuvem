@@ -4,6 +4,7 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 
 import "./componentPrint.scss";
 import { Produto } from "../../../domain/produto";
+import { ETipoMedidaItem } from "../../../domain/ETipoMedidaItem";
 
 type ComponentPrintProp = {
   prestacao: PrestacaoServico;
@@ -68,18 +69,27 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
               </th>
               <tr>
                 <td>CLIENTE: {prestacao.cliente?.nome}</td>
-                <td>INICIO DO SERVIÇO: {new Date(prestacao.dataCadastro || '')?.toLocaleDateString('en-GB')}</td>
+                <td>
+                  INICIO DO SERVIÇO:{" "}
+                  {new Date(prestacao.dataCadastro || "")?.toLocaleDateString(
+                    "en-GB"
+                  )}
+                </td>
               </tr>
               <tr>
                 <td>VEICULO: {prestacao?.veiculo?.marca}</td>
-                <td>TÉRMINO DO SERVIÇO:</td>
+                <td>TÉRMINO DO SERVIÇO:{" "}
+                {prestacao.dataConclusaoServico? new Date(prestacao.dataConclusaoServico || "")?.toLocaleDateString(
+                    "en-GB"
+                  ) : ''}
+                </td>
               </tr>
               <tr>
                 <td>
                   MODELO: {prestacao?.veiculo?.modelo} -{" "}
                   {prestacao?.veiculo?.ano}
                 </td>
-                <td>KM: -</td>
+                <td>KM: {prestacao.veiculo?.km || "-"}</td>
               </tr>
               <tr>
                 <td>PLACA: {prestacao.veiculo?.placa}</td>
@@ -137,15 +147,23 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
                   {Object.keys(produtoAgrupado).map((produto, index) => {
                     const arr = produtoAgrupado[produto];
                     const first = arr[0];
-                    const total = arr.reduce(
-                      (accumulator, currentValue) => accumulator + currentValue.valor_Venda,
-                      0
-                    ) || 0
+                    const total =
+                      arr.reduce(
+                        (accumulator, currentValue) =>
+                          accumulator + currentValue.valor_Venda,
+                        0
+                      ) || 0;
                     return (
                       <tr key={index}>
                         <td>{arr.length}</td>
-                        <td>{first.tipoMedidaItem.toString()}</td>
-                        <td>{first.marca} - {first.modelo}</td>
+                        <td>
+                          {first.tipoMedidaItem === ETipoMedidaItem.Litro
+                            ? "Litro"
+                            : "Peça"}
+                        </td>
+                        <td>
+                          {first.marca} - {first.modelo}
+                        </td>
                         <td>{first.valor_Venda}</td>
                         <td>{total}</td>
                       </tr>

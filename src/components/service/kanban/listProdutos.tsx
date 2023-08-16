@@ -7,20 +7,36 @@ import { Produto } from "../../../domain/produto";
 type ListProps = {
   produtos: Produto[];
 };
-
-interface ProdutoList extends Produto {
+interface GroupedProduct {
+  products: Produto[];
   isOpened: boolean;
+  key: string;
 }
 
 const ListProdutos = ({ produtos }: ListProps) => {
-  const [produtosList, setProdutosList] = useState<ProdutoList[]>(
-    produtos as ProdutoList[]
-  );
+  const [produtosList, setProdutosList] = useState<GroupedProduct[]>([]);
 
-  useEffect(
-    () => setProdutosList(produtos as ProdutoList[]),
-    [produtos, setProdutosList]
-  );
+  useEffect(() => {
+    const produtoAgrupado =
+      (produtos &&
+        produtos.reduce(
+          (g: { [id: string]: Produto[] }, o: Produto) => {
+            g[o.modelo || ""] = g[o.modelo || ""] || []; //check if key allready exists, else init a new array
+            g[o.modelo || ""].push(o); //add item to array
+            return g; // be sure to return, or g will be undefined in next loop
+          },
+          {} //a second parameter to the reduce function, important to init the returned object
+        )) ||
+      [];
+
+    const list = Object.keys(produtoAgrupado).map((x) => ({
+      key: x,
+      isOpened: false,
+      products: produtoAgrupado[x],
+    })) as GroupedProduct[];
+
+    setProdutosList(list);
+  }, [produtos, setProdutosList]);
 
   const openMenu = (index: number) => {
     const list = [...produtosList];
@@ -37,6 +53,12 @@ const ListProdutos = ({ produtos }: ListProps) => {
     >
       {produtosList.map((produto, index) => {
         const isOpened = produto.isOpened;
+        const first = produto.products[0];
+        const total = produto.products.reduce(
+          (accumulator, object) => accumulator + object.valor_Venda,
+          0
+        );
+
         return (
           <div key={index}>
             <h3>
@@ -44,15 +66,13 @@ const ListProdutos = ({ produtos }: ListProps) => {
                 type="button"
                 className={classNames(
                   "flex items-center justify-between w-full font-medium text-left py-1 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400",
-                  isOpened
-                    ? "text-gray-900"
-                    : "text-gray-500"
+                  isOpened ? "text-gray-900" : "text-gray-500"
                 )}
                 aria-expanded={isOpened}
                 onClick={() => openMenu(index)}
               >
                 <span>
-                  {produto.marca} - {produto.modelo} - {produto.valor_Venda}
+                  {first.marca} - {first.modelo} - Total {total} (Qtd: {produto.products.length})
                 </span>
                 <svg
                   data-accordion-icon
@@ -78,13 +98,13 @@ const ListProdutos = ({ produtos }: ListProps) => {
             <div className={isOpened ? "" : "hidden"}>
               <div className="py-5 border-b border-gray-200 dark:border-gray-700">
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Valor Compra: </strong> {produto.valor_Compra}
+                  <strong>Valor de compra: (unitário) </strong> {first.valor_Compra}
                 </p>
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Nome: </strong> {produto.nome}
+                  <strong>Nome: </strong> {first.nome}
                 </p>
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Garantia: </strong> {produto.garantia}
+                  <strong>Garantia: </strong> {first.garantia}
                 </p>
               </div>
             </div>

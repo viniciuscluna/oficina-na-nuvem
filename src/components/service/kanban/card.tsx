@@ -20,8 +20,12 @@ const Card = ({ prestacao, changeStatusCallback, editCallback }: CardProps) => {
       prestacao.servicos?.reduce(
         (accumulator, object) => accumulator + object.valor,
         0
+      ) +
+      prestacao.produtos?.reduce(
+        (accumulator, object) => accumulator + object.valor_Venda,
+        0
       ),
-    [prestacao.servicos]
+    [prestacao.servicos, prestacao.produtos]
   );
 
   const canEdit = useMemo(
@@ -101,7 +105,7 @@ const Card = ({ prestacao, changeStatusCallback, editCallback }: CardProps) => {
         <h4 className="text-gray-700 dark:text-gray-400 font-bold">Serviços</h4>
         <ListServicos servicos={prestacao.servicos} />
       </div>
-      
+
       <div className="block mt-2">
         <h4 className="text-gray-700 dark:text-gray-400 font-bold">Produtos</h4>
         <ListProdutos produtos={prestacao.produtos} />

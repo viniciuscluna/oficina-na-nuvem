@@ -10,6 +10,7 @@ import { Veiculo } from "./veiculo";
 export interface PrestacaoServico extends Base {
     referencia: string;
     status: EPrestacaoServicoStatus;
+    dataConclusaoServico: Date;
     prestador?: Prestador;
     prestadorId?: string;
     cliente?: Cliente;

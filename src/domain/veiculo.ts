@@ -8,6 +8,7 @@ export interface Veiculo extends Base {
     chassi?: string;
     ano?: number;
     anoSelect?: string;
+    km?: string;
     tipoCombustivel?: string;
     tipo: EveiculoTipo;
 }

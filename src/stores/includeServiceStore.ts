@@ -23,5 +23,5 @@ export const useIncludeServiceStore = create<IncludeServiceProps>((set) => ({
     set({ prestacaoServico: prestacao, isUpdateOpened: true }),
   changeIsIncludeOpened: () => set((state) => ({ isIncludeOpened: !state.isIncludeOpened })),
   changeIsUpdateOpened: () => set((state) => ({ isUpdateOpened: !state.isUpdateOpened })),
-  setUpdateQuery: () => set((state) => ({ updateQuery: state.updateQuery })),
+  setUpdateQuery: (updateQuery: boolean) => set(({ updateQuery: updateQuery })),
 }));

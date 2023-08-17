@@ -5,17 +5,30 @@ import Loader from "../../../components/loader";
 import { add } from "../../../services/categoriaService";
 import { CategoriaServico } from "../../../domain/categoriaServico";
 import CategoryForm from "../../../components/records/categoryForm";
+import { useNotificationStore } from "../../../stores/notificationStore";
 
 const AddCategory = () => {
   const backPage = "/logged/records/category";
   const navigate = useNavigate();
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
 
   const categoriaResult = useMutation({
-    mutationKey: ["addCategoria"],
     mutationFn: add,
     onSuccess: () => {
       navigate(backPage);
+      addNotification({
+        message: "Categoria inserida!",
+        type: "success",
+      });
     },
+    onError: () => {
+      addNotification({
+        message: "Erro ao inserir categoria.",
+        type: "error"
+      })
+    }
   });
 
   const onSubmit = (subServico: CategoriaServico) => {

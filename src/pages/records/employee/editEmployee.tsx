@@ -8,17 +8,31 @@ import { getId, edit } from "../../../services/prestadorService";
 import { PathCrudProps } from "../../../types/pathCrudProps";
 import EmployeeForm from "../../../components/records/employeeForm";
 import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
+import { useNotificationStore } from "../../../stores/notificationStore";
 
 const EditEmployee = () => {
   const params = useParams<PathCrudProps>();
   const backPage = "/logged/records/employee";
   const navigate = useNavigate();
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
 
   const editEmployeeResult = useMutation({
     mutationFn: edit,
     onSuccess: () => {
       navigate(backPage);
+      addNotification({
+        message: "Funcionário atualizado!",
+        type: "success",
+      });
     },
+    onError: () => {
+      addNotification({
+        message: "Erro ao atualizar funcionário.",
+        type: "error"
+      })
+    }
   });
 
   const employeeResult = useQuery({

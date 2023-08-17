@@ -5,16 +5,30 @@ import Loader from "../../../components/loader";
 import { add } from "../../../services/prestadorService";
 import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
 import EmployeeForm from "../../../components/records/employeeForm";
+import { useNotificationStore } from "../../../stores/notificationStore";
 
 const AddEmployee = () => {
   const backPage = "/logged/records/employee";
   const navigate = useNavigate();
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
 
   const funcionarioResult = useMutation({
     mutationFn: add,
     onSuccess: () => {
       navigate(backPage);
+      addNotification({
+        message: "Funcionário inserido!",
+        type: "success",
+      });
     },
+    onError: () => {
+      addNotification({
+        message: "Erro ao inserir funcionário.",
+        type: "error"
+      })
+    }
   });
 
   const onSubmit = (funcionario: FuncionarioPrestador) => {

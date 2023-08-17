@@ -9,12 +9,18 @@ import { SubServico } from "../../../domain/subServico";
 import { edit, getId } from "../../../services/subServicoService";
 import SubServiceForm from "../../../components/records/subServiceForm";
 import { PathCrudProps } from "../../../types/pathCrudProps";
+import { useNotificationStore } from "../../../stores/notificationStore";
 
 const EditSubService = () => {
   const params = useParams<PathCrudProps>();
 
   const backPage = "/logged/records/subService";
   const navigate = useNavigate();
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
+  
+
 
   const categoriaResult = useQuery({
     queryKey: ["categoria"],
@@ -27,11 +33,20 @@ const EditSubService = () => {
   });
 
   const editSubServicoResult = useMutation({
-    mutationKey: ["editSubServico"],
     mutationFn: edit,
     onSuccess: () => {
       navigate(backPage);
+      addNotification({
+        message: "Subserviço atualizado!",
+        type: "success",
+      });
     },
+    onError: () => {
+      addNotification({
+        message: "Erro ao atualizar Subserviço.",
+        type: "error"
+      })
+    }
   });
 
   const onSubmit = (subServico: SubServico) => {

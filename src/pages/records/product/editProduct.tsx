@@ -8,18 +8,31 @@ import { getId, edit } from "../../../services/produtoService";
 import { Produto } from "../../../domain/produto";
 import ProductForm from "../../../components/records/productForm";
 import { PathCrudProps } from "../../../types/pathCrudProps";
+import { useNotificationStore } from "../../../stores/notificationStore";
 
 const EditProduct = () => {
   const params = useParams<PathCrudProps>();
   const backPage = "/logged/records/product";
   const navigate = useNavigate();
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
 
   const editProdutoResult = useMutation({
-    mutationKey: ["editProduto"],
     mutationFn: edit,
     onSuccess: () => {
       navigate(backPage);
+      addNotification({
+        message: "Produto atualizado!",
+        type: "success",
+      });
     },
+    onError: () => {
+      addNotification({
+        message: "Erro ao atualizar produto.",
+        type: "error"
+      })
+    }
   });
 
   const produtoResult = useQuery({

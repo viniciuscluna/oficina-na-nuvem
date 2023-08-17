@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import classNames from "classnames";
 
 import { Servico } from "../../../domain/servico";
+import { currencyFormat } from "../../../utils/currencyFormater";
 
 type ListProps = {
   servicos: Servico[];
@@ -44,9 +45,7 @@ const ListServicos = ({ servicos }: ListProps) => {
                 type="button"
                 className={classNames(
                   "flex items-center justify-between w-full font-medium text-left py-1 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400",
-                  isOpened
-                    ? "text-gray-900"
-                    : "text-gray-500"
+                  isOpened ? "text-gray-900" : "text-gray-500"
                 )}
                 aria-expanded={isOpened}
                 onClick={() => openMenu(index)}
@@ -82,13 +81,15 @@ const ListServicos = ({ servicos }: ListProps) => {
                   <strong>Serviço executado: </strong> {servico.descricao}
                 </p>
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Valor R$: </strong> {servico.valor}
+                  <strong>Valor {currencyFormat(servico.valor)}</strong>
                 </p>
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Sobre o que se refere: </strong> {servico.subCategoriaServico?.desc}
+                  <strong>Sobre o que se refere: </strong>{" "}
+                  {servico.subCategoriaServico?.desc}
                 </p>
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Sobre o tipo de serviço que se refere: </strong> {servico.subCategoriaServico?.categoria.desc}
+                  <strong>Sobre o tipo de serviço que se refere: </strong>{" "}
+                  {servico.subCategoriaServico?.categoria.desc}
                 </p>
               </div>
             </div>

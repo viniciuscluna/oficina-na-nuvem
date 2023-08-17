@@ -1,8 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 import classNames from "classnames";
 
 import { Produto } from "../../../domain/produto";
+import { currencyFormat } from "../../../utils/currencyFormater";
 
 type ListProps = {
   produtos: Produto[];
@@ -44,6 +45,7 @@ const ListProdutos = ({ produtos }: ListProps) => {
     setProdutosList(list);
   };
 
+
   return (
     <div
       id="accordion-flush"
@@ -72,7 +74,7 @@ const ListProdutos = ({ produtos }: ListProps) => {
                 onClick={() => openMenu(index)}
               >
                 <span>
-                  {first.marca} - {first.modelo} - Total {total} (Qtd: {produto.products.length})
+                  {first.marca} - {first.modelo} - Total {currencyFormat(total)} (Qtd: {produto.products.length})
                 </span>
                 <svg
                   data-accordion-icon
@@ -98,7 +100,7 @@ const ListProdutos = ({ produtos }: ListProps) => {
             <div className={isOpened ? "" : "hidden"}>
               <div className="py-5 border-b border-gray-200 dark:border-gray-700">
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
-                  <strong>Valor de compra: (unitário) </strong> {first.valor_Compra}
+                  <strong>Valor de compra: (unitário) </strong> {currencyFormat(first.valor_Compra)}
                 </p>
                 <p className="mb-2 text-gray-500 dark:text-gray-400">
                   <strong>Nome: </strong> {first.nome}

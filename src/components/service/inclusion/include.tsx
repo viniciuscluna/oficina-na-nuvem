@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler } from "react-hook-form";
 
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
+import { useNotificationStore } from "../../../stores/notificationStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import { Cliente } from "../../../domain/cliente";
 import { Marca } from "../../../domain/fipe/marca";
@@ -17,6 +18,7 @@ import Loader from "../../loader";
 
 const Include = () => {
   const queryClient = useQueryClient();
+  const addNotification = useNotificationStore(state => state.addNotification);
   const { changeIsOpened, isOpened, setUpdateQuery } = useIncludeServiceStore((state) => ({
     changeIsOpened: state.changeIsIncludeOpened,
     setUpdateQuery: state.setUpdateQuery,
@@ -31,12 +33,22 @@ const Include = () => {
 
 
   const addPrestacaoServicoMut = useMutation({
-    mutationKey: ["prestacaoServico"],
     mutationFn: addPrestacaoServico,
-    onSuccess: () => {
+    onSuccess: (data) => {
       changeIsOpened();
       setUpdateQuery(true);
+      addNotification({
+        message: `${data.referencia} inserida!`,
+        type: 'success'
+      });
     },
+    onError: () => {
+      changeIsOpened();
+      addNotification({
+        message: 'Erro ao inserir',
+        type: 'error'
+      });
+    }
   });
 
   const onSubmit: SubmitHandler<PrestacaoServico> = (data) =>

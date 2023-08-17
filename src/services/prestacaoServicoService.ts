@@ -1,18 +1,35 @@
 import { EPrestacaoServicoStatus } from "../domain/ePrestacaoServicoStatus";
 import { PrestacaoServico } from "../domain/prestacaoServico";
+import { onlyNumber } from "../utils/numberFormater";
 import { instanceApi } from "./axiosConfig";
 
-export const add = async (
-  form: PrestacaoServico
-): Promise<PrestacaoServico> => {
+const mapPrestacaoServico = (
+  prestacaoServico: PrestacaoServico
+): PrestacaoServico => {
   const other = "other";
 
-  if (form.clienteId === other) form.clienteId = undefined;
-  if (form.veiculoId === other) form.veiculoId = undefined;
+  if (prestacaoServico.clienteId === other) {
+    prestacaoServico.clienteId = undefined;
+    if (prestacaoServico.cliente) {
+      prestacaoServico.cliente.cpf = onlyNumber(prestacaoServico.cliente.cpf);
+      prestacaoServico.cliente.rg = onlyNumber(prestacaoServico.cliente.rg);
+      prestacaoServico.cliente.telefone = onlyNumber(prestacaoServico.cliente.telefone);
+    }
+  }
 
-  return (await instanceApi.post<PrestacaoServico>("/prestacaoServico", form))
-    .data;
+  if (prestacaoServico.veiculoId === other)
+    prestacaoServico.veiculoId = undefined;
+
+  return prestacaoServico;
 };
+
+export const add = async (form: PrestacaoServico): Promise<PrestacaoServico> =>
+  (
+    await instanceApi.post<PrestacaoServico>(
+      "/prestacaoServico",
+      mapPrestacaoServico(form)
+    )
+  ).data;
 
 export const getId = async (prestacaoId: string): Promise<PrestacaoServico> => {
   return (
@@ -20,31 +37,21 @@ export const getId = async (prestacaoId: string): Promise<PrestacaoServico> => {
   ).data;
 };
 
-export const edit = async (
-  form: PrestacaoServico
-): Promise<PrestacaoServico> => {
-  const other = "other";
-
-  if (form.clienteId === other) form.clienteId = undefined;
-  if (form.veiculoId === other) form.veiculoId = undefined;
-
-  return (await instanceApi.put<PrestacaoServico>("/prestacaoServico", form))
-    .data;
-};
+export const edit = async (form: PrestacaoServico): Promise<PrestacaoServico> =>
+  (
+    await instanceApi.put<PrestacaoServico>(
+      "/prestacaoServico",
+      mapPrestacaoServico(form)
+    )
+  ).data;
 
 export const getAllInProgress = async (): Promise<PrestacaoServico[]> =>
-  (
-    await instanceApi.get(
-      `/prestacaoServico/PrestacaoServicoAbertoPrestador`
-    )
-  ).data;
+  (await instanceApi.get(`/prestacaoServico/PrestacaoServicoAbertoPrestador`))
+    .data;
 
-  export const getAllInDone = async (): Promise<PrestacaoServico[]> =>
-  (
-    await instanceApi.get(
-      `/prestacaoServico/PrestacaoServicoFechadosPrestador`
-    )
-  ).data;
+export const getAllInDone = async (): Promise<PrestacaoServico[]> =>
+  (await instanceApi.get(`/prestacaoServico/PrestacaoServicoFechadosPrestador`))
+    .data;
 
 export const changeStatus = async (
   id: string,

@@ -59,8 +59,8 @@ const EmployeeForm = ({
           Email
         </label>
         <input
-          {...registerWithMask("email", 'email')}
-          type="email"
+          {...registerWithMask("email", "email")}
+          type="text"
           id="email"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
@@ -87,7 +87,7 @@ const EmployeeForm = ({
           CPF
         </label>
         <input
-          {...registerWithMask("cpf", 'cpf')}
+          {...registerWithMask("cpf", "cpf", { valueAsNumber: true })}
           type="text"
           id="cpf"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

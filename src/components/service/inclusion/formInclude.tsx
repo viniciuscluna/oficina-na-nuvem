@@ -4,7 +4,6 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 
 import { Cliente } from "../../../domain/cliente";
-import { Prestador } from "../../../domain/prestador";
 import { SubServico } from "../../../domain/subServico";
 import { Veiculo } from "../../../domain/veiculo";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";

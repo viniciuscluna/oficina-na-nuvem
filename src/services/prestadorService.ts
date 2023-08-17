@@ -1,4 +1,5 @@
 import { FuncionarioPrestador } from "../domain/funcionarioPrestador";
+import { onlyNumber } from "../utils/numberFormater";
 import { instanceApi } from "./axiosConfig";
 
 export const getAll = async (): Promise<FuncionarioPrestador[]> => {
@@ -7,21 +8,38 @@ export const getAll = async (): Promise<FuncionarioPrestador[]> => {
   ).data;
 };
 
+const mapFuncionario = (
+  funcionario: FuncionarioPrestador
+): FuncionarioPrestador => {
+  funcionario.cpf = onlyNumber(funcionario.cpf);
+  funcionario.rg = onlyNumber(funcionario.rg);
+  funcionario.telefone = onlyNumber(funcionario.telefone);
+
+  return funcionario;
+};
+
 export const add = async (
   funcionario: FuncionarioPrestador
-): Promise<FuncionarioPrestador> => {
-  return (
+): Promise<FuncionarioPrestador> =>
+  (
     await instanceApi.post<FuncionarioPrestador>(
       "/prestador/funcionario",
-      funcionario
+      mapFuncionario(funcionario)
     )
   ).data;
-};
 
-export const edit = async (funcionario: FuncionarioPrestador): Promise<FuncionarioPrestador> => {
-  return (await instanceApi.put<FuncionarioPrestador>("/prestador/funcionario", funcionario)).data;
-};
+export const edit = async (
+  funcionario: FuncionarioPrestador
+): Promise<FuncionarioPrestador> =>
+  (
+    await instanceApi.put<FuncionarioPrestador>(
+      "/prestador/funcionario",
+      mapFuncionario(funcionario)
+    )
+  ).data;
 
 export const getId = async (id: string): Promise<FuncionarioPrestador> => {
-  return (await instanceApi.get<FuncionarioPrestador>(`/prestador/funcionario/${id}`)).data;
+  return (
+    await instanceApi.get<FuncionarioPrestador>(`/prestador/funcionario/${id}`)
+  ).data;
 };

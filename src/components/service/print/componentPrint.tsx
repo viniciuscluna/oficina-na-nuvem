@@ -5,6 +5,7 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import "./componentPrint.scss";
 import { Produto } from "../../../domain/produto";
 import { ETipoMedidaItem } from "../../../domain/ETipoMedidaItem";
+import { currencyFormat } from "../../../utils/currencyFormater";
 
 type ComponentPrintProp = {
   prestacao: PrestacaoServico;
@@ -65,7 +66,7 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
           <div className="container">
             <table className="order-details">
               <th style={{ textAlign: "center" }} colSpan={2}>
-                <h4>{prestacao.prestador?.nome}</h4>
+                <h4>{prestacao.prestador?.nome} ({prestacao.referencia})</h4>
               </th>
               <tr>
                 <td>CLIENTE: {prestacao.cliente?.nome}</td>
@@ -117,14 +118,14 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
                   return (
                     <tr key={index}>
                       <td className="whitespace-pre-line">{descr}</td>
-                      <td>R$ {servico.valor}</td>
+                      <td>{currencyFormat(servico.valor)}</td>
                     </tr>
                   );
                 })}
 
                 <tr>
                   <td colSpan={2}>
-                    <strong>Total: {totalServico}</strong>
+                    <strong>Total: {currencyFormat(totalServico)}</strong>
                   </td>
                 </tr>
               </tbody>
@@ -164,15 +165,15 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
                         <td>
                           {first.marca} - {first.modelo}
                         </td>
-                        <td>{first.valor_Venda}</td>
-                        <td>{total}</td>
+                        <td>{currencyFormat(first.valor_Venda)}</td>
+                        <td>{currencyFormat(total)}</td>
                       </tr>
                     );
                   })}
 
                   <tr>
                     <td colSpan={5}>
-                      <strong>Total: {totalProduto}</strong>
+                      <strong>Total: {currencyFormat(totalProduto)}</strong>
                     </td>
                   </tr>
                 </tbody>
@@ -182,11 +183,15 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
             <br />
             <div className="details-total">
               <p style={{ paddingLeft: "1%" }}>
-                <strong>PEÇAS: {totalProduto}</strong>
+                <strong>PEÇAS: {currencyFormat(totalProduto)}</strong>
               </p>
               <hr />
               <p style={{ paddingLeft: "1%" }}>
-                <strong>SERVIÇOS: {totalServico}</strong>{" "}
+                <strong>SERVIÇOS: {currencyFormat(totalServico)}</strong>
+              </p>
+              <hr />
+              <p style={{ paddingLeft: "1%" }}>
+                <strong>TOTAL: {currencyFormat(totalProduto + totalServico)}</strong>
               </p>
               <hr />
               {/* <p style={{ paddingLeft: "1%" }}>

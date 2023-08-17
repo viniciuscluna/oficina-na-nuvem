@@ -14,6 +14,7 @@ import { getAll as getVeiculo } from "../services/veiculoService";
 import { getAll as getFuncionario } from "../services/prestadorService";
 import { getMarcas } from "../services/fipeService";
 import { STORAGE_KEY } from "../constants/key";
+import NotificationContainer from "../components/notificationContainer";
 
 const Logged = () => {
   const [, setLocalStorage] = useLocalStorage<string>(STORAGE_KEY, "");
@@ -72,6 +73,7 @@ const Logged = () => {
         <div className="flex flex-col grow">
           <Outlet />
         </div>
+        <NotificationContainer />
         <Footer />
       </section>
     </main>

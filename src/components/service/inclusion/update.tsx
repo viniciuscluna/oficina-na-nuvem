@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler } from "react-hook-form";
 
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
+import { useNotificationStore } from "../../../stores/notificationStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import { Cliente } from "../../../domain/cliente";
 import { Marca } from "../../../domain/fipe/marca";
@@ -18,6 +19,7 @@ import Loader from "../../loader";
 
 const Update = () => {
   const queryClient = useQueryClient();
+  const addNotification = useNotificationStore(state => state.addNotification);
   const { changeIsOpened, isOpened, prestacaoServico, setUpdateQuery } = useIncludeServiceStore(
     (state) => ({
       changeIsOpened: state.changeIsUpdateOpened,
@@ -34,12 +36,21 @@ const Update = () => {
   const funcionarios = queryClient.getQueryData<FuncionarioPrestador[]>(["funcionario"]) || [];
 
   const editPrestacaoServicoMut = useMutation({
-    mutationKey: ["prestacaoServico"],
     mutationFn: editPrestacaoServico,
-    onSuccess: () => {
+    onSuccess: (data) => {
       changeIsOpened();
       setUpdateQuery(true);
+      addNotification({
+        message: `${data.referencia} atualizada!`,
+        type: 'success'
+      });
     },
+    onError: () => {
+      addNotification({
+        message: 'Erro ao atualizar',
+        type: 'error'
+      });
+    }
   });
 
   const onEdit: SubmitHandler<PrestacaoServico> = (data) =>

@@ -16,7 +16,7 @@ const ProdutoForm = ({
   label,
   editMode,
 }: ProductFormProps) => {
-  const { register, handleSubmit, } = useForm<Produto>({
+  const { register, handleSubmit } = useForm<Produto>({
     defaultValues: defaultValues,
   });
 
@@ -101,7 +101,7 @@ const ProdutoForm = ({
         </label>
         <select
           id="tipoMedida"
-          {...register("tipoMedidaItem", { valueAsNumber: true})}
+          {...register("tipoMedidaItem", { valueAsNumber: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="0">Litro</option>
@@ -136,7 +136,7 @@ const ProdutoForm = ({
         <input
           type="date"
           id="data_validade"
-          {...register("data_validade")}
+          {...register("data_validade", { valueAsDate: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>

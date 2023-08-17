@@ -5,6 +5,7 @@ import Loader from "../../../components/loader";
 import { add } from "../../../services/produtoService";
 import { Produto } from "../../../domain/produto";
 import ProductForm from "../../../components/records/productForm";
+import { ETipoMedidaItem } from "../../../domain/ETipoMedidaItem";
 
 const AddProduct = () => {
   const backPage = "/logged/records/product";
@@ -33,6 +34,7 @@ const AddProduct = () => {
         <ProductForm
           backCallback={() => navigate(backPage)}
           submitCallback={onSubmit}
+          defaultValues={{ tipoMedidaItem: ETipoMedidaItem.Litro, qtd: 1 } as Produto}
           label="Adicionar"
           editMode={false}
         />

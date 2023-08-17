@@ -6,6 +6,8 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
+import { useHookFormMask } from "use-mask-input";
+
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import { useMutation } from "@tanstack/react-query";
 import { Marca } from "../../../domain/fipe/marca";
@@ -30,6 +32,7 @@ const VeiculoForm = ({
   watch,
   setValue,
 }: VeiculoFormProps) => {
+  const registerWithMask = useHookFormMask(register);
   const marca = watch("veiculo.marca");
   const marcaSelecionada = useMemo(
     () => marcas.find((f) => f.nome == marca)?.codigo,
@@ -152,7 +155,7 @@ const VeiculoForm = ({
         <input
           id="chassiVeiculo"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("veiculo.chassi")}
+          {...registerWithMask("veiculo.chassi", ['9AAAAAAAAA9999999'])}
         />{" "}
       </div>
       <div className="mt-2">
@@ -164,6 +167,7 @@ const VeiculoForm = ({
         </label>
         <input
           id="kmVeiculo"
+          type="number"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
           {...register("veiculo.km")}
         />{" "}
@@ -178,7 +182,7 @@ const VeiculoForm = ({
         <input
           id="placaVeiculo"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("veiculo.placa")}
+          {...registerWithMask("veiculo.placa", ["AAA-9[A|9]99"])}
         />{" "}
       </div>
       <div className="mt-2">

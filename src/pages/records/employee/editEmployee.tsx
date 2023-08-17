@@ -4,50 +4,49 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Loader from "../../../components/loader";
-import { getId, edit } from "../../../services/categoriaService";
-import { CategoriaServico } from "../../../domain/categoriaServico";
-import CategoryForm from "../../../components/records/categoryForm";
+import { getId, edit } from "../../../services/prestadorService";
 import { PathCrudProps } from "../../../types/pathCrudProps";
+import EmployeeForm from "../../../components/records/employeeForm";
+import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
 
-const EditCategory = () => {
+const EditEmployee = () => {
   const params = useParams<PathCrudProps>();
-  const backPage = "/logged/records/category";
+  const backPage = "/logged/records/employee";
   const navigate = useNavigate();
 
-  const editCategoriaResult = useMutation({
-    mutationKey: ["editCategoria"],
+  const editEmployeeResult = useMutation({
     mutationFn: edit,
     onSuccess: () => {
       navigate(backPage);
     },
   });
 
-  const categoriaResult = useQuery({
-    queryKey: ["categoria", params.id],
+  const employeeResult = useQuery({
+    queryKey: ["employee", params.id],
     queryFn: () => getId(params.id || ""),
   });
 
-  const onSubmit = (categoria: CategoriaServico) => {
-    editCategoriaResult.mutateAsync(categoria);
+  const onSubmit = (funcionario: FuncionarioPrestador) => {
+    editEmployeeResult.mutateAsync(funcionario);
   };
 
   const isLoading = useMemo(
-    () => editCategoriaResult.isLoading || categoriaResult.isLoading,
-    [editCategoriaResult.isLoading, categoriaResult.isLoading]
+    () => editEmployeeResult.isLoading || employeeResult.isLoading,
+    [editEmployeeResult.isLoading, employeeResult.isLoading]
   );
 
   return (
     <div>
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
-        Editar Categoria
+        Editar Funcionário
       </h3>
       {isLoading ? (
         <Loader />
       ) : (
-        <CategoryForm
+        <EmployeeForm
           backCallback={() => navigate(backPage)}
           submitCallback={onSubmit}
-          defaultValues={categoriaResult.data}
+          defaultValues={employeeResult.data}
           label="Editar"
         />
       )}
@@ -55,4 +54,4 @@ const EditCategory = () => {
   );
 };
 
-export default EditCategory;
+export default EditEmployee;

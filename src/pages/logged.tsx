@@ -11,6 +11,7 @@ import Loader from "../components/loader";
 import { getAll as getAllSubServico } from "../services/subServicoService";
 import { getAll as getAllCliente } from "../services/clienteService";
 import { getAll as getVeiculo } from "../services/veiculoService";
+import { getAll as getFuncionario } from "../services/prestadorService";
 import { getMarcas } from "../services/fipeService";
 import { STORAGE_KEY } from "../constants/key";
 
@@ -36,6 +37,11 @@ const Logged = () => {
     queryFn: getMarcas,
   });
 
+  const funcionarioResult = useQuery({
+    queryKey: ['funcionario'],
+    queryFn: getFuncionario
+  })
+
   useEffect(() => {
     if (subServicoResult.isError) {
       setLocalStorage("");
@@ -47,12 +53,14 @@ const Logged = () => {
       clienteResult.isLoading ||
       subServicoResult.isLoading ||
       veiculoResult.isLoading ||
-      marcaResult.isLoading,
+      marcaResult.isLoading ||
+      funcionarioResult.isLoading,
     [
       clienteResult.isLoading,
       subServicoResult.isLoading,
       veiculoResult.isLoading,
       marcaResult.isLoading,
+      funcionarioResult.isLoading
     ]
   );
 

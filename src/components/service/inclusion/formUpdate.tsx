@@ -13,12 +13,14 @@ import ServicoForm from "./servicoForm";
 import SelectFilter from "../../selectFilter";
 import ProdutoForm from "./produtoForm";
 import { Produto } from "../../../domain/produto";
+import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
 
 type FormUpdateProps = {
   veiculos: Veiculo[];
   subServicos: SubServico[];
   clientes: Cliente[];
   marcas: Marca[];
+  funcionarios: FuncionarioPrestador[];
   submitCallback: (servico: PrestacaoServico) => void;
   isOpened: boolean;
 };
@@ -28,6 +30,7 @@ const FormUpdate = ({
   subServicos,
   clientes,
   marcas,
+  funcionarios,
   submitCallback,
   isOpened,
 }: FormUpdateProps) => {
@@ -99,6 +102,25 @@ const FormUpdate = ({
     <form onSubmit={handleSubmit(submit)}>
       <div className="space-y-4">
         <div className="overflow-auto max-h-[80dvh]">
+        <div>
+            <label
+              htmlFor="funcionarioPrestadorId"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Funcionário
+            </label>
+            <SelectFilter
+              name="funcionarioPrestadorId"
+              search="Procure por Funcionário"
+              control={control}
+              searchPlaceholder="Procurar"
+              values={funcionarios.map((funcionario) => ({
+                name: funcionario.nome,
+                value: funcionario.id?.toString() || "",
+              }))}
+              emptyPlaceholder="Escolha o funcionário"
+            />
+          </div>
           <div>
             <label
               htmlFor="clienteId"
@@ -158,7 +180,7 @@ const FormUpdate = ({
           <div>
             <label
               htmlFor="servicos"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block my-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Serviços
             </label>

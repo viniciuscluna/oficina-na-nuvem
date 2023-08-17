@@ -23,9 +23,12 @@ import Product from "./pages/records/product/product";
 import Employee from "./pages/records/employee/employee";
 import AddProduct from "./pages/records/product/addProduct";
 import EditProduct from "./pages/records/product/editProduct";
+import AddEmployee from "./pages/records/employee/addEmployee";
+import EditEmployee from "./pages/records/employee/editEmployee";
 import Print from "./pages/print";
 
 import "./index.css";
+
 
 //Configure routes
 const router = createBrowserRouter([
@@ -88,6 +91,14 @@ const router = createBrowserRouter([
               {
                 path: "/logged/records/employee",
                 element: <Employee />,
+              },
+              {
+                path: "/logged/records/employee/add",
+                element: <AddEmployee />,
+              },
+              {
+                path: "/logged/records/employee/edit/:id",
+                element: <EditEmployee />,
               },
             ],
           },

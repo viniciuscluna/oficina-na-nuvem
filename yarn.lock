@@ -1697,6 +1697,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-mask-input@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/use-mask-input/-/use-mask-input-3.3.3.tgz#4770acf63340dfba9950e5cf3f6fe2026a8dd1c2"
+  integrity sha512-CDvSH6YnOBBpvnR9wDlmZVu85r9Fyi89PVRVQkQLGf1YV32Zo7SEduSR/RpQn5BA/oPMYcbWds0S4OFZbC+h9g==
+
 use-sync-external-store@1.2.0, use-sync-external-store@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"

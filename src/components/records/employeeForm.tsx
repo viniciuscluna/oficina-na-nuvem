@@ -1,24 +1,25 @@
 import { useForm } from "react-hook-form";
-import { Produto } from "../../domain/produto";
+import { useHookFormMask } from "use-mask-input";
 
-type ProductFormProps = {
-  submitCallback: (produto: Produto) => void;
+import { FuncionarioPrestador } from "../../domain/funcionarioPrestador";
+
+type EmployeeFormProps = {
+  submitCallback: (funcionario: FuncionarioPrestador) => void;
   backCallback: () => void;
-  defaultValues?: Produto;
+  defaultValues?: FuncionarioPrestador;
   label: string;
-  editMode: boolean;
 };
 
-const ProdutoForm = ({
+const EmployeeForm = ({
   submitCallback,
   backCallback,
   defaultValues,
   label,
-  editMode,
-}: ProductFormProps) => {
-  const { register, handleSubmit, } = useForm<Produto>({
+}: EmployeeFormProps) => {
+  const { register, handleSubmit } = useForm<FuncionarioPrestador>({
     defaultValues: defaultValues,
   });
+  const registerWithMask = useHookFormMask(register);
 
   return (
     <form onSubmit={handleSubmit(submitCallback)}>
@@ -38,105 +39,85 @@ const ProdutoForm = ({
       </div>
       <div className="mb-6">
         <label
-          htmlFor="marca"
+          htmlFor="telefone"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Marca
+          Telefone
         </label>
         <input
+          {...registerWithMask("telefone", ["(99) [9]9999-9999"])}
           type="text"
-          id="marca"
-          {...register("marca")}
+          id="telefone"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
       <div className="mb-6">
         <label
-          htmlFor="marca"
+          htmlFor="email"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Marca
+          Email
         </label>
         <input
+          {...registerWithMask("email", 'email')}
+          type="email"
+          id="email"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+      <div className="mb-6">
+        <label
+          htmlFor="rg"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          RG
+        </label>
+        <input
+          {...registerWithMask("rg", ["99999999-9"])}
           type="text"
-          id="marca"
-          {...register("marca")}
+          id="rg"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
       <div className="mb-6">
         <label
-          htmlFor="valor_Compra"
+          htmlFor="cpf"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Valor Compra
+          CPF
         </label>
         <input
-          type="number"
-          id="valor_Compra"
-          {...register("valor_Compra")}
+          {...registerWithMask("cpf", 'cpf')}
+          type="text"
+          id="cpf"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
       <div className="mb-6">
         <label
-          htmlFor="valor_Venda"
+          htmlFor="endereco"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Valor Venda
+          Endereço
         </label>
         <input
-          type="number"
-          id="valor_Venda"
-          {...register("valor_Venda")}
+          {...register("endereco")}
+          type="text"
+          id="endereco"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
       <div className="mb-6">
         <label
-          htmlFor="tipoMedida"
+          htmlFor="cargo"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Tipo Medida
-        </label>
-        <select
-          id="tipoMedida"
-          {...register("tipoMedidaItem")}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="0">Litro</option>
-          <option value="1">Peça</option>
-        </select>
-      </div>
-      {editMode ? (
-        <></>
-      ) : (
-        <div className="mb-6">
-          <label
-            htmlFor="quantidade"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Quantidade
-          </label>
-          <input
-            type="number"
-            id="quantidade"
-            {...register("qtd")}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-        </div>
-      )}
-      <div className="mb-6">
-        <label
-          htmlFor="data_validade"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Data Validade
+          Cargo
         </label>
         <input
-          type="date"
-          id="data_validade"
-          {...register("data_validade")}
+          {...register("cargo")}
+          type="text"
+          id="cargo"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
@@ -159,4 +140,4 @@ const ProdutoForm = ({
   );
 };
 
-export default ProdutoForm;
+export default EmployeeForm;

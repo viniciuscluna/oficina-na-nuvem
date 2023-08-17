@@ -16,12 +16,14 @@ import ServicoForm from "./servicoForm";
 import ProdutoForm from "./produtoForm";
 import { Produto } from "../../../domain/produto";
 import SelectFilter from "../../selectFilter";
+import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
 
 type FormIncludeProps = {
   veiculos: Veiculo[];
   subServicos: SubServico[];
   clientes: Cliente[];
   marcas: Marca[];
+  funcionarios: FuncionarioPrestador[];
   submitCallback: (servico: PrestacaoServico) => void;
   isOpened: boolean;
 };
@@ -31,6 +33,7 @@ const FormInclude = ({
   subServicos,
   clientes,
   marcas,
+  funcionarios,
   isOpened,
   submitCallback,
 }: FormIncludeProps) => {
@@ -95,6 +98,25 @@ const FormInclude = ({
         <div className="overflow-auto max-h-[80dvh]">
           <div>
             <label
+              htmlFor="funcionarioPrestadorId"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Funcionário
+            </label>
+            <SelectFilter
+              name="funcionarioPrestadorId"
+              search="Procure por Funcionário"
+              control={control}
+              searchPlaceholder="Procurar"
+              values={funcionarios.map((funcionario) => ({
+                name: funcionario.nome,
+                value: funcionario.id?.toString() || "",
+              }))}
+              emptyPlaceholder="Escolha o funcionário"
+            />
+          </div>
+          <div>
+            <label
               htmlFor="clienteId"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
@@ -152,7 +174,7 @@ const FormInclude = ({
           <div>
             <label
               htmlFor="servicos"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block my-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Serviços
             </label>

@@ -8,6 +8,7 @@ import { Cliente } from "../../../domain/cliente";
 import { Marca } from "../../../domain/fipe/marca";
 import { Veiculo } from "../../../domain/veiculo";
 import { SubServico } from "../../../domain/subServico";
+import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
 
 import { add as addPrestacaoServico } from "../../../services/prestacaoServicoService";
 
@@ -26,6 +27,7 @@ const Include = () => {
   const marcas = queryClient.getQueryData<Marca[]>(["veiculoMarcas"]) || [];
   const veiculos = queryClient.getQueryData<Veiculo[]>(["veiculo"]) || [];
   const subServicos = queryClient.getQueryData<SubServico[]>(["subServico"]) || [];
+  const funcionarios = queryClient.getQueryData<FuncionarioPrestador[]>(["funcionario"]) || [];
 
 
   const addPrestacaoServicoMut = useMutation({
@@ -89,6 +91,7 @@ const Include = () => {
             veiculos={veiculos}
             subServicos={subServicos}
             marcas={marcas}
+            funcionarios={funcionarios}
             submitCallback={onSubmit}
             isOpened={isOpened}
           />

@@ -8,6 +8,7 @@ import { Cliente } from "../../../domain/cliente";
 import { Marca } from "../../../domain/fipe/marca";
 import { Veiculo } from "../../../domain/veiculo";
 import { SubServico } from "../../../domain/subServico";
+import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
 
 import { edit as editPrestacaoServico } from "../../../services/prestacaoServicoService";
 
@@ -30,6 +31,7 @@ const Update = () => {
   const marcas = queryClient.getQueryData<Marca[]>(["veiculoMarcas"]) || [];
   const veiculos = queryClient.getQueryData<Veiculo[]>(["veiculo"]) || [];
   const subServicos = queryClient.getQueryData<SubServico[]>(["subServico"]) || [];
+  const funcionarios = queryClient.getQueryData<FuncionarioPrestador[]>(["funcionario"]) || [];
 
   const editPrestacaoServicoMut = useMutation({
     mutationKey: ["prestacaoServico"],
@@ -92,6 +94,7 @@ const Update = () => {
             veiculos={veiculos}
             subServicos={subServicos}
             marcas={marcas}
+            funcionarios={funcionarios}
             submitCallback={onEdit}
             isOpened={isOpened}
           />

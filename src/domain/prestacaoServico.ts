@@ -17,8 +17,8 @@ export interface PrestacaoServico extends Base {
     clienteId?: string;
     veiculo?: Veiculo;
     veiculoId?: string;
-    funcionario?: FuncionarioPrestador;
-    funcionarioId?: string;
+    funcionarioPrestador?: FuncionarioPrestador;
+    funcionarioPrestadorId?: string;
     servicos: Servico[];
     produtos: Produto[];
 }

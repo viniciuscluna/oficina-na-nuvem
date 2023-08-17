@@ -1,4 +1,6 @@
 import { UseFormRegister } from "react-hook-form";
+import { useHookFormMask } from "use-mask-input";
+
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 
 type ClienteFormProps = {
@@ -6,6 +8,8 @@ type ClienteFormProps = {
 };
 
 const ClienteForm = ({ register }: ClienteFormProps) => {
+  const registerWithMask = useHookFormMask(register);
+
   return (
     <div className="border  border-gray-700 rounded-lg my-2 p-4">
       <div>
@@ -31,7 +35,7 @@ const ClienteForm = ({ register }: ClienteFormProps) => {
         <input
           id="telefoneCliente"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("cliente.telefone")}
+          {...registerWithMask("cliente.telefone", ["(99) [9]9999-9999"])}
         />{" "}
       </div>
       <div className="mt-2">
@@ -44,7 +48,7 @@ const ClienteForm = ({ register }: ClienteFormProps) => {
         <input
           id="rgCliente"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("cliente.rg")}
+          {...registerWithMask("cliente.rg", ["99999999-9"])}
         />{" "}
       </div>
       <div className="mt-2">
@@ -57,7 +61,7 @@ const ClienteForm = ({ register }: ClienteFormProps) => {
         <input
           id="cpfCliente"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("cliente.cpf")}
+          {...registerWithMask("cliente.cpf", "cpf")}
         />{" "}
       </div>
       <div className="mt-2">
@@ -83,7 +87,7 @@ const ClienteForm = ({ register }: ClienteFormProps) => {
         <input
           id="emailCliente"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("cliente.email")}
+          {...registerWithMask("cliente.email", 'email')}
         />{" "}
       </div>
     </div>

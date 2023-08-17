@@ -46,6 +46,7 @@ const Update = () => {
       });
     },
     onError: () => {
+      changeIsOpened();
       addNotification({
         message: 'Erro ao atualizar',
         type: 'error'

@@ -83,6 +83,7 @@ const FormInclude = ({
       marca: "",
       valor_Compra: 0,
       valor_Venda: 0,
+      qtd: 1,
     } as Produto);
   };
 

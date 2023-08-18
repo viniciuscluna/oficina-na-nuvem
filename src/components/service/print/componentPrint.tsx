@@ -36,8 +36,8 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
         (prestacao.produtos &&
           prestacao.produtos.reduce(
             (g: { [id: string]: Produto[] }, o: Produto) => {
-              g[o.modelo || ""] = g[o.modelo || ""] || []; //check if key allready exists, else init a new array
-              g[o.modelo || ""].push(o); //add item to array
+              g[o.nome || ""] = g[o.nome || ""] || []; //check if key allready exists, else init a new array
+              g[o.nome || ""].push(o); //add item to array
               return g; // be sure to return, or g will be undefined in next loop
             },
             {} //a second parameter to the reduce function, important to init the returned object

@@ -13,15 +13,14 @@ import { ChangeStatus } from "../../../types/changeStatusRequest";
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 import { useServiceStore } from "../../../stores/servicosStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
+import { Produto } from "../../../domain/produto";
 
 const Board = () => {
   const queryClient = useQueryClient();
-  const { setPrestacaoEdit, updateQuery } = useIncludeServiceStore(
-    (state) => ({
-      updateQuery: state.updateQuery,
-      setPrestacaoEdit: state.setPrestacao,
-    })
-  );
+  const { setPrestacaoEdit, updateQuery } = useIncludeServiceStore((state) => ({
+    updateQuery: state.updateQuery,
+    setPrestacaoEdit: state.setPrestacao,
+  }));
   const setServicos = useServiceStore((state) => state.setServicos);
 
   const {

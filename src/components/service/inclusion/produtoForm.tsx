@@ -13,7 +13,6 @@ const ProdutoForm = ({
   register,
   removeServicoCallback,
 }: ProdutoFormProps) => {
-
   return (
     <>
       {produtos.map((__, index) => (

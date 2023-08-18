@@ -16,9 +16,10 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 
 const Board = () => {
   const queryClient = useQueryClient();
-  const { setPrestacaoEdit, updateQuery } = useIncludeServiceStore((state) => ({
+  const { setPrestacaoEdit, updateQuery, setUpdateQuery } = useIncludeServiceStore((state) => ({
     updateQuery: state.updateQuery,
     setPrestacaoEdit: state.setPrestacaoId,
+    setUpdateQuery: state.setUpdateQuery
   }));
   const setServicos = useServiceStore((state) => state.setServicos);
 
@@ -40,8 +41,9 @@ const Board = () => {
       queryClient.invalidateQueries({ queryKey: ["cliente"] });
       queryClient.invalidateQueries({ queryKey: ["veiculo"] });
       refetch();
+      setUpdateQuery(false);
     }
-  }, [updateQuery, queryClient, refetch]);
+  }, [updateQuery, queryClient, refetch, setUpdateQuery]);
 
   const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } =
     useMutation({

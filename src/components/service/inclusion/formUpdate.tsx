@@ -1,4 +1,5 @@
 import { useFieldArray, useForm } from "react-hook-form";
+
 import { Cliente } from "../../../domain/cliente";
 import { SubServico } from "../../../domain/subServico";
 import { Veiculo } from "../../../domain/veiculo";
@@ -7,7 +8,6 @@ import ClienteForm from "./clienteForm";
 import VeiculoForm from "./veiculoForm";
 import { Marca } from "../../../domain/fipe/marca";
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
-import { useEffect } from "react";
 import ServicoForm from "./servicoForm";
 import SelectFilter from "../../selectFilter";
 import ProdutoForm from "./produtoForm";
@@ -20,6 +20,7 @@ type FormUpdateProps = {
   clientes: Cliente[];
   marcas: Marca[];
   funcionarios: FuncionarioPrestador[];
+  prestacaoServico: PrestacaoServico;
   submitCallback: (servico: PrestacaoServico) => void;
   isOpened: boolean;
 };
@@ -30,18 +31,17 @@ const FormUpdate = ({
   clientes,
   marcas,
   funcionarios,
+  prestacaoServico,
   submitCallback,
-  isOpened,
 }: FormUpdateProps) => {
-  const { clearPrestacao, changeIsOpened, prestacaoServico } =
-    useIncludeServiceStore((state) => ({
-      clearPrestacao: state.clearPrestacao,
-      changeIsOpened: state.changeIsUpdateOpened,
-      prestacaoServico: state.prestacaoServico,
-    }));
+  const { changeIsOpened } = useIncludeServiceStore((state) => ({
+    changeIsOpened: state.changeIsUpdateOpened,
+  }));
 
   const { register, handleSubmit, control, reset, watch, setValue, getValues } =
-    useForm<PrestacaoServico>();
+    useForm<PrestacaoServico>({
+      defaultValues: prestacaoServico,
+    });
 
   const {
     fields: servicos,
@@ -58,51 +58,11 @@ const FormUpdate = ({
     remove: removeProduto,
   } = useFieldArray<PrestacaoServico>({
     control,
-    name: "produtosGrouped",
+    name: "groupedProducts",
   });
-
-  const { remove: removeProdutoList } =
-    useFieldArray<PrestacaoServico>({
-      control,
-      name: "produtos",
-    });
 
   const showClienteForm = watch("clienteId") === "other";
   const showVeiculoForm = watch("veiculoId") === "other";
-
-  const produtoGrouped = watch("produtosGrouped");
-
-  useEffect(() => {
-    const produtos = getValues("produtos");
-    produtoGrouped &&
-      produtoGrouped.forEach((prod) => {
-        produtos.forEach((item, index) => {
-          if (item.nome == prod.nome) {
-            setValue(`produtos.${index}.marca`, prod.marca);
-            setValue(`produtos.${index}.modelo`, prod.modelo);
-            setValue(`produtos.${index}.data_validade`, prod.data_validade);
-            setValue(`produtos.${index}.garantia`, prod.garantia);
-            setValue(`produtos.${index}.valor_Compra`, prod.valor_Compra);
-            setValue(`produtos.${index}.valor_Venda`, prod.valor_Venda);
-            setValue(`produtos.${index}.tipoMedidaItem`, prod.tipoMedidaItem);
-          }
-        });
-      });
-  }, [produtoGrouped, setValue, getValues]);
-
-  useEffect(() => {
-    if (isOpened && prestacaoServico) {
-      reset({
-        ...prestacaoServico,
-        cliente: undefined,
-        veiculo: undefined,
-        prestador: undefined,
-      });
-    }
-    if (!isOpened) {
-      clearPrestacao();
-    }
-  }, [reset, clearPrestacao, prestacaoServico, isOpened]);
 
   const addServico = () => {
     appendServico({ descricao: "", valor: 0, subServicoId: "" });
@@ -119,16 +79,11 @@ const FormUpdate = ({
   };
 
   const submit = (form: PrestacaoServico) => {
-    clearPrestacao();
     reset();
     submitCallback(form);
   };
 
   const handleRemoveProduct = (index: number) => {
-    const prodMain = getValues("produtosGrouped")[index];
-    getValues("produtos").forEach((prod, idx) => {
-      if (prod.nome === prodMain.nome) removeProdutoList(idx);
-    });
     removeProduto(index);
   };
 
@@ -244,6 +199,7 @@ const FormUpdate = ({
             </label>
             <div className="flex gap-2 flex-col">
               <ProdutoForm
+                arrayName="groupedProducts"
                 removeServicoCallback={handleRemoveProduct}
                 register={register}
                 produtos={produtos}

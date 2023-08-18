@@ -1,6 +1,6 @@
 import { EPrestacaoServicoStatus } from "../domain/ePrestacaoServicoStatus";
 import { PrestacaoServico } from "../domain/prestacaoServico";
-import { returnGroupedPrestacaoServico } from "../utils/grouped";
+import { returnGroupedPrestacaoServico } from "../utils/prestacaoServicoGroup";
 import { onlyNumber } from "../utils/numberFormater";
 import { instanceApi } from "./axiosConfig";
 
@@ -35,9 +35,11 @@ export const add = async (form: PrestacaoServico): Promise<PrestacaoServico> =>
   ).data;
 
 export const getId = async (prestacaoId: string): Promise<PrestacaoServico> => {
-  return (
-    await instanceApi.get<PrestacaoServico>(`/prestacaoServico/${prestacaoId}`)
-  ).data;
+  const result = await instanceApi.get<PrestacaoServico>(
+    `/prestacaoServico/${prestacaoId}`
+  );
+
+  return { ...returnGroupedPrestacaoServico(result.data) };
 };
 
 export const edit = async (form: PrestacaoServico): Promise<PrestacaoServico> =>
@@ -52,18 +54,14 @@ export const getAllInProgress = async (): Promise<PrestacaoServico[]> => {
   const result = await instanceApi.get<PrestacaoServico[]>(
     `/prestacaoServico/PrestacaoServicoAbertoPrestador`
   );
-  return result.data.map((item) => ({
-    ...returnGroupedPrestacaoServico(item),
-  }));
+  return result.data;
 };
 
 export const getAllInDone = async (): Promise<PrestacaoServico[]> => {
   const result = await instanceApi.get<PrestacaoServico[]>(
     `/prestacaoServico/PrestacaoServicoFechadosPrestador`
   );
-  return result.data.map((item) => ({
-    ...returnGroupedPrestacaoServico(item),
-  }));
+  return result.data;
 };
 
 export const changeStatus = async (

@@ -11,29 +11,36 @@ import { Veiculo } from "../../../domain/veiculo";
 import { SubServico } from "../../../domain/subServico";
 import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
 
-import { edit as editPrestacaoServico } from "../../../services/prestacaoServicoService";
+import {
+  edit as editPrestacaoServico,
+  getId,
+} from "../../../services/prestacaoServicoService";
 
 import FormUpdate from "./formUpdate";
 import Loader from "../../loader";
-
+import { useEffect, useMemo } from "react";
+import { syncGroupedWithProducts } from "../../../utils/prestacaoServicoGroup";
 
 const Update = () => {
   const queryClient = useQueryClient();
-  const addNotification = useNotificationStore(state => state.addNotification);
-  const { changeIsOpened, isOpened, prestacaoServico, setUpdateQuery } = useIncludeServiceStore(
-    (state) => ({
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
+  const { changeIsOpened, isOpened, prestacaoServicoId, setUpdateQuery } =
+    useIncludeServiceStore((state) => ({
       changeIsOpened: state.changeIsUpdateOpened,
       setUpdateQuery: state.setUpdateQuery,
+      prestacaoServicoId: state.prestacaoServicoId,
       isOpened: state.isUpdateOpened,
-      prestacaoServico: state.prestacaoServico,
-    })
-  );
+    }));
 
   const clientes = queryClient.getQueryData<Cliente[]>(["cliente"]) || [];
   const marcas = queryClient.getQueryData<Marca[]>(["veiculoMarcas"]) || [];
   const veiculos = queryClient.getQueryData<Veiculo[]>(["veiculo"]) || [];
-  const subServicos = queryClient.getQueryData<SubServico[]>(["subServico"]) || [];
-  const funcionarios = queryClient.getQueryData<FuncionarioPrestador[]>(["funcionario"]) || [];
+  const subServicos =
+    queryClient.getQueryData<SubServico[]>(["subServico"]) || [];
+  const funcionarios =
+    queryClient.getQueryData<FuncionarioPrestador[]>(["funcionario"]) || [];
 
   const editPrestacaoServicoMut = useMutation({
     mutationFn: editPrestacaoServico,
@@ -42,20 +49,35 @@ const Update = () => {
       setUpdateQuery(true);
       addNotification({
         message: `${data.referencia} atualizada!`,
-        type: 'success'
+        type: "success",
       });
     },
     onError: () => {
       changeIsOpened();
       addNotification({
-        message: 'Erro ao atualizar',
-        type: 'error'
+        message: "Erro ao atualizar",
+        type: "error",
       });
-    }
+    },
   });
 
   const onEdit: SubmitHandler<PrestacaoServico> = (data) =>
-    editPrestacaoServicoMut.mutateAsync(data);
+    editPrestacaoServicoMut.mutateAsync(syncGroupedWithProducts(data));
+
+  const { isLoading: isGetLoading, mutateAsync: getMutateAsync, data: getData } = useMutation({
+    mutationFn: (id: string) => getId(id),
+  });
+
+  useEffect(() => {
+    if (prestacaoServicoId != null) {
+      getMutateAsync(prestacaoServicoId);
+    }
+  }, [prestacaoServicoId, getMutateAsync]);
+
+  const isLoading = useMemo(
+    () => isGetLoading || editPrestacaoServicoMut.isLoading || getData === undefined,
+    [isGetLoading, editPrestacaoServicoMut.isLoading, getData]
+  );
 
   return (
     <>
@@ -73,7 +95,7 @@ const Update = () => {
           id="drawer-label"
           className="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400"
         >
-          Editar Serviço - {prestacaoServico?.referencia}
+          Editar Serviço - { getData?.referencia}
         </h5>
         <button
           type="button"
@@ -98,7 +120,7 @@ const Update = () => {
           <span className="sr-only">Close menu</span>
         </button>
 
-        {editPrestacaoServicoMut.isLoading ? (
+        {isLoading || !getData ? (
           <Loader />
         ) : (
           <FormUpdate
@@ -109,6 +131,7 @@ const Update = () => {
             funcionarios={funcionarios}
             submitCallback={onEdit}
             isOpened={isOpened}
+            prestacaoServico={getData}
           />
         )}
       </div>

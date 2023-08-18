@@ -6,11 +6,13 @@ type ProdutoFormProps = {
   produtos: FieldArrayWithId<PrestacaoServico, "servicos" | "produtos", "id">[];
   register: UseFormRegister<PrestacaoServico>;
   removeServicoCallback: (index: number) => void;
+  arrayName: "groupedProducts" | "produtos";
 };
 
 const ProdutoForm = ({
   produtos,
   register,
+  arrayName,
   removeServicoCallback,
 }: ProdutoFormProps) => {
   return (
@@ -26,7 +28,7 @@ const ProdutoForm = ({
             </label>
             <input
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`produtos.${index}.nome`)}
+              {...register(`${arrayName}.${index}.nome`)}
             ></input>
           </div>
           <div>
@@ -37,7 +39,7 @@ const ProdutoForm = ({
               type="text"
               id="small-input"
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`produtos.${index}.marca`)}
+              {...register(`${arrayName}.${index}.marca`)}
             ></input>
           </div>
           <div>
@@ -48,7 +50,7 @@ const ProdutoForm = ({
               type="text"
               id="small-input"
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`produtos.${index}.modelo`)}
+              {...register(`${arrayName}.${index}.modelo`)}
             ></input>
           </div>
           <div>
@@ -59,7 +61,7 @@ const ProdutoForm = ({
               type="date"
               id="small-input"
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`produtos.${index}.data_validade`, {
+              {...register(`${arrayName}.${index}.data_validade`, {
                 valueAsDate: true,
               })}
             ></input>
@@ -72,7 +74,7 @@ const ProdutoForm = ({
               type="date"
               id="small-input"
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`produtos.${index}.garantia`)}
+              {...register(`${arrayName}.${index}.garantia`)}
             ></input>
           </div>
           <div>
@@ -83,7 +85,7 @@ const ProdutoForm = ({
               type="number"
               id="small-input"
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`produtos.${index}.valor_Compra`, {
+              {...register(`${arrayName}.${index}.valor_Compra`, {
                 valueAsNumber: true,
               })}
             ></input>
@@ -96,7 +98,7 @@ const ProdutoForm = ({
               type="number"
               id="small-input"
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`produtos.${index}.valor_Venda`, {
+              {...register(`${arrayName}.${index}.valor_Venda`, {
                 valueAsNumber: true,
               })}
             ></input>
@@ -109,7 +111,7 @@ const ProdutoForm = ({
               type="number"
               id="small-input"
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`produtos.${index}.qtd`)}
+              {...register(`${arrayName}.${index}.qtd`)}
             ></input>
           </div>
           <div className="mb-6">
@@ -121,7 +123,7 @@ const ProdutoForm = ({
             </label>
             <select
               id="tipoMedida"
-              {...register(`produtos.${index}.tipoMedidaItem`, {
+              {...register(`${arrayName}.${index}.tipoMedidaItem`, {
                 valueAsNumber: true,
               })}
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

@@ -13,13 +13,12 @@ import { ChangeStatus } from "../../../types/changeStatusRequest";
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 import { useServiceStore } from "../../../stores/servicosStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
-import { Produto } from "../../../domain/produto";
 
 const Board = () => {
   const queryClient = useQueryClient();
   const { setPrestacaoEdit, updateQuery } = useIncludeServiceStore((state) => ({
     updateQuery: state.updateQuery,
-    setPrestacaoEdit: state.setPrestacao,
+    setPrestacaoEdit: state.setPrestacaoId,
   }));
   const setServicos = useServiceStore((state) => state.setServicos);
 
@@ -79,7 +78,7 @@ const Board = () => {
   );
 
   const onEdit = (prestacao: PrestacaoServico) => {
-    setPrestacaoEdit(prestacao);
+    setPrestacaoEdit(prestacao.id || '');
   };
 
   if (isLoading || isStatusLoading) return <Loader />;

@@ -36,12 +36,9 @@ const FormInclude = ({
   isOpened,
   submitCallback,
 }: FormIncludeProps) => {
-  const { prestacaoServico, changeIsOpened } = useIncludeServiceStore(
-    (state) => ({
-      prestacaoServico: state.prestacaoServico,
-      changeIsOpened: state.changeIsIncludeOpened,
-    })
-  );
+  const { changeIsOpened } = useIncludeServiceStore((state) => ({
+    changeIsOpened: state.changeIsIncludeOpened,
+  }));
 
   const { register, handleSubmit, control, reset, setValue, watch } =
     useForm<PrestacaoServico>();
@@ -68,7 +65,7 @@ const FormInclude = ({
     if (!isOpened) {
       reset();
     }
-  }, [reset, setValue, register, prestacaoServico, isOpened]);
+  }, [reset, setValue, register, isOpened]);
 
   const showClienteForm = watch("clienteId") === "other";
   const showVeiculoForm = watch("veiculoId") === "other";
@@ -83,6 +80,7 @@ const FormInclude = ({
       marca: "",
       valor_Compra: 0,
       valor_Venda: 0,
+      qtd: 1,
     } as Produto);
   };
 
@@ -202,6 +200,7 @@ const FormInclude = ({
             </label>
             <div className="flex gap-2 flex-col">
               <ProdutoForm
+                arrayName="produtos"
                 removeServicoCallback={removeProduto}
                 register={register}
                 produtos={produtos}

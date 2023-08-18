@@ -1,14 +1,13 @@
 import { create } from "zustand";
-import { PrestacaoServico } from "../domain/prestacaoServico";
 
 type IncludeServiceProps = {
   isIncludeOpened: boolean;
   isUpdateOpened: boolean;
   updateQuery: boolean;
-  prestacaoServico: PrestacaoServico | null;
+  prestacaoServicoId: string | null;
   changeIsIncludeOpened: () => void;
   changeIsUpdateOpened: () => void;
-  setPrestacao: (prestacao: PrestacaoServico) => void;
+  setPrestacaoId: (prestacaoId: string) => void;
   setUpdateQuery: (updateQuery: boolean) => void;
   clearPrestacao: () => void;
 };
@@ -17,11 +16,20 @@ export const useIncludeServiceStore = create<IncludeServiceProps>((set) => ({
   isIncludeOpened: false,
   isUpdateOpened: false,
   updateQuery: false,
-  prestacaoServico: null,
-  clearPrestacao: () => set({ prestacaoServico: null }),
-  setPrestacao: (prestacao: PrestacaoServico) =>
-    set({ prestacaoServico: prestacao, isUpdateOpened: true }),
-  changeIsIncludeOpened: () => set((state) => ({ isIncludeOpened: !state.isIncludeOpened })),
-  changeIsUpdateOpened: () => set((state) => ({ isUpdateOpened: !state.isUpdateOpened })),
-  setUpdateQuery: (updateQuery: boolean) => set(({ updateQuery: updateQuery })),
+  prestacaoServicoId: null,
+  clearPrestacao: () => set({ prestacaoServicoId: null }),
+  setPrestacaoId: (prestacaoId: string) =>
+    set({ prestacaoServicoId: prestacaoId, isUpdateOpened: true }),
+  changeIsIncludeOpened: () =>
+    set((state) => ({ isIncludeOpened: !state.isIncludeOpened })),
+  changeIsUpdateOpened: () =>
+    set((state) => {
+      if (state.isUpdateOpened)
+        return {
+          isUpdateOpened: !state.isUpdateOpened,
+          prestacaoServicoId: null,
+        };
+      else return { isUpdateOpened: !state.isUpdateOpened };
+    }),
+  setUpdateQuery: (updateQuery: boolean) => set({ updateQuery: updateQuery }),
 }));

@@ -1,4 +1,5 @@
 import { useFieldArray, useForm } from "react-hook-form";
+
 import { Cliente } from "../../../domain/cliente";
 import { SubServico } from "../../../domain/subServico";
 import { Veiculo } from "../../../domain/veiculo";
@@ -7,7 +8,6 @@ import ClienteForm from "./clienteForm";
 import VeiculoForm from "./veiculoForm";
 import { Marca } from "../../../domain/fipe/marca";
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
-import { useEffect } from "react";
 import ServicoForm from "./servicoForm";
 import SelectFilter from "../../selectFilter";
 import ProdutoForm from "./produtoForm";
@@ -20,6 +20,7 @@ type FormUpdateProps = {
   clientes: Cliente[];
   marcas: Marca[];
   funcionarios: FuncionarioPrestador[];
+  prestacaoServico: PrestacaoServico;
   submitCallback: (servico: PrestacaoServico) => void;
   isOpened: boolean;
 };
@@ -30,18 +31,17 @@ const FormUpdate = ({
   clientes,
   marcas,
   funcionarios,
+  prestacaoServico,
   submitCallback,
-  isOpened,
 }: FormUpdateProps) => {
-  const { clearPrestacao, changeIsOpened, prestacaoServico } =
-    useIncludeServiceStore((state) => ({
-      clearPrestacao: state.clearPrestacao,
-      changeIsOpened: state.changeIsUpdateOpened,
-      prestacaoServico: state.prestacaoServico,
-    }));
+  const { changeIsOpened } = useIncludeServiceStore((state) => ({
+    changeIsOpened: state.changeIsUpdateOpened,
+  }));
 
-  const { register, handleSubmit, control, reset, watch, setValue } =
-    useForm<PrestacaoServico>();
+  const { register, handleSubmit, control, reset, watch, setValue, getValues } =
+    useForm<PrestacaoServico>({
+      defaultValues: prestacaoServico,
+    });
 
   const {
     fields: servicos,
@@ -58,25 +58,11 @@ const FormUpdate = ({
     remove: removeProduto,
   } = useFieldArray<PrestacaoServico>({
     control,
-    name: "produtos",
+    name: "groupedProducts",
   });
 
   const showClienteForm = watch("clienteId") === "other";
   const showVeiculoForm = watch("veiculoId") === "other";
-
-  useEffect(() => {
-    if (isOpened && prestacaoServico) {
-      reset({
-        ...prestacaoServico,
-        cliente: undefined,
-        veiculo: undefined,
-        prestador: undefined,
-      });
-    }
-    if (!isOpened) {
-      clearPrestacao();
-    }
-  }, [reset, clearPrestacao, prestacaoServico, isOpened]);
 
   const addServico = () => {
     appendServico({ descricao: "", valor: 0, subServicoId: "" });
@@ -88,20 +74,24 @@ const FormUpdate = ({
       marca: "",
       valor_Compra: 0,
       valor_Venda: 0,
+      qtd: 1,
     } as Produto);
   };
 
   const submit = (form: PrestacaoServico) => {
-    clearPrestacao();
     reset();
     submitCallback(form);
+  };
+
+  const handleRemoveProduct = (index: number) => {
+    removeProduto(index);
   };
 
   return (
     <form onSubmit={handleSubmit(submit)}>
       <div className="space-y-4">
         <div className="overflow-auto max-h-[80dvh]">
-        <div>
+          <div>
             <label
               htmlFor="funcionarioPrestadorId"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -209,7 +199,8 @@ const FormUpdate = ({
             </label>
             <div className="flex gap-2 flex-col">
               <ProdutoForm
-                removeServicoCallback={removeProduto}
+                arrayName="groupedProducts"
+                removeServicoCallback={handleRemoveProduct}
                 register={register}
                 produtos={produtos}
               />

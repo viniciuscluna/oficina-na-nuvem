@@ -1,5 +1,6 @@
 import { EPrestacaoServicoStatus } from "../domain/ePrestacaoServicoStatus";
 import { PrestacaoServico } from "../domain/prestacaoServico";
+import { returnGroupedPrestacaoServico } from "../utils/prestacaoServicoGroup";
 import { onlyNumber } from "../utils/numberFormater";
 import { instanceApi } from "./axiosConfig";
 
@@ -13,7 +14,9 @@ const mapPrestacaoServico = (
     if (prestacaoServico.cliente) {
       prestacaoServico.cliente.cpf = onlyNumber(prestacaoServico.cliente.cpf);
       prestacaoServico.cliente.rg = onlyNumber(prestacaoServico.cliente.rg);
-      prestacaoServico.cliente.telefone = onlyNumber(prestacaoServico.cliente.telefone);
+      prestacaoServico.cliente.telefone = onlyNumber(
+        prestacaoServico.cliente.telefone
+      );
     }
   }
 
@@ -32,9 +35,11 @@ export const add = async (form: PrestacaoServico): Promise<PrestacaoServico> =>
   ).data;
 
 export const getId = async (prestacaoId: string): Promise<PrestacaoServico> => {
-  return (
-    await instanceApi.get<PrestacaoServico>(`/prestacaoServico/${prestacaoId}`)
-  ).data;
+  const result = await instanceApi.get<PrestacaoServico>(
+    `/prestacaoServico/${prestacaoId}`
+  );
+
+  return { ...returnGroupedPrestacaoServico(result.data) };
 };
 
 export const edit = async (form: PrestacaoServico): Promise<PrestacaoServico> =>
@@ -45,13 +50,19 @@ export const edit = async (form: PrestacaoServico): Promise<PrestacaoServico> =>
     )
   ).data;
 
-export const getAllInProgress = async (): Promise<PrestacaoServico[]> =>
-  (await instanceApi.get(`/prestacaoServico/PrestacaoServicoAbertoPrestador`))
-    .data;
+export const getAllInProgress = async (): Promise<PrestacaoServico[]> => {
+  const result = await instanceApi.get<PrestacaoServico[]>(
+    `/prestacaoServico/PrestacaoServicoAbertoPrestador`
+  );
+  return result.data;
+};
 
-export const getAllInDone = async (): Promise<PrestacaoServico[]> =>
-  (await instanceApi.get(`/prestacaoServico/PrestacaoServicoFechadosPrestador`))
-    .data;
+export const getAllInDone = async (): Promise<PrestacaoServico[]> => {
+  const result = await instanceApi.get<PrestacaoServico[]>(
+    `/prestacaoServico/PrestacaoServicoFechadosPrestador`
+  );
+  return result.data;
+};
 
 export const changeStatus = async (
   id: string,

@@ -21,4 +21,5 @@ export interface PrestacaoServico extends Base {
     funcionarioPrestadorId?: string;
     servicos: Servico[];
     produtos: Produto[];
+    groupedProducts: Produto[];
 }

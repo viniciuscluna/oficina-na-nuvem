@@ -38,7 +38,7 @@ const FormUpdate = ({
     changeIsOpened: state.changeIsUpdateOpened,
   }));
 
-  const { register, handleSubmit, control, reset, watch, setValue, getValues } =
+  const { register, handleSubmit, control, reset, watch, setValue } =
     useForm<PrestacaoServico>({
       defaultValues: prestacaoServico,
     });

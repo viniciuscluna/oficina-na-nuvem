@@ -1,15 +1,30 @@
-import { FieldArrayWithId, UseFormRegister } from "react-hook-form";
+import {
+  FieldArrayWithId,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import { SubServico } from "../../../domain/subServico";
 
-type ServicoFormProps ={
-    servicos: FieldArrayWithId<PrestacaoServico, "servicos" | "produtos", "id">[];
-    subServicos: SubServico[];
-    register: UseFormRegister<PrestacaoServico>;
-    removeServicoCallback: (index: number) => void;
+type ServicoFormProps = {
+  servicos: FieldArrayWithId<PrestacaoServico, "servicos" | "produtos", "id">[];
+  subServicos: SubServico[];
+  register: UseFormRegister<PrestacaoServico>;
+  removeServicoCallback: (index: number) => void;
+  setValue: UseFormSetValue<PrestacaoServico>;
 };
 
-const ServicoForm = ({ servicos, subServicos, register, removeServicoCallback } : ServicoFormProps) => {
+const ServicoForm = ({
+  servicos,
+  subServicos,
+  register,
+  removeServicoCallback,
+  setValue,
+}: ServicoFormProps) => {
+  const updateValor = (index: number, value: string) => {
+    const valor = subServicos.find((f) => f.id === value)?.valorServico;
+    if (valor && valor !== 0) setValue(`servicos.${index}.valor`, valor);
+  };
   return (
     <>
       {servicos.map((__, index) => (
@@ -24,6 +39,7 @@ const ServicoForm = ({ servicos, subServicos, register, removeServicoCallback } 
             <select
               className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               {...register(`servicos.${index}.subServicoId`)}
+              onChange={(e) => updateValor(index, e.target.value)}
             >
               {subServicos?.map((subServico, index) => (
                 <option key={index} value={subServico.id}>
@@ -66,6 +82,5 @@ const ServicoForm = ({ servicos, subServicos, register, removeServicoCallback } 
     </>
   );
 };
-
 
 export default ServicoForm;

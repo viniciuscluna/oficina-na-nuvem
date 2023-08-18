@@ -181,6 +181,7 @@ const FormInclude = ({
                 register={register}
                 servicos={servicos}
                 subServicos={subServicos}
+                setValue={setValue}
               />
             </div>
             <button

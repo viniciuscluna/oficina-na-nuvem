@@ -40,7 +40,7 @@ const FormUpdate = ({
       prestacaoServico: state.prestacaoServico,
     }));
 
-  const { register, handleSubmit, control, reset, watch, setValue } =
+  const { register, handleSubmit, control, reset, watch, setValue, getValues } =
     useForm<PrestacaoServico>();
 
   const {
@@ -58,11 +58,37 @@ const FormUpdate = ({
     remove: removeProduto,
   } = useFieldArray<PrestacaoServico>({
     control,
-    name: "produtos",
+    name: "produtosGrouped",
   });
+
+  const { remove: removeProdutoList } =
+    useFieldArray<PrestacaoServico>({
+      control,
+      name: "produtos",
+    });
 
   const showClienteForm = watch("clienteId") === "other";
   const showVeiculoForm = watch("veiculoId") === "other";
+
+  const produtoGrouped = watch("produtosGrouped");
+
+  useEffect(() => {
+    const produtos = getValues("produtos");
+    produtoGrouped &&
+      produtoGrouped.forEach((prod) => {
+        produtos.forEach((item, index) => {
+          if (item.nome == prod.nome) {
+            setValue(`produtos.${index}.marca`, prod.marca);
+            setValue(`produtos.${index}.modelo`, prod.modelo);
+            setValue(`produtos.${index}.data_validade`, prod.data_validade);
+            setValue(`produtos.${index}.garantia`, prod.garantia);
+            setValue(`produtos.${index}.valor_Compra`, prod.valor_Compra);
+            setValue(`produtos.${index}.valor_Venda`, prod.valor_Venda);
+            setValue(`produtos.${index}.tipoMedidaItem`, prod.tipoMedidaItem);
+          }
+        });
+      });
+  }, [produtoGrouped, setValue, getValues]);
 
   useEffect(() => {
     if (isOpened && prestacaoServico) {
@@ -88,6 +114,7 @@ const FormUpdate = ({
       marca: "",
       valor_Compra: 0,
       valor_Venda: 0,
+      qtd: 1,
     } as Produto);
   };
 
@@ -97,11 +124,19 @@ const FormUpdate = ({
     submitCallback(form);
   };
 
+  const handleRemoveProduct = (index: number) => {
+    const prodMain = getValues("produtosGrouped")[index];
+    getValues("produtos").forEach((prod, idx) => {
+      if (prod.nome === prodMain.nome) removeProdutoList(idx);
+    });
+    removeProduto(index);
+  };
+
   return (
     <form onSubmit={handleSubmit(submit)}>
       <div className="space-y-4">
         <div className="overflow-auto max-h-[80dvh]">
-        <div>
+          <div>
             <label
               htmlFor="funcionarioPrestadorId"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -209,7 +244,7 @@ const FormUpdate = ({
             </label>
             <div className="flex gap-2 flex-col">
               <ProdutoForm
-                removeServicoCallback={removeProduto}
+                removeServicoCallback={handleRemoveProduct}
                 register={register}
                 produtos={produtos}
               />

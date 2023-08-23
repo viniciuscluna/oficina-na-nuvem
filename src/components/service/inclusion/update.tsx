@@ -6,7 +6,6 @@ import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 import { useNotificationStore } from "../../../stores/notificationStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import { Cliente } from "../../../domain/cliente";
-import { Marca } from "../../../domain/fipe/marca";
 import { Veiculo } from "../../../domain/veiculo";
 import { SubServico } from "../../../domain/subServico";
 import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
@@ -35,7 +34,6 @@ const Update = () => {
     }));
 
   const clientes = queryClient.getQueryData<Cliente[]>(["cliente"]) || [];
-  const marcas = queryClient.getQueryData<Marca[]>(["veiculoMarcas"]) || [];
   const veiculos = queryClient.getQueryData<Veiculo[]>(["veiculo"]) || [];
   const subServicos =
     queryClient.getQueryData<SubServico[]>(["subServico"]) || [];

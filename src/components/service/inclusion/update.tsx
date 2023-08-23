@@ -127,7 +127,6 @@ const Update = () => {
             clientes={clientes}
             veiculos={veiculos}
             subServicos={subServicos}
-            marcas={marcas}
             funcionarios={funcionarios}
             submitCallback={onEdit}
             isOpened={isOpened}

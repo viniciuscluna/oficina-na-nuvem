@@ -36,7 +36,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [bearerToken, setBearer] = useLocalStorage<string>(STORAGE_KEY, "");
 
-  const { mutateAsync, isLoading, data, isSuccess } = useMutation({
+  const { mutateAsync, isLoading, data, isSuccess, isError } = useMutation({
     mutationFn: login,
   });
 
@@ -53,8 +53,8 @@ const Login = () => {
   const onSubmit = async (data: FormData) => {
     await mutateAsync({
       password: data.password,
-      email: data.email || '',
-      userName: data.login || '',
+      email: data.email || "",
+      userName: data.login || "",
     });
     //Refresh page
     navigate(0);
@@ -63,6 +63,27 @@ const Login = () => {
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        {isError ? (
+          <div
+            className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert"
+          >
+            <span className="font-medium">Erro ao fazer login</span> Verifique
+            suas credenciais e tente novamente 😉.
+          </div>
+        ) : (
+          <></>
+        )}
+        {isLoading ? (
+          <div
+            className="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+            role="alert"
+          >
+            <span className="font-medium">Carregando!</span> Aguarde....
+          </div>
+        ) : (
+          <></>
+        )}
         <a
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"

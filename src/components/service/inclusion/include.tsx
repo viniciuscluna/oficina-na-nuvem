@@ -26,11 +26,9 @@ const Include = () => {
   }));
 
   const clientes = queryClient.getQueryData<Cliente[]>(["cliente"]) || [];
-  const marcas = queryClient.getQueryData<Marca[]>(["veiculoMarcas"]) || [];
   const veiculos = queryClient.getQueryData<Veiculo[]>(["veiculo"]) || [];
   const subServicos = queryClient.getQueryData<SubServico[]>(["subServico"]) || [];
   const funcionarios = queryClient.getQueryData<FuncionarioPrestador[]>(["funcionario"]) || [];
-
 
   const addPrestacaoServicoMut = useMutation({
     mutationFn: addPrestacaoServico,
@@ -102,7 +100,6 @@ const Include = () => {
             clientes={clientes}
             veiculos={veiculos}
             subServicos={subServicos}
-            marcas={marcas}
             funcionarios={funcionarios}
             submitCallback={onSubmit}
             isOpened={isOpened}

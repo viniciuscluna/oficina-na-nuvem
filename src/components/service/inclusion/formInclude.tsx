@@ -21,7 +21,6 @@ type FormIncludeProps = {
   veiculos: Veiculo[];
   subServicos: SubServico[];
   clientes: Cliente[];
-  marcas: Marca[];
   funcionarios: FuncionarioPrestador[];
   submitCallback: (servico: PrestacaoServico) => void;
   isOpened: boolean;
@@ -31,7 +30,6 @@ const FormInclude = ({
   veiculos,
   subServicos,
   clientes,
-  marcas,
   funcionarios,
   isOpened,
   submitCallback,
@@ -158,7 +156,6 @@ const FormInclude = ({
             />
             {showVeiculoForm ? (
               <VeiculoForm
-                marcas={marcas}
                 register={register}
                 watch={watch}
                 control={control}

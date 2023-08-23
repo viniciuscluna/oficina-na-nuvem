@@ -143,13 +143,15 @@ const SelectFilter = ({
         >
           {filterList.map((value, index) => {
             const isFirstOption = index === 0;
+            const isOther = value.value === 'other';
             return (
               <li key={index}>
                 <button
                   type="button"
                   className={classNames(
                     "flex items-center pl-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left",
-                    isFirstOption ? "bg-gray-100 dark:bg-gray-600" : ""
+                    isFirstOption ? "bg-gray-100 dark:bg-gray-600" : "",
+                    isOther ? "bg-green-200 dark:bg-green-900" : "",
                   )}
                   onClick={() => selectItem(value)}
                   ref={isFirstOption ? firstButtonRef : undefined}

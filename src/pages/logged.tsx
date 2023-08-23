@@ -12,12 +12,12 @@ import { getAll as getAllSubServico } from "../services/subServicoService";
 import { getAll as getAllCliente } from "../services/clienteService";
 import { getAll as getVeiculo } from "../services/veiculoService";
 import { getAll as getFuncionario } from "../services/prestadorService";
-import { getMarcas } from "../services/fipeService";
 import { STORAGE_KEY } from "../constants/key";
 import NotificationContainer from "../components/notificationContainer";
 
 const Logged = () => {
   const [, setLocalStorage] = useLocalStorage<string>(STORAGE_KEY, "");
+
   const subServicoResult = useQuery({
     queryKey: ["subServico"],
     queryFn: getAllSubServico,
@@ -31,11 +31,6 @@ const Logged = () => {
   const veiculoResult = useQuery({
     queryKey: ["veiculo"],
     queryFn: getVeiculo,
-  });
-
-  const marcaResult = useQuery({
-    queryKey: ["veiculoMarcas"],
-    queryFn: getMarcas,
   });
 
   const funcionarioResult = useQuery({
@@ -54,13 +49,11 @@ const Logged = () => {
       clienteResult.isLoading ||
       subServicoResult.isLoading ||
       veiculoResult.isLoading ||
-      marcaResult.isLoading ||
       funcionarioResult.isLoading,
     [
       clienteResult.isLoading,
       subServicoResult.isLoading,
       veiculoResult.isLoading,
-      marcaResult.isLoading,
       funcionarioResult.isLoading
     ]
   );

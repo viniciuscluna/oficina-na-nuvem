@@ -18,7 +18,6 @@ type FormUpdateProps = {
   veiculos: Veiculo[];
   subServicos: SubServico[];
   clientes: Cliente[];
-  marcas: Marca[];
   funcionarios: FuncionarioPrestador[];
   prestacaoServico: PrestacaoServico;
   submitCallback: (servico: PrestacaoServico) => void;
@@ -29,7 +28,6 @@ const FormUpdate = ({
   veiculos,
   subServicos,
   clientes,
-  marcas,
   funcionarios,
   prestacaoServico,
   submitCallback,
@@ -156,7 +154,6 @@ const FormUpdate = ({
             />
             {showVeiculoForm ? (
               <VeiculoForm
-                marcas={marcas}
                 register={register}
                 watch={watch}
                 control={control}

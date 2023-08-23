@@ -121,7 +121,7 @@ const VeiculoForm = ({
               value: modelo.nome,
             })) || []
           }
-          emptyPlaceholder="Escolha a marca"
+          emptyPlaceholder="Escolha o modelo"
         />
       </div>
       <div className="mt-1">

@@ -11,18 +11,32 @@ const Buttons = ({ id, status, changeStatusCallback }: ButtonsProps) => {
   switch (status) {
     case EPrestacaoServicoStatus.aberto:
       return (
-        <button
-          type="button"
-          className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={() =>
-            changeStatusCallback({
-              id: id || "",
-              status: EPrestacaoServicoStatus.analise,
-            })
-          }
-        >
-          Enviar para análise
-        </button>
+        <>
+          <button
+            type="button"
+            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() =>
+              changeStatusCallback({
+                id: id || "",
+                status: EPrestacaoServicoStatus.analise,
+              })
+            }
+          >
+            Enviar para análise
+          </button>
+          <button
+            type="button"
+            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() =>
+              changeStatusCallback({
+                id: id || "",
+                status: EPrestacaoServicoStatus.rejeitado,
+              })
+            }
+          >
+            Cancelar
+          </button>
+        </>
       );
     case EPrestacaoServicoStatus.analise:
       return (
@@ -55,49 +69,91 @@ const Buttons = ({ id, status, changeStatusCallback }: ButtonsProps) => {
       );
     case EPrestacaoServicoStatus.aprovado:
       return (
-        <button
-          type="button"
-          className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={() =>
-            changeStatusCallback({
-              id: id || "",
-              status: EPrestacaoServicoStatus.andamento,
-            })
-          }
-        >
-          Enviar para andamento
-        </button>
+        <>
+          <button
+            type="button"
+            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() =>
+              changeStatusCallback({
+                id: id || "",
+                status: EPrestacaoServicoStatus.andamento,
+              })
+            }
+          >
+            Enviar para andamento
+          </button>
+          <button
+            type="button"
+            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() =>
+              changeStatusCallback({
+                id: id || "",
+                status: EPrestacaoServicoStatus.rejeitado,
+              })
+            }
+          >
+            Cancelar
+          </button>
+        </>
       );
     case EPrestacaoServicoStatus.andamento:
       return (
-        <button
-          type="button"
-          className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={() =>
-            changeStatusCallback({
-              id: id || "",
-              status: EPrestacaoServicoStatus.teste,
-            })
-          }
-        >
-          Enviar para testes
-        </button>
+        <>
+          <button
+            type="button"
+            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() =>
+              changeStatusCallback({
+                id: id || "",
+                status: EPrestacaoServicoStatus.teste,
+              })
+            }
+          >
+            Enviar para testes
+          </button>
+          <button
+            type="button"
+            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() =>
+              changeStatusCallback({
+                id: id || "",
+                status: EPrestacaoServicoStatus.rejeitado,
+              })
+            }
+          >
+            Cancelar
+          </button>
+        </>
       );
 
     case EPrestacaoServicoStatus.teste:
       return (
-        <button
-          type="button"
-          className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={() =>
-            changeStatusCallback({
-              id: id || "",
-              status: EPrestacaoServicoStatus.concluido,
-            })
-          }
-        >
-          Concluir
-        </button>
+        <>
+          <button
+            type="button"
+            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() =>
+              changeStatusCallback({
+                id: id || "",
+                status: EPrestacaoServicoStatus.concluido,
+              })
+            }
+          >
+            Concluir
+          </button>
+          <button
+            type="button"
+            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() =>
+              changeStatusCallback({
+                id: id || "",
+                status: EPrestacaoServicoStatus.rejeitado,
+              })
+            }
+          >
+            Cancelar
+          </button>
+        </>
       );
     default:
       return <></>;

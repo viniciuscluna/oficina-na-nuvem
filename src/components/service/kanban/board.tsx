@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
@@ -13,14 +13,24 @@ import { ChangeStatus } from "../../../types/changeStatusRequest";
 import { useIncludeServiceStore } from "../../../stores/includeServiceStore";
 import { useServiceStore } from "../../../stores/servicosStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
+import ConfirmModal from "../../confirmModal";
+import { useNotificationStore } from "../../../stores/notificationStore";
 
 const Board = () => {
+  const [pendingConfirm, setPendingConfirm] = useState<ChangeStatus | null>(
+    null
+  );
+
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
   const queryClient = useQueryClient();
-  const { setPrestacaoEdit, updateQuery, setUpdateQuery } = useIncludeServiceStore((state) => ({
-    updateQuery: state.updateQuery,
-    setPrestacaoEdit: state.setPrestacaoId,
-    setUpdateQuery: state.setUpdateQuery
-  }));
+  const { setPrestacaoEdit, updateQuery, setUpdateQuery } =
+    useIncludeServiceStore((state) => ({
+      updateQuery: state.updateQuery,
+      setPrestacaoEdit: state.setPrestacaoId,
+      setUpdateQuery: state.setUpdateQuery,
+    }));
   const setServicos = useServiceStore((state) => state.setServicos);
 
   const {
@@ -48,7 +58,13 @@ const Board = () => {
   const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } =
     useMutation({
       mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status),
-      onSuccess: () => refetch(),
+      onSuccess: () => {
+        refetch();
+        addNotification({ message: "Status atualizado!", type: "success" });
+      },
+      onError: () => {
+        addNotification({ message: "Erro ao alterar status :(", type: "error" });
+      }
     });
 
   const abertaAnalise = useMemo(
@@ -80,59 +96,84 @@ const Board = () => {
   );
 
   const onEdit = (prestacao: PrestacaoServico) => {
-    setPrestacaoEdit(prestacao.id || '');
+    setPrestacaoEdit(prestacao.id || "");
+  };
+
+  const handleConfirmStatus = (status: ChangeStatus) => {
+    if (status.status === EPrestacaoServicoStatus.rejeitado) {
+      setPendingConfirm(status);
+    } else mutateStatusAsync(status);
+  };
+
+  const confirmRemoval = () => {
+    if (pendingConfirm !== null) {
+      mutateStatusAsync(pendingConfirm);
+      setPendingConfirm(null);
+    }
+  };
+
+  const cancelRemoval = () => {
+    setPendingConfirm(null);
   };
 
   if (isLoading || isStatusLoading) return <Loader />;
 
   return (
-    <div className="flex flex-col grow md:flex-row gap-3 w-full">
-      <div className="border rounded border-gray-200 dark:border-gray-700 w-full">
-        <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
-          Aberta/Análise
-        </h3>
-        <div className="flex flex-col gap-y-4 px-2  max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
-          {abertaAnalise?.map((prestacao, index) => (
-            <Card
-              prestacao={prestacao}
-              key={index}
-              changeStatusCallback={mutateStatusAsync}
-              editCallback={onEdit}
-            />
-          ))}
+    <>
+      <ConfirmModal
+        message="Deseja realmente realizar essa operação?"
+        onNoCallback={cancelRemoval}
+        onYesCallback={confirmRemoval}
+        isOpened={pendingConfirm !== null}
+      />
+      <div className="flex flex-col grow md:flex-row gap-3 w-full">
+        <div className="border rounded border-gray-200 dark:border-gray-700 w-full">
+          <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
+            Aberta/Análise
+          </h3>
+          <div className="flex flex-col gap-y-4 px-2  max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
+            {abertaAnalise?.map((prestacao, index) => (
+              <Card
+                prestacao={prestacao}
+                key={index}
+                changeStatusCallback={handleConfirmStatus}
+                editCallback={onEdit}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="border rounded  border-gray-200 dark:border-gray-700 w-full">
+          <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
+            Andamento
+          </h3>
+          <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
+            {andamento?.map((prestacao, index) => (
+              <Card
+                prestacao={prestacao}
+                key={index}
+                changeStatusCallback={handleConfirmStatus}
+                editCallback={onEdit}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="border rounded border-gray-200 dark:border-gray-700 w-full">
+          <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
+            Teste
+          </h3>
+          <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
+            {teste?.map((prestacao, index) => (
+              <Card
+                prestacao={prestacao}
+                key={index}
+                changeStatusCallback={handleConfirmStatus}
+                editCallback={onEdit}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      <div className="border rounded  border-gray-200 dark:border-gray-700 w-full">
-        <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
-          Andamento
-        </h3>
-        <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
-          {andamento?.map((prestacao, index) => (
-            <Card
-              prestacao={prestacao}
-              key={index}
-              changeStatusCallback={mutateStatusAsync}
-              editCallback={onEdit}
-            />
-          ))}
-        </div>
-      </div>
-      <div className="border rounded border-gray-200 dark:border-gray-700 w-full">
-        <h3 className="text-2xl text-center my-5 font-bold dark:text-white">
-          Teste
-        </h3>
-        <div className="flex flex-col gap-y-4 px-2 max-h-[40vh] md:max-h-[65vh] xl:max-h-[75vh] overflow-auto">
-          {teste?.map((prestacao, index) => (
-            <Card
-              prestacao={prestacao}
-              key={index}
-              changeStatusCallback={mutateStatusAsync}
-              editCallback={onEdit}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

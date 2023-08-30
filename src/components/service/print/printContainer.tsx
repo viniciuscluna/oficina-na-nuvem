@@ -37,7 +37,7 @@ const PrintContainer = ({prestacaoId} : PrintContainerProps) => {
             Imprimir!
           </button>
         </div>
-        <section className="block w-[60%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+        <section className="block w-[60%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 overflow-x-auto">
           {data ? (
             <ComponentPrint ref={componentRef} prestacao={data} />
           ) : (

@@ -148,7 +148,8 @@ const VeiculoForm = ({
               id="marcaVeiculo"
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              {...register("veiculo.marca")}
+              maxLength={80}
+              {...register("veiculo.marca", { required: true })}
             />
           </div>
           <div className="mt-1">
@@ -161,8 +162,9 @@ const VeiculoForm = ({
             <input
               id="modeloVeiculo"
               type="text"
+              maxLength={150}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              {...register("veiculo.modelo")}
+              {...register("veiculo.modelo", { required: true })}
             />
           </div>
         </>
@@ -247,7 +249,8 @@ const VeiculoForm = ({
           id="anoVeiculo"
           disabled={!otherTipoSelected}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("veiculo.ano")}
+          min={0}
+          {...register("veiculo.ano", { required : true })}
         />{" "}
       </div>
       <div className="mt-2">
@@ -261,6 +264,7 @@ const VeiculoForm = ({
           id="tipoCombustivelVeiculo"
           disabled={!otherTipoSelected}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          maxLength={25}
           {...register("veiculo.tipoCombustivel")}
         />{" "}
       </div>
@@ -288,7 +292,8 @@ const VeiculoForm = ({
           id="kmVeiculo"
           type="number"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...register("veiculo.km")}
+          min={0}
+          {...register("veiculo.km", { required: true })}
         />{" "}
       </div>
       <div className="mt-2">
@@ -301,7 +306,7 @@ const VeiculoForm = ({
         <input
           id="placaVeiculo"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          {...registerWithMask("veiculo.placa", ["AAA-9[A|9]99"])}
+          {...registerWithMask("veiculo.placa", ["AAA-9[A|9]99"], { required: true })}
         />{" "}
       </div>
     </div>

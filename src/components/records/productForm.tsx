@@ -30,9 +30,10 @@ const ProdutoForm = ({
           Nome
         </label>
         <input
-          {...register("nome")}
+          {...register("nome", { required: true })}
           type="text"
           id="nome"
+          maxLength={150}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
@@ -44,9 +45,10 @@ const ProdutoForm = ({
           Marca
         </label>
         <input
+          {...register("marca", { required: true })}
           type="text"
           id="marca"
-          {...register("marca")}
+          maxLength={150}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
@@ -61,6 +63,7 @@ const ProdutoForm = ({
           type="text"
           id="modelo"
           {...register("modelo")}
+          maxLength={200}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
@@ -74,6 +77,7 @@ const ProdutoForm = ({
         <input
           type="text"
           id="garantia"
+          maxLength={200}
           {...register("garantia")}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
@@ -88,7 +92,8 @@ const ProdutoForm = ({
         <input
           type="number"
           id="valor_Compra"
-          {...register("valor_Compra")}
+          min={0}
+          {...register("valor_Compra", { valueAsNumber: true, required: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
@@ -103,6 +108,7 @@ const ProdutoForm = ({
           type="number"
           id="valor_Venda"
           {...register("valor_Venda")}
+          min={0}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
@@ -136,7 +142,7 @@ const ProdutoForm = ({
             type="number"
             min={1}
             id="quantidade"
-            {...register("qtd")}
+            {...register("qtd", { required: true, valueAsNumber: true })}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>

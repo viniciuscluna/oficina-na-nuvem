@@ -28,7 +28,8 @@ const ProdutoForm = ({
             </label>
             <input
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`${arrayName}.${index}.nome`)}
+              maxLength={150}
+              {...register(`${arrayName}.${index}.nome`, { required: true })}
             ></input>
           </div>
           <div>
@@ -39,7 +40,8 @@ const ProdutoForm = ({
               type="text"
               id="small-input"
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`${arrayName}.${index}.marca`)}
+              maxLength={150}
+              {...register(`${arrayName}.${index}.marca`, { required: true })}
             ></input>
           </div>
           <div>
@@ -49,6 +51,7 @@ const ProdutoForm = ({
             <input
               type="text"
               id="small-input"
+              maxLength={200}
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               {...register(`${arrayName}.${index}.modelo`)}
             ></input>
@@ -71,8 +74,9 @@ const ProdutoForm = ({
               Garantia
             </label>
             <input
-              type="date"
+              type="text"
               id="small-input"
+              maxLength={200}
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               {...register(`${arrayName}.${index}.garantia`)}
             ></input>
@@ -84,9 +88,11 @@ const ProdutoForm = ({
             <input
               type="number"
               id="small-input"
+              min={0}
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               {...register(`${arrayName}.${index}.valor_Compra`, {
                 valueAsNumber: true,
+                required: true,
               })}
             ></input>
           </div>
@@ -97,9 +103,11 @@ const ProdutoForm = ({
             <input
               type="number"
               id="small-input"
+              min={0}
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               {...register(`${arrayName}.${index}.valor_Venda`, {
                 valueAsNumber: true,
+                required: true,
               })}
             ></input>
           </div>
@@ -112,7 +120,10 @@ const ProdutoForm = ({
               id="small-input"
               min={1}
               className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register(`${arrayName}.${index}.qtd`)}
+              {...register(`${arrayName}.${index}.qtd`, {
+                required: true,
+                valueAsNumber: true,
+              })}
             ></input>
           </div>
           <div className="mb-6">

@@ -38,7 +38,7 @@ const Sidebar = () => {
           aria-controls="default-sidebar"
           type="button"
           className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          onClick={() => setMenuOpened(value => !value)}
+          onClick={() => setMenuOpened((value) => !value)}
         >
           <span className="sr-only">Abrir Menu</span>
           <svg
@@ -57,7 +57,10 @@ const Sidebar = () => {
         </button>
       </div>
       <aside
-        className={classNames("fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0", menuOpened ? "transform-none" : "-translate-x-full")}
+        className={classNames(
+          "fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0",
+          menuOpened ? "transform-none" : "-translate-x-full"
+        )}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
@@ -174,7 +177,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="records/subService"
+                    to="records/customer"
                     className={(props) =>
                       classNames(
                         "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
@@ -182,20 +185,7 @@ const Sidebar = () => {
                       )
                     }
                   >
-                    Sub-Serviço
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="records/product"
-                    className={(props) =>
-                      classNames(
-                        "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
-                        props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
-                      )
-                    }
-                  >
-                    Produto
+                    Cliente
                   </NavLink>
                 </li>
                 <li>
@@ -213,7 +203,7 @@ const Sidebar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="records/customer"
+                    to="records/product"
                     className={(props) =>
                       classNames(
                         "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
@@ -221,7 +211,20 @@ const Sidebar = () => {
                       )
                     }
                   >
-                    Cliente
+                    Produto
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="records/subService"
+                    className={(props) =>
+                      classNames(
+                        "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
+                        props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
+                      )
+                    }
+                  >
+                    Sub-Serviço
                   </NavLink>
                 </li>
               </ul>
@@ -257,7 +260,7 @@ const Sidebar = () => {
         <div
           drawer-backdrop=""
           className="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30"
-          onClick={() => setMenuOpened(value => !value)}
+          onClick={() => setMenuOpened((value) => !value)}
         ></div>
       ) : (
         <></>

@@ -14,7 +14,6 @@ const CategoryForm = ({
   defaultValues,
   label,
 }: CategoryFormProps) => {
-
   const { register, handleSubmit } = useForm<CategoriaServico>({
     defaultValues: defaultValues,
   });
@@ -29,7 +28,8 @@ const CategoryForm = ({
           Nome
         </label>
         <input
-          {...register("titulo")}
+          {...register("titulo", { required: true })}
+          maxLength={250}
           type="text"
           id="nome"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -45,7 +45,7 @@ const CategoryForm = ({
         <input
           type="text"
           id="descricao"
-          {...register("desc")}
+          {...register("desc", { required: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>

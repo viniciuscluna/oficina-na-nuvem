@@ -31,7 +31,8 @@ const EmployeeForm = ({
           Nome
         </label>
         <input
-          {...register("nome")}
+          {...register("nome", { required: true })}
+          maxLength={150}
           type="text"
           id="nome"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -45,7 +46,9 @@ const EmployeeForm = ({
           Telefone
         </label>
         <input
-          {...registerWithMask("telefone", ["(99) [9]9999-9999"])}
+          {...registerWithMask("telefone", ["(99) [9]9999-9999"], {
+            required: true,
+          })}
           type="text"
           id="telefone"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -59,9 +62,10 @@ const EmployeeForm = ({
           Email
         </label>
         <input
-          {...registerWithMask("email", "email")}
+          {...registerWithMask("email", "email", { required: true })}
           type="text"
           id="email"
+          maxLength={250}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
@@ -73,7 +77,7 @@ const EmployeeForm = ({
           RG
         </label>
         <input
-          {...registerWithMask("rg", ["99999999-9"])}
+          {...registerWithMask("rg", ["99999999-9"], { required: true })}
           type="text"
           id="rg"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -87,7 +91,10 @@ const EmployeeForm = ({
           CPF
         </label>
         <input
-          {...registerWithMask("cpf", "cpf", { valueAsNumber: true })}
+          {...registerWithMask("cpf", "cpf", {
+            valueAsNumber: true,
+            required: true,
+          })}
           type="text"
           id="cpf"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -101,9 +108,10 @@ const EmployeeForm = ({
           Endereço
         </label>
         <input
-          {...register("endereco")}
+          {...register("endereco", { required: true })}
           type="text"
           id="endereco"
+          maxLength={250}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
@@ -115,9 +123,10 @@ const EmployeeForm = ({
           Cargo
         </label>
         <input
-          {...register("cargo")}
+          {...register("cargo", { required: true })}
           type="text"
           id="cargo"
+          maxLength={100}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>

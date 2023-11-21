@@ -35,6 +35,9 @@ const Employee = () => {
                   Cargo
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Telefone
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Ações
                 </th>
               </tr>
@@ -51,6 +54,9 @@ const Employee = () => {
                   >
                     {funcionario.nome}
                   </th>
+                  <td className="px-6 py-4">
+                    {funcionario.telefone}
+                  </td>
                   <td className="px-6 py-4">{funcionario.cargo}</td>
                   <td className="px-6 py-4">
                     <NavLink title="Editar" to={`edit/${funcionario.id}`}>

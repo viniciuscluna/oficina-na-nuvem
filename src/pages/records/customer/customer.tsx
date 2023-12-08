@@ -32,7 +32,16 @@ const Customer = () => {
                   Nome
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Cpf
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  E-mail
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Endereço
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Dat. Cadastro
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Ações
@@ -51,7 +60,16 @@ const Customer = () => {
                   >
                     {cliente.nome}
                   </th>
-                  <td className="px-6 py-4">{cliente.endereco}</td>
+                  <td>
+                    {cliente.cpf}
+                  </td> 
+                  <td>
+                    {cliente.email}
+                  </td>                  
+                  <td >{cliente.endereco}</td>
+                  <td>
+                    {cliente.dataCadastro?.substring(0,10)}
+                  </td>
                   <td className="px-6 py-4">
                     <NavLink title="Editar" to={`edit/${cliente.id}`}>
                       <svg

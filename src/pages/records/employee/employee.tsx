@@ -32,10 +32,16 @@ const Employee = () => {
                   Nome
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Cargo
+                  E-mail
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Cpf
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Telefone
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Cargo
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Ações
@@ -54,8 +60,10 @@ const Employee = () => {
                   >
                     {funcionario.nome}
                   </th>
-                  <td className="px-6 py-4">{funcionario.cargo}</td>
+                  <td className="px-6 py-4">{funcionario.email}</td>
+                  <td className="px-6 py-4">{funcionario.cpf}</td>
                   <td className="px-6 py-4">{funcionario.telefone}</td>
+                  <td className="px-6 py-4">{funcionario.cargo}</td>
                   <td className="px-6 py-4">
                     <NavLink title="Editar" to={`edit/${funcionario.id}`}>
                       <svg

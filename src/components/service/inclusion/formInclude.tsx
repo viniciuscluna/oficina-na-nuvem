@@ -15,6 +15,8 @@ import ProdutoForm from "./produtoForm";
 import { Produto } from "../../../domain/produto";
 import SelectFilter from "../../selectFilter";
 import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
+import { useNotificationStore } from "../../../stores/notificationStore";
+import { ValidationFormServico } from "../../../utils/validationFormSubmitPrestacao";
 
 type FormIncludeProps = {
   veiculos: Veiculo[];
@@ -31,8 +33,10 @@ const FormInclude = ({
   clientes,
   funcionarios,
   isOpened,
-  submitCallback,
-}: FormIncludeProps) => {
+  submitCallback
+}:
+  FormIncludeProps) => {
+  const addNotification = useNotificationStore(state => state.addNotification);
   const { changeIsOpened } = useIncludeServiceStore((state) => ({
     changeIsOpened: state.changeIsIncludeOpened,
   }));
@@ -82,6 +86,20 @@ const FormInclude = ({
   };
 
   const submit = (form: PrestacaoServico) => {
+
+    console.log(form);
+
+    const result = ValidationFormServico(form);
+
+    console.log("resultado validação " + result)
+    
+    if (result != null && !result.validation) {
+      addNotification({
+        message: result.menssagens,
+        type: 'error'
+      });
+      return;
+    }
     reset();
     submitCallback(form);
   };

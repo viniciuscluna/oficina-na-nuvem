@@ -68,9 +68,9 @@ const Notification = ({ notification, index }: NotificationProps) => {
   }, notification.duration || 3000);
 
   return (
-    <div
+    <div 
       id="toast-success"
-      className="fixed flex bottom-5 right-5 items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+      className="fixed flex bottom-5 right-5 items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 z-50"
       role="alert"
     >
       <Icon icon={notification.type} />

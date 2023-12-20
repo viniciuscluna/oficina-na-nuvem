@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getAll } from "../../../services/produtoService";
 import Loader from "../../../components/loader";
+import { useState } from "react";
 
 const Product = () => {
   const navigate = useNavigate();
@@ -11,11 +12,88 @@ const Product = () => {
     queryFn: getAll,
   });
 
+  const [filtroAberto, setFiltroAberto] = useState(false);
+
+  const handleToggleFiltro = () => {
+    setFiltroAberto(!filtroAberto);
+  };
+
+
   if (produtoResult.isLoading) <Loader />;
 
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-col  gap-5">
+        {/* Barra de filtro */}
+        <div className="w-full rounded-md shadow-md" >
+          <div className="bg-white rounded-t-md" onClick={() => setFiltroAberto(!filtroAberto)}>
+            <button
+              className="flex items-center justify-between w-full p-2 bg-gray-200 rounded-md focus:outline-none"
+            >
+              <span>Filtro</span>
+              <svg
+                className={`w-4 h-4 transition-transform transform ${filtroAberto ? 'rotate-0' : 'rotate-180'}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="bg-white p-4 rounded-md shadow-md">
+            {filtroAberto && (
+              <div className="mt-4">
+                {/* Aqui você pode adicionar os campos de filtro */}
+                <div className="mb-4">
+                  <label htmlFor="Nome" className="block text-sm font-medium text-gray-600">
+                    Nome
+                  </label>
+                  <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    className="mt-1 p-2 border rounded-md w-full"
+                    placeholder="Digite aqui"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="marca" className="block text-sm font-medium text-gray-600">
+                    Marca
+                  </label>
+                  <input
+                    type="text"
+                    id="marca"
+                    name="marca"
+                    className="mt-1 p-2 border rounded-md w-full"
+                    placeholder="Digite aqui"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="modelo" className="block text-sm font-medium text-gray-600">
+                    Modelo
+                  </label>
+                  <input
+                    type="text"
+                    id="modelo"
+                    name="modelo"
+                    className="mt-1 p-2 border rounded-md w-full"
+                    placeholder="Digite aqui"
+                  />
+                </div>
+                <button className="bg-green-800 text-white px-4 py-2 rounded-md ml-auto">
+                  Pesquisar
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
         <div>
           <button
             type="button"

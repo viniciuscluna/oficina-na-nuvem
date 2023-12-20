@@ -24,7 +24,7 @@ const EditSubService = () => {
 
   const categoriaResult = useQuery({
     queryKey: ["categoria"],
-    queryFn: getAll,
+    queryFn: () => getAll('', ''),
   });
 
   const subServicoResult = useQuery({

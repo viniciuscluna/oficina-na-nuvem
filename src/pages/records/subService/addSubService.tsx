@@ -19,7 +19,7 @@ const AddSubService = () => {
   
   const categoriaResult = useQuery({
     queryKey: ["subService"],
-    queryFn: getAll,
+    queryFn: () => getAll('', ''),
   });
 
   const subServicoResult = useMutation({

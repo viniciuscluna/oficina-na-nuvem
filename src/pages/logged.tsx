@@ -25,7 +25,7 @@ const Logged = () => {
 
   const clienteResult = useQuery({
     queryKey: ["cliente"],
-    queryFn: getAllCliente,
+    queryFn: () => getAllCliente('', '', ''),
   });
 
   const veiculoResult = useQuery({

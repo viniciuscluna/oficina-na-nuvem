@@ -1,86 +1,80 @@
-import { useQuery } from "@tanstack/react-query";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+
 import { getAll } from "../../../services/categoriaService";
 import Loader from "../../../components/loader";
-import { NavLink, useNavigate } from "react-router-dom";
-import React, { useState } from 'react';
+import Filter from "../../../components/filter";
+import { useEffect } from "react";
+
+type CategoryFields = {
+  titulo: string;
+  descricao: string;
+};
 
 const Category = () => {
   const navigate = useNavigate();
-  const categoriaResult = useQuery({
-    queryKey: ["categoria"],
-    queryFn: getAll,
+  const {data, isLoading, mutateAsync} = useMutation({
+    mutationFn: (fields: CategoryFields) =>
+      getAll(fields.titulo, fields.descricao),
   });
 
-  const [filtroAberto, setFiltroAberto] = useState(false);
+  const { register, handleSubmit } = useForm<CategoryFields>();
 
-  const handleToggleFiltro = () => {
-    setFiltroAberto(!filtroAberto);
+  useEffect(() => {
+      mutateAsync({ titulo: "", descricao: "" });
+  }, [mutateAsync]);
+
+  const onSubmit = (fields: CategoryFields) => {
+    mutateAsync(fields);
   };
 
-  if (categoriaResult.isLoading) <Loader />;
+  if (isLoading) <Loader />;
 
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-col  gap-5">
-        {/* Barra de filtro */}
-        <div className="w-full rounded-md shadow-md" >
-          <div className="bg-white rounded-t-md" onClick={() => setFiltroAberto(!filtroAberto)}>
-            <button
-              className="flex items-center justify-between w-full p-2 bg-gray-200 rounded-md focus:outline-none"
-            >
-              <span>Filtro</span>
-              <svg
-                className={`w-4 h-4 transition-transform transform ${filtroAberto ? 'rotate-0' : 'rotate-180'}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
+        <Filter defaultValue={false}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mt-4">
+              {/* Aqui você pode adicionar os campos de filtro */}
+              <div className="mb-6">
+                <label
+                  htmlFor="titulo"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Titulo
+                </label>
+                <input
+                  type="text"
+                  id="titulo"
+                  {...register("titulo")}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
-              </svg>
-            </button>
-          </div>
-          <div className="bg-white p-4 rounded-md shadow-md">
-            {filtroAberto && (
-              <div className="mt-4">
-                {/* Aqui você pode adicionar os campos de filtro */}
-                <div className="mb-4">
-                  <label htmlFor="titulo" className="block text-sm font-medium text-gray-600">
-                    Tíulo
-                  </label>
-                  <input
-                    type="text"
-                    id="titulo"
-                    name="titulo"
-                    className="mt-1 p-2 border rounded-md w-full"
-                    placeholder="Digite aqui"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="descricao" className="block text-sm font-medium text-gray-600">
-                    Descrição
-                  </label>
-                  <input
-                    type="text"
-                    id="descricao"
-                    name="descricao"
-                    className="mt-1 p-2 border rounded-md w-full"
-                    placeholder="Digite aqui"
-                  />
-                </div>
-                <button className="bg-green-800 text-white px-4 py-2 rounded-md ml-auto">
-                  Pesquisar
-                </button>
               </div>
-            )}
-          </div>
-        </div>
-
+              <div className="mb-6">
+                <label
+                  htmlFor="descricao"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Descrição
+                </label>
+                <input
+                  type="text"
+                  id="descricao"
+                  {...register("descricao")}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-green-800 text-white px-4 py-2 rounded-md ml-auto block ml-auto"
+              >
+                Filtrar
+              </button>
+            </div>
+          </form>
+        </Filter>
         <div>
           <button
             type="button"
@@ -106,7 +100,7 @@ const Category = () => {
               </tr>
             </thead>
             <tbody>
-              {categoriaResult.data?.map((categoria, index) => (
+              {data?.map((categoria, index) => (
                 <tr
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                   key={index}
@@ -121,7 +115,7 @@ const Category = () => {
                   <td className="px-6 py-4">
                     <NavLink title="Editar" to={`edit/${categoria.id}`}>
                       <svg
-                        className="w-4 h-4 text-green-800 dark:text-green-400"
+                        className="w-4 h-4 text-gray-800 dark:text-gray-400"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -131,28 +125,6 @@ const Category = () => {
                         <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
                       </svg>
                     </NavLink>
-                    <NavLink title="Excluir" to={`edit/${categoria.id}`}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        aria-hidden="true"
-                        className="w-4 h-4 text-red-800 dark:text-red-400"
-                      >
-                        <g>
-                          <rect width="20" height="14" x="2" y="2" rx="2" ry="2"></rect>
-                          <path d="M6 2L6 6"></path>
-                          <path d="M10 2L10 6"></path>
-                          <path d="M14 2L14 6"></path>
-                          <path d="M18 2L18 6"></path>
-                          <path d="M3 10L21 10"></path>
-                        </g>
-                      </svg>
-                    </NavLink>
                   </td>
                 </tr>
               ))}
@@ -160,7 +132,7 @@ const Category = () => {
           </table>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

@@ -13,9 +13,6 @@ const Employee = () => {
 
   const [filtroAberto, setFiltroAberto] = useState(false);
 
-  const handleToggleFiltro = () => {
-    setFiltroAberto(!filtroAberto);
-  };
 
 
   if (funcionarioResult.isLoading) <Loader />;

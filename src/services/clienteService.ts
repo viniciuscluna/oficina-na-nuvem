@@ -1,8 +1,14 @@
 import { Cliente } from "../domain/cliente";
 import { instanceApi } from "./axiosConfig";
 
-export const getAll = async (): Promise<Cliente[]> => {
-  return (await instanceApi.get<Cliente[]>("/cliente")).data;
+export const getAll = async (nome: string, cpf: string, email: string): Promise<Cliente[]> => {
+  return (await instanceApi.get<Cliente[]>("/cliente", {
+    params: {
+      nome,
+      cpf,
+      email
+    }
+  })).data;
 };
 
 export const add = async (

@@ -13,10 +13,6 @@ const SubService = () => {
 
   const [filtroAberto, setFiltroAberto] = useState(false);
 
-  const handleToggleFiltro = () => {
-    setFiltroAberto(!filtroAberto);
-  };
-
 
   if (subServicoResult.isLoading) <Loader />;
 

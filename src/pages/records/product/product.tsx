@@ -1,99 +1,95 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import { getAll } from "../../../services/produtoService";
 import Loader from "../../../components/loader";
-import { useState } from "react";
+import Filter from "../../../components/filter";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
+type ProductFields = {
+  nome: string;
+  marca: string;
+  modelo: string;
+};
 const Product = () => {
   const navigate = useNavigate();
-  const produtoResult = useQuery({
-    queryKey: ["produto"],
-    queryFn: getAll,
+  const { data, isLoading, mutateAsync } = useMutation({
+    mutationFn: (fields: ProductFields) =>
+      getAll(fields.nome, fields.marca, fields.modelo),
   });
 
-  const [filtroAberto, setFiltroAberto] = useState(false);
+  const { register, handleSubmit } = useForm<ProductFields>();
 
-  const handleToggleFiltro = () => {
-    setFiltroAberto(!filtroAberto);
+  useEffect(() => {
+    mutateAsync({ nome: "", marca: "", modelo: "" });
+  }, [mutateAsync]);
+
+  const onSubmit = (fields: ProductFields) => {
+    mutateAsync(fields);
   };
 
-
-  if (produtoResult.isLoading) <Loader />;
+  if (isLoading) <Loader />;
 
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-col  gap-5">
-        {/* Barra de filtro */}
-        <div className="w-full rounded-md shadow-md" >
-          <div className="bg-white rounded-t-md" onClick={() => setFiltroAberto(!filtroAberto)}>
-            <button
-              className="flex items-center justify-between w-full p-2 bg-gray-200 rounded-md focus:outline-none"
-            >
-              <span>Filtro</span>
-              <svg
-                className={`w-4 h-4 transition-transform transform ${filtroAberto ? 'rotate-0' : 'rotate-180'}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
+        <Filter defaultValue={false}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mt-4">
+              {/* Aqui você pode adicionar os campos de filtro */}
+              <div className="mb-6">
+                <label
+                  htmlFor="nome"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Nome
+                </label>
+                <input
+                  type="text"
+                  id="nome"
+                  {...register("nome")}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
-              </svg>
-            </button>
-          </div>
-          <div className="bg-white p-4 rounded-md shadow-md">
-            {filtroAberto && (
-              <div className="mt-4">
-                {/* Aqui você pode adicionar os campos de filtro */}
-                <div className="mb-4">
-                  <label htmlFor="Nome" className="block text-sm font-medium text-gray-600">
-                    Nome
-                  </label>
-                  <input
-                    type="text"
-                    id="nome"
-                    name="nome"
-                    className="mt-1 p-2 border rounded-md w-full"
-                    placeholder="Digite aqui"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="marca" className="block text-sm font-medium text-gray-600">
-                    Marca
-                  </label>
-                  <input
-                    type="text"
-                    id="marca"
-                    name="marca"
-                    className="mt-1 p-2 border rounded-md w-full"
-                    placeholder="Digite aqui"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="modelo" className="block text-sm font-medium text-gray-600">
-                    Modelo
-                  </label>
-                  <input
-                    type="text"
-                    id="modelo"
-                    name="modelo"
-                    className="mt-1 p-2 border rounded-md w-full"
-                    placeholder="Digite aqui"
-                  />
-                </div>
-                <button className="bg-green-800 text-white px-4 py-2 rounded-md ml-auto">
-                  Pesquisar
-                </button>
               </div>
-            )}
-          </div>
-        </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="marca"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Marca
+                </label>
+                <input
+                  type="text"
+                  id="marca"
+                  {...register("marca")}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="modelo"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Modelo
+                </label>
+                <input
+                  type="text"
+                  id="modelo"
+                  {...register("modelo")}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-green-800 text-white px-4 py-2 rounded-md ml-auto block ml-auto"
+              >
+                Filtrar
+              </button>
+            </div>
+          </form>
+        </Filter>
+
         <div>
           <button
             type="button"
@@ -131,7 +127,7 @@ const Product = () => {
               </tr>
             </thead>
             <tbody>
-              {produtoResult.data?.map((produto, index) => (
+              {data?.map((produto, index) => (
                 <tr
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                   key={index}

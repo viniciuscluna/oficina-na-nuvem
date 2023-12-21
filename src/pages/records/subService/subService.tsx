@@ -1,94 +1,83 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAll } from "../../../services/subServicoService";
 import Loader from "../../../components/loader";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import Filter from "../../../components/filter";
+
+
+type SubServiceFields = {
+  titulo: string;
+  descricao: string;
+};
 
 const SubService = () => {
   const navigate = useNavigate();
-  const subServicoResult = useQuery({
-    queryKey: ["subServico"],
-    queryFn: getAll,
+
+  const { data, isLoading, mutateAsync } = useMutation({
+    mutationFn: (fields: SubServiceFields) =>
+      getAll(fields.titulo, fields.descricao),
   });
 
-  const [filtroAberto, setFiltroAberto] = useState(false);
+  const { register, handleSubmit } = useForm<SubServiceFields>();
+
+  useEffect(() => {
+    mutateAsync({ titulo: "",descricao: "" });
+  }, [mutateAsync]);
+
+  const onSubmit = (fields: SubServiceFields) => {
+    mutateAsync(fields);
+  };
 
 
-  if (subServicoResult.isLoading) <Loader />;
+  if (isLoading) <Loader />;
 
   return (
     <div className="flex flex-col mt-8">
       <div className="flex flex-col  gap-5">
-                {/* Barra de filtro */}
-                <div className="w-full rounded-md shadow-md" >
-          <div className="bg-white rounded-t-md" onClick={() => setFiltroAberto(!filtroAberto)}>
-            <button
-              className="flex items-center justify-between w-full p-2 bg-gray-200 rounded-md focus:outline-none"
-            >
-              <span>Filtro</span>
-              <svg
-                className={`w-4 h-4 transition-transform transform ${filtroAberto ? 'rotate-0' : 'rotate-180'}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
+        {/* Barra de filtro */}
+        <Filter defaultValue={false}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mt-4">
+              {/* Aqui você pode adicionar os campos de filtro */}
+              <div className="mb-6">
+                <label
+                  htmlFor="titulo"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Titulo
+                </label>
+                <input
+                  type="text"
+                  id="titulo"
+                  {...register("titulo")}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
-              </svg>
-            </button>
-          </div>
-          <div className="bg-white p-4 rounded-md shadow-md">
-            {filtroAberto && (
-              <div className="mt-4">
-                {/* Aqui você pode adicionar os campos de filtro */}
-                <div className="mb-4">
-                  <label htmlFor="Nome" className="block text-sm font-medium text-gray-600">
-                    Nome
-                  </label>
-                  <input
-                    type="text"
-                    id="nome"
-                    name="nome"
-                    className="mt-1 p-2 border rounded-md w-full"
-                    placeholder="Digite aqui"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="descricao" className="block text-sm font-medium text-gray-600">
-                    Descrição
-                  </label>
-                  <input
-                    type="text"
-                    id="descricao"
-                    name="descricao"
-                    className="mt-1 p-2 border rounded-md w-full"
-                    placeholder="Digite aqui"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="categoria" className="block text-sm font-medium text-gray-600">
-                    Categoria
-                  </label>
-                  <input
-                    type="text"
-                    id="categoria"
-                    name="categoria"
-                    className="mt-1 p-2 border rounded-md w-full"
-                    placeholder="Digite aqui"
-                  />
-                </div>
-                <button className="bg-green-800 text-white px-4 py-2 rounded-md ml-auto">
-                  Pesquisar
-                </button>
               </div>
-            )}
-          </div>
-        </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="descricao"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Descrição
+                </label>
+                <input
+                  type="text"
+                  id="descricao"
+                  {...register("descricao")}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-green-800 text-white px-4 py-2 rounded-md ml-auto block ml-auto"
+              >
+                Filtrar
+              </button>
+            </div>
+          </form>
+        </Filter>
         <div>
           <button
             type="button"
@@ -117,7 +106,7 @@ const SubService = () => {
               </tr>
             </thead>
             <tbody>
-              {subServicoResult.data?.map((subServico, index) => (
+              {data?.map((subServico, index) => (
                 <tr
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                   key={index}

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import classNames from "classnames";
-import { Control, useController } from "react-hook-form";
+import { Control, RegisterOptions, useController } from "react-hook-form";
 
 export interface SelectValue {
   name: string;
@@ -15,6 +15,10 @@ type SelectFilterProps = {
   search: string;
   control: Control<any>;
   name: string;
+  rules?: Omit<
+    RegisterOptions<any, string>,
+    "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
+  >;
 };
 
 const SelectFilter = ({
@@ -24,6 +28,7 @@ const SelectFilter = ({
   search,
   control,
   name,
+  rules,
 }: SelectFilterProps) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
@@ -33,9 +38,11 @@ const SelectFilter = ({
 
   const {
     field: { ref, onChange, onBlur, value },
+    formState: { errors },
   } = useController({
     control: control,
     name: name,
+    rules: rules,
   });
 
   const selectItem = (value: SelectValue) => {
@@ -143,7 +150,7 @@ const SelectFilter = ({
         >
           {filterList.map((value, index) => {
             const isFirstOption = index === 0;
-            const isOther = value.value === 'other';
+            const isOther = value.value === "other";
             return (
               <li key={index}>
                 <button
@@ -151,7 +158,7 @@ const SelectFilter = ({
                   className={classNames(
                     "flex items-center pl-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left",
                     isFirstOption ? "bg-gray-100 dark:bg-gray-600" : "",
-                    isOther ? "bg-green-200 dark:bg-green-900" : "",
+                    isOther ? "bg-green-200 dark:bg-green-900" : ""
                   )}
                   onClick={() => selectItem(value)}
                   ref={isFirstOption ? firstButtonRef : undefined}
@@ -168,6 +175,9 @@ const SelectFilter = ({
           })}
         </ul>
       </div>
+      {errors[name] && (
+        <p className="my-2 text-sm text-red-600 dark:text-red-500">{errors[name]?.message?.toString() || "Validation Error"}</p>
+      )}
     </>
   );
 };

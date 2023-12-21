@@ -105,6 +105,7 @@ const FormUpdate = ({
                 value: funcionario.id?.toString() || "",
               }))}
               emptyPlaceholder="Escolha o funcionário"
+              rules={{ required: 'Selecione um funcinário' }}
             />
           </div>
           <div>
@@ -127,6 +128,7 @@ const FormUpdate = ({
                 ...[{ name: "Inserir", value: "other" }],
               ]}
               emptyPlaceholder="Escolha o cliente"
+              rules={{ required: 'Selecione um cliente' }}
             />
             {showClienteForm ? <ClienteForm register={register} /> : <></>}
           </div>
@@ -150,6 +152,7 @@ const FormUpdate = ({
                 ...[{ name: "Inserir", value: "other" }],
               ]}
               emptyPlaceholder="Escolha o veículo"
+              rules={{ required: 'Selecione um veículo' }}
             />
             {showVeiculoForm ? (
               <VeiculoForm

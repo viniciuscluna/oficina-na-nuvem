@@ -20,7 +20,7 @@ const Logged = () => {
 
   const subServicoResult = useQuery({
     queryKey: ["subServico"],
-    queryFn: getAllSubServico,
+    queryFn: () => getAllSubServico('',''),
   });
 
   const clienteResult = useQuery({
@@ -35,7 +35,7 @@ const Logged = () => {
 
   const funcionarioResult = useQuery({
     queryKey: ['funcionario'],
-    queryFn: getFuncionario
+    queryFn: () => getFuncionario('','','')
   })
 
   useEffect(() => {

@@ -33,10 +33,11 @@ const FormInclude = ({
   clientes,
   funcionarios,
   isOpened,
-  submitCallback
-}:
-  FormIncludeProps) => {
-  const addNotification = useNotificationStore(state => state.addNotification);
+  submitCallback,
+}: FormIncludeProps) => {
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
   const { changeIsOpened } = useIncludeServiceStore((state) => ({
     changeIsOpened: state.changeIsIncludeOpened,
   }));
@@ -86,17 +87,16 @@ const FormInclude = ({
   };
 
   const submit = (form: PrestacaoServico) => {
-
     console.log(form);
 
     const result = ValidationFormServico(form);
 
-    console.log("resultado validação " + result)
-    
+    console.log("resultado validação " + result);
+
     if (result != null && !result.validation) {
       addNotification({
         message: result.menssagens,
-        type: 'error'
+        type: "error",
       });
       return;
     }
@@ -125,6 +125,7 @@ const FormInclude = ({
                 value: funcionario.id?.toString() || "",
               }))}
               emptyPlaceholder="Escolha o funcionário"
+              rules={{ required: 'Selecione um funcinário' }}
             />
           </div>
           <div>
@@ -147,6 +148,7 @@ const FormInclude = ({
                 ...[{ name: "Inserir", value: "other" }],
               ]}
               emptyPlaceholder="Escolha o cliente"
+              rules={{ required: 'Selecione um cliente' }}
             />
             {showClienteForm ? <ClienteForm register={register} /> : <></>}
           </div>
@@ -169,6 +171,7 @@ const FormInclude = ({
                 })),
                 ...[{ name: "Inserir", value: "other" }],
               ]}
+              rules={{ required: 'Selecione um veículo' }}
               emptyPlaceholder="Escolha o veículo"
             />
             {showVeiculoForm ? (

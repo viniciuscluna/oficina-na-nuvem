@@ -27,9 +27,11 @@ const AddCustomer = () => {
     onError: (error: AxiosError) => {
 
       if (error.response?.status === 400) {
+        const errordata = error.response?.data as any[]
         addNotification({
-          message: JSON.stringify(error.response?.data),
-          type: "error"
+          message: errordata?.map(errors=>errors.errormensagem).join(","),
+          type: "error",
+          duration: 5000
         })
       return
       }

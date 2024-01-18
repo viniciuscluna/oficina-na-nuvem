@@ -29,7 +29,7 @@ const AddCustomer = () => {
       if (error.response?.status === 400) {
         const errordata = error.response?.data as any[]
         addNotification({
-          message: errordata?.map(errors=>errors.errormensagem).join(","),
+          message: errordata?.map(errors=>errors.errorMensagem).join(","),
           type: "error",
           duration: 5000
         })

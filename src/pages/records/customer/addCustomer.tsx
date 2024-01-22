@@ -6,6 +6,7 @@ import { add } from "../../../services/clienteService";
 import { Cliente } from "../../../domain/cliente";
 import CustomerForm from "../../../components/records/customerForm";
 import { useNotificationStore } from "../../../stores/notificationStore";
+import { AxiosError } from "axios";
 
 const AddCustomer = () => {
   const backPage = "/logged/records/customer";
@@ -23,7 +24,18 @@ const AddCustomer = () => {
         type: "success",
       });
     },
-    onError: () => {
+    onError: (error: AxiosError) => {
+
+      if (error.response?.status === 400) {
+        const errordata = error.response?.data as any[]
+        addNotification({
+          message: errordata?.map(errors=>errors.errorMensagem).join(","),
+          type: "error",
+          duration: 5000
+        })
+      return
+      }
+
       addNotification({
         message: "Erro ao inserir cliente.",
         type: "error"

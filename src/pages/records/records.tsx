@@ -9,6 +9,9 @@ const Records = () => {
     const base = "/logged/records/";
     if (location.pathname.startsWith(`${base}category`)) return "Categoria";
     if (location.pathname.startsWith(`${base}subService`)) return "Sub-Serviço";
+    if (location.pathname.startsWith(`${base}product`)) return "Produto";
+    if (location.pathname.startsWith(`${base}employee`)) return "Funcionário";
+    if (location.pathname.startsWith(`${base}customer`)) return "Cliente";
     else return "Cadastro";
   }, [location.pathname]);
 

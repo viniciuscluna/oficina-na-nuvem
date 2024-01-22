@@ -1,8 +1,18 @@
 import { SubServico } from "../domain/subServico";
 import { instanceApi } from "./axiosConfig";
 
-export const getAll = async (): Promise<SubServico[]> => {
-  return (await instanceApi.get<SubServico[]>("/subServico")).data;
+export const getAll = async (
+
+  titulo: string,
+  desc: string
+
+): Promise<SubServico[]> => {
+  return (await instanceApi.get<SubServico[]>("/subServico", {
+    params: {
+      titulo: titulo,
+      desc: desc
+    }
+  })).data;
 };
 
 export const add = async (subServico: SubServico): Promise<SubServico> => {

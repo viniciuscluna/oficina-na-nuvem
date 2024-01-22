@@ -2,9 +2,19 @@ import { FuncionarioPrestador } from "../domain/funcionarioPrestador";
 import { onlyNumber } from "../utils/numberFormater";
 import { instanceApi } from "./axiosConfig";
 
-export const getAll = async (): Promise<FuncionarioPrestador[]> => {
+export const getAll = async (
+  cpf: string,
+  nome: string,
+  email: string
+): Promise<FuncionarioPrestador[]> => {
   return (
-    await instanceApi.get<FuncionarioPrestador[]>("/prestador/funcionario")
+    await instanceApi.get<FuncionarioPrestador[]>("/prestador/funcionario", {
+      params: {
+        cpf: cpf,
+        nome: nome,
+        email: email
+      }
+    })
   ).data;
 };
 

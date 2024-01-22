@@ -6,9 +6,9 @@ export const getAll = async (
   cpf: string,
   nome: string,
   email: string
-): Promise<FuncionarioPrestador[]> => {
+): Promise<FuncionarioPrestador[] | string> => {
   return (
-    await instanceApi.get<FuncionarioPrestador[]>("/prestador/funcionario", {
+    await instanceApi.get<FuncionarioPrestador[] | string>("/prestador/funcionario", {
       params: {
         cpf: cpf,
         nome: nome,
@@ -53,3 +53,11 @@ export const getId = async (id: string): Promise<FuncionarioPrestador> => {
     await instanceApi.get<FuncionarioPrestador>(`/prestador/funcionario/${id}`)
   ).data;
 };
+
+export const desabled = async (
+  id: string
+): Promise<FuncionarioPrestador> =>
+  (
+    await instanceApi.put<FuncionarioPrestador>(
+      `/prestador/DesativarFuncionario?id=${id}`)
+  ).data;

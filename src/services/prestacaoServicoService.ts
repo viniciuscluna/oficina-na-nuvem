@@ -69,3 +69,9 @@ export const changeStatus = async (
   status: EPrestacaoServicoStatus
 ): Promise<void> =>
   (await instanceApi.put(`/prestacaoServico/status/${id}/${status}`)).data;
+
+  export const desabled = async (id: string): Promise<PrestacaoServico> =>
+  (
+    await instanceApi.put<PrestacaoServico>(
+      `/prestacaoServico/DesativarPrestacao?id=${id}`)
+  ).data;

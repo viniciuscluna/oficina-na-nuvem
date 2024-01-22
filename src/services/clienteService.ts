@@ -1,8 +1,8 @@
 import { Cliente } from "../domain/cliente";
 import { instanceApi } from "./axiosConfig";
 
-export const getAll = async (nome: string, cpf: string, email: string): Promise<Cliente[]> => {
-  return (await instanceApi.get<Cliente[]>("/cliente", {
+export const getAll = async (nome: string, cpf: string, email: string): Promise<Cliente[] | string> => {
+  return (await instanceApi.get<Cliente[] | string>("/cliente", {
     params: {
       nome,
       cpf,
@@ -25,4 +25,8 @@ export const edit = async (cliente: Cliente): Promise<Cliente> => {
 
 export const getId = async (id: string): Promise<Cliente> => {
   return (await instanceApi.get<Cliente>(`/cliente/${id}`)).data;
+};
+
+export const desabled = async (id: string): Promise<Cliente> => {
+  return (await instanceApi.put<Cliente>(`/cliente/DesativarCliente?id=${id}`)).data;
 };

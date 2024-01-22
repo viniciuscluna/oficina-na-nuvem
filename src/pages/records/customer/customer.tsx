@@ -2,11 +2,13 @@ import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { useMutation } from "@tanstack/react-query";
-import { getAll } from "../../../services/clienteService";
+import { getAll, desabled } from "../../../services/clienteService";
 import Loader from "../../../components/loader";
 import Filter from "../../../components/filter";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHookFormMask } from "use-mask-input";
+import { useNotificationStore } from "../../../stores/notificationStore";
+import ConfirmModal from "../../../components/confirmModal";
 
 type CustomerFields = {
   nome: string;
@@ -15,13 +17,31 @@ type CustomerFields = {
 };
 
 const Customer = () => {
-  const navigate = useNavigate();
+  const [isDisableSelect, setDisableSelect] = useState<string | undefined>(undefined);
+  const navigate = useNavigate(); 
+   const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
   const { mutateAsync, isLoading, data } = useMutation({
     mutationFn: (fields: CustomerFields) =>
       getAll(fields.nome, fields.cpf, fields.email),
   });
-  const { register, handleSubmit } = useForm<CustomerFields>();
+  const { register, handleSubmit, getValues } = useForm<CustomerFields>();
   const registerWithMask = useHookFormMask(register);
+
+  const { mutateAsync: mutateDisableAsync } = useMutation({
+    mutationFn: (id: string) =>
+      desabled(id),
+    onSuccess: () => {
+      setDisableSelect(undefined);
+      const formValues = getValues();
+      mutateAsync(formValues);
+      addNotification({
+        message: "Cliente apagado(a) com sucesso!",
+        type: "success",
+      });
+    }
+  });
 
   useEffect(() => {
     mutateAsync({ nome: "", cpf: "", email: "" });
@@ -34,10 +54,15 @@ const Customer = () => {
   if (isLoading) <Loader />;
 
   return (
+    <> 
+    <ConfirmModal
+    isOpened={isDisableSelect !== undefined}
+    onNoCallback={() => setDisableSelect(undefined)}
+    onYesCallback={() => mutateDisableAsync(isDisableSelect || "")}
+    message="Deseja realmente excluir o(a) cliente?"
+  />
     <div className="flex flex-col mt-8">
       <div className="flex flex-col  gap-5">
-        {/* Barra de filtro */}
-
         <Filter defaultValue={false}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mt-4">
@@ -128,7 +153,7 @@ const Customer = () => {
               </tr>
             </thead>
             <tbody>
-              {data?.map((cliente, index) => (
+              {data instanceof Array ? data?.map((cliente, index) => (
                 <tr
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                   key={index}
@@ -144,26 +169,34 @@ const Customer = () => {
                   <td>{cliente.endereco}</td>
                   <td>{cliente.dataCadastro?.substring(0, 10)}</td>
                   <td className="px-6 py-4">
-                    <NavLink title="Editar" to={`edit/${cliente.id}`}>
-                      <svg
-                        className="w-4 h-4 text-gray-800 dark:text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 20 18"
-                      >
-                        <path d="M12.687 14.408a3.01 3.01 0 0 1-1.533.821l-3.566.713a3 3 0 0 1-3.53-3.53l.713-3.566a3.01 3.01 0 0 1 .821-1.533L10.905 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V11.1l-3.313 3.308Zm5.53-9.065.546-.546a2.518 2.518 0 0 0 0-3.56 2.576 2.576 0 0 0-3.559 0l-.547.547 3.56 3.56Z" />
-                        <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
-                      </svg>
-                    </NavLink>
+                    <div className="flex gap-1">
+                      <NavLink title="Editar" to={`edit/${cliente.id}`}>
+                        <svg
+                          className="w-4 h-4 text-green-800 dark:text-green-400"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 20 18"
+                        >
+                          <path d="M12.687 14.408a3.01 3.01 0 0 1-1.533.821l-3.566.713a3 3 0 0 1-3.53-3.53l.713-3.566a3.01 3.01 0 0 1 .821-1.533L10.905 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V11.1l-3.313 3.308Zm5.53-9.065.546-.546a2.518 2.518 0 0 0 0-3.56 2.576 2.576 0 0 0-3.559 0l-.547.547 3.56 3.56Z" />
+                          <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
+                        </svg>
+                      </NavLink>
+                      <button type="button" title="Excluir" onClick={()=> setDisableSelect(cliente.id)}>
+                        <svg className="w-4 h-4 text-red-800 dark:text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                          <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z" />
+                        </svg>
+                      </button>
+                    </div>
                   </td>
                 </tr>
-              ))}
+              )) : <></>}
             </tbody>
           </table>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

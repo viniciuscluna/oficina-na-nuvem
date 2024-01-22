@@ -4,9 +4,9 @@ import { instanceApi } from "./axiosConfig";
 export const getAll = async (
   titulo: string,
   descricao: string
-): Promise<CategoriaServico[]> => {
+): Promise<CategoriaServico[] | string> => {
   return (
-    await instanceApi.get<CategoriaServico[]>("/categoriaServico", {
+    await instanceApi.get<CategoriaServico[] | string>("/categoriaServico", {
       params: {
         titulo: titulo,
         desc: descricao,
@@ -34,4 +34,12 @@ export const edit = async (
 export const getId = async (id: string): Promise<CategoriaServico> => {
   return (await instanceApi.get<CategoriaServico>(`/categoriaServico/${id}`))
     .data;
+};
+
+export const desabled = async (
+  id: string
+): Promise<CategoriaServico> => {
+  return (
+    await instanceApi.put<CategoriaServico>(`/categoriaServico/DesativarCategoria?id=${id}`)
+  ).data;
 };

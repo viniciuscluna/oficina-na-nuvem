@@ -5,9 +5,9 @@ export const getAll = async (
   nome: string,
   marca: string,
   modelo: string
-): Promise<Produto[]> => {
+): Promise<Produto[] | string> => {
   return (
-    await instanceApi.get<Produto[]>("/produto", {
+    await instanceApi.get<Produto[] | string>("/produto", {
       params: {
         nome,
         marca,
@@ -27,4 +27,8 @@ export const edit = async (produto: Produto): Promise<Produto> => {
 
 export const getId = async (id: string): Promise<Produto> => {
   return (await instanceApi.get<Produto>(`/produto/${id}`)).data;
+};
+
+export const desabled = async (id: string): Promise<Produto> => {
+  return (await instanceApi.put<Produto>(`/produto/DesativarProduto?id=${id}`)).data;
 };

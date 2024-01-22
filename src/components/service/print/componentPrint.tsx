@@ -59,7 +59,7 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
               <br />
               {prestacao.prestador?.telefone}
               <br />
-              {prestacao.prestador?.emailEmpresa}
+              <b>{prestacao.prestador?.emailEmpresa}</b>
             </p>
           </section>
 
@@ -69,44 +69,44 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
                 <h4>{prestacao.prestador?.nome} ({prestacao.referencia})</h4>
               </th>
               <tr>
-                <td>CLIENTE: {prestacao.cliente?.nome}</td>
+                <td><b>Cliente:</b> {prestacao.cliente?.nome}</td>
                 <td>
-                  INICIO DO SERVIÇO:{" "}
+                  <b>Início do seviço:</b>{" "}
                   {new Date(prestacao.dataCadastro || "")?.toLocaleDateString(
                     "en-GB"
                   )}
                 </td>
               </tr>
               <tr>
-                <td>VEICULO: {prestacao?.veiculo?.marca}</td>
-                <td>TÉRMINO DO SERVIÇO:{" "}
-                {prestacao.dataConclusaoServico? new Date(prestacao.dataConclusaoServico || "")?.toLocaleDateString(
+                <td><b>Veículo: </b>{prestacao?.veiculo?.marca}</td>
+                <td><b>Término do serviço:</b> {" "}
+                  {prestacao.dataConclusaoServico ? new Date(prestacao.dataConclusaoServico || "")?.toLocaleDateString(
                     "en-GB"
                   ) : ''}
                 </td>
               </tr>
               <tr>
                 <td>
-                  MODELO: {prestacao?.veiculo?.modelo} -{" "}
+                  <b>Modelo:</b> {prestacao?.veiculo?.modelo} -{" "}
                   {prestacao?.veiculo?.ano}
                 </td>
-                <td>KM: {prestacao.veiculo?.km || "-"}</td>
+                <td><b>Km:</b> {prestacao.veiculo?.km || "-"}</td>
               </tr>
               <tr>
-                <td>PLACA: {prestacao.veiculo?.placa}</td>
-                <td>TELEFONE: {prestacao.cliente?.telefone}</td>
+                <td><b>Placa:</b> {prestacao.veiculo?.placa}</td>
+                <td><b>Telefone:</b> {prestacao.cliente?.telefone}</td>
               </tr>
             </table>
 
             {/* Serviços */}
             <table>
               <th style={{ textAlign: "center" }} colSpan={2}>
-                <h4>SERVIÇOS REALIZADOS</h4>
+                <h4>Serviços realizados</h4>
               </th>
               <tbody>
                 <tr>
-                  <th>DESCRIMININAÇÃO DE SERVIÇO</th>
-                  <th>VALOR R$</th>
+                  <th>Descriminação de serviço</th>
+                  <th>Valor (R$) </th>
                 </tr>
                 {prestacao.servicos?.map((servico, index) => {
                   const descr =
@@ -125,24 +125,24 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
 
                 <tr>
                   <td colSpan={2}>
-                    <strong>Total: {currencyFormat(totalServico)}</strong>
+                    <strong>Total:</strong> {currencyFormat(totalServico)}
                   </td>
                 </tr>
               </tbody>
             </table>
-
+            <br></br>
             {/* Produtos */}
             <table>
               <table>
                 <th style={{ textAlign: "center" }} colSpan={5}>
-                  <h4>PEÇAS E ACESSÓRIOS</h4>
+                  <h4>Peças e acessórios</h4>
                 </th>
                 <tr>
-                  <th>QTD</th>
-                  <th>UN.</th>
-                  <th>PEÇAS</th>
-                  <th>UNITÁRIO R$</th>
-                  <th>TOTAL R$</th>
+                  <th>Qtd.</th>
+                  <th>Un.</th>
+                  <th>Peças</th>
+                  <th>Unitário (R$)</th>
+                  <th>Total (R$)</th>
                 </tr>
                 <tbody>
                   {Object.keys(produtoAgrupado).map((produto, index) => {
@@ -173,7 +173,7 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
 
                   <tr>
                     <td colSpan={5}>
-                      <strong>Total: {currencyFormat(totalProduto)}</strong>
+                      <strong>Total:</strong> {currencyFormat(totalProduto)}
                     </td>
                   </tr>
                 </tbody>
@@ -183,15 +183,15 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
             <br />
             <div className="details-total">
               <p style={{ paddingLeft: "1%" }}>
-                <strong>PEÇAS: {currencyFormat(totalProduto)}</strong>
+                <strong>Peças: </strong>{currencyFormat(totalProduto)}
               </p>
               <hr />
               <p style={{ paddingLeft: "1%" }}>
-                <strong>SERVIÇOS: {currencyFormat(totalServico)}</strong>
+                <strong>Serviços:</strong> {currencyFormat(totalServico)}
               </p>
               <hr />
               <p style={{ paddingLeft: "1%" }}>
-                <strong>TOTAL: {currencyFormat(totalProduto + totalServico)}</strong>
+                <strong>Total:</strong> {currencyFormat(totalProduto + totalServico)}
               </p>
               <hr />
               {/* <p style={{ paddingLeft: "1%" }}>

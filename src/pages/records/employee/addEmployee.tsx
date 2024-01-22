@@ -6,6 +6,7 @@ import { add } from "../../../services/prestadorService";
 import { FuncionarioPrestador } from "../../../domain/funcionarioPrestador";
 import EmployeeForm from "../../../components/records/employeeForm";
 import { useNotificationStore } from "../../../stores/notificationStore";
+import { AxiosError } from "axios";
 
 const AddEmployee = () => {
   const backPage = "/logged/records/employee";
@@ -23,7 +24,18 @@ const AddEmployee = () => {
         type: "success",
       });
     },
-    onError: () => {
+    onError: (error: AxiosError) => {
+
+      if (error.response?.status === 400) {
+        const errordata = error.response?.data as any[]
+        addNotification({
+          message: errordata?.map(errors=>errors.errorMensagem).join(","),
+          type: "error",
+          duration: 5000
+        })
+      return
+      }
+
       addNotification({
         message: "Erro ao inserir funcionário.",
         type: "error"

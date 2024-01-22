@@ -2,7 +2,7 @@ import axios from "axios";
 import { STORAGE_KEY } from "../constants/key";
 
 export const instanceApi = axios.create({
-  baseURL: import.meta.env.PROD ? "https://smart-oficina-api.azurewebsites.net/api" : "https://localhost:7291/api",
+  baseURL: import.meta.env.PROD ? "https://smart-oficina-app-api.azurewebsites.net/api" : "https://localhost:7291/api",
   headers: {
     Authorization: `Bearer ${JSON.parse(
       localStorage.getItem(STORAGE_KEY) || "{}"

@@ -74,7 +74,7 @@ const EditSubService = () => {
       ) : (
         <SubServiceForm
           backCallback={() => navigate(backPage)}
-          categorias={categoriaResult.data || []}
+          categorias={categoriaResult.data instanceof Array ? categoriaResult.data : []}
           submitCallback={onSubmit}
           defaultValues={subServicoResult.data}
           label="Editar"

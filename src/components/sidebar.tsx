@@ -68,6 +68,43 @@ const Sidebar = () => {
             <li>
               <NavLink
                 end
+                to="/logged/dashboard"
+                className={(props) =>
+                  classNames(
+                    "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group",
+                    props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
+                  )
+                }
+              >
+                <svg
+                  className="w-5 h-5 text-gray-500 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 6a7.5 7.5 0 1 0 8 8h-8V6Z"
+                  />
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13.5 3H13v8h8v-.5A7.5 7.5 0 0 0 13.5 3Z"
+                  />
+                </svg>
+
+                <span className="flex-1 ml-3 whitespace-nowrap">Dashboard</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                end
                 to="/logged/services"
                 className={(props) =>
                   classNames(

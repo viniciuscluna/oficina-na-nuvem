@@ -21,6 +21,7 @@ import Print from "../pages/print";
 import Customer from "../pages/records/customer/customer";
 import AddCustomer from "../pages/records/customer/addCustomer";
 import EditCustomer from "../pages/records/customer/editCustomer";
+import Dashboard from "../pages/dashboard";
 
 export const routes =  createBrowserRouter([
     {
@@ -35,6 +36,10 @@ export const routes =  createBrowserRouter([
           path: "/logged",
           element: <Logged />,
           children: [
+            {
+              path: "/logged/dashboard",
+              element: <Dashboard />,
+            },
             {
               path: "/logged/services",
               element: <Service />,

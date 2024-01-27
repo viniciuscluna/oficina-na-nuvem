@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import {
   BarChart,
   Bar,
@@ -9,53 +10,30 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { getDiaryProfit } from "../../services/dashboardService";
+import { useMemo } from "react";
+import LoadingIndicator from "../loadingIndicator";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
 
 const ProfitChartBar = () => {
+
+  const { isLoading, data: responseData } = useQuery({
+    queryKey: ["dash/diaryProfit"],
+    queryFn: getDiaryProfit,
+  });
+
+  const data = useMemo(
+    () =>
+      responseData ?
+      responseData.map((item) => ({
+        name: item.key,
+        value: Number(item.count),
+      })) : [],
+    [responseData]
+  );
+
+  if (isLoading) return <LoadingIndicator />;
+
   return (
     <div className="p-2 w-full">
       <h5 className="text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -84,7 +62,7 @@ const ProfitChartBar = () => {
             <Tooltip />
             <Legend />
             <Bar
-              dataKey="uv"
+              dataKey="value"
               fill="#82ca9d"
               activeBar={<Rectangle fill="gold" stroke="purple" />}
             />

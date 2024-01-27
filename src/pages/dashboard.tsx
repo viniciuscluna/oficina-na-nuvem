@@ -1,4 +1,7 @@
-import { CardProfit } from "../components/dashboard/cardProfit";
+import CardClients from "../components/dashboard/cardClients";
+import CardOS from "../components/dashboard/cardOS";
+import CardProfit from "../components/dashboard/cardProfit";
+import CardSoldProducts from "../components/dashboard/cardSoldProducts";
 import CategoryChartPie from "../components/dashboard/categoryChartPie";
 import ProfitChartBar from "../components/dashboard/profitChartBar";
 import SubCategoryChartPie from "../components/dashboard/subCategoryChartPie";
@@ -13,9 +16,9 @@ const Dashboard = () => {
       </div>
       <div className="flex-wrap lg:flex-nowrap flex gap-2 mb-5">
         <CardProfit />
-        <CardProfit />
-        <CardProfit />
-        <CardProfit />
+        <CardOS />
+        <CardClients />
+        <CardSoldProducts />
       </div>
       <div className="flex-wrap lg:flex-nowrap flex gap-2">
         <CategoryChartPie />

@@ -92,7 +92,7 @@ const EmployeeForm = ({
         </label>
         <input
           {...registerWithMask("cpf", "cpf", {
-            valueAsNumber: true,
+            valueAsNumber: false,
             required: true,
           })}
           type="text"

@@ -10,7 +10,7 @@ const CardSoldProducts = () => {
   });
   if (isLoading) return <LoadingIndicator />;
 
-  return <GenericCard label="Produtos vendidos nesse mês" amount={data?.valor ?? 0} />;
+  return <GenericCard label="Produtos vendidos nesse mês" amount={data?.valor ?? 0}  useCurrency={false} />;
 };
 
 export default CardSoldProducts;

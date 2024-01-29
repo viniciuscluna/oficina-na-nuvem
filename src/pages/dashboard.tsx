@@ -3,7 +3,7 @@ import CardOS from "../components/dashboard/cardOS";
 import CardProfit from "../components/dashboard/cardProfit";
 import CardSoldProducts from "../components/dashboard/cardSoldProducts";
 import CategoryChartPie from "../components/dashboard/categoryChartPie";
-import ProfitChartBar from "../components/dashboard/profitChartBar";
+import ProfitChartLine from "../components/dashboard/profitChartLine";
 import SubCategoryChartPie from "../components/dashboard/subCategoryChartPie";
 
 const Dashboard = () => {
@@ -25,7 +25,7 @@ const Dashboard = () => {
         <SubCategoryChartPie />
       </div>
       <div className="flex-nowrap">
-        <ProfitChartBar />
+        <ProfitChartLine />
       </div>
     </>
   );

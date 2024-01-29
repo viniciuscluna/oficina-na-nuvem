@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-  BarChart,
-  Bar,
   Rectangle,
   XAxis,
   YAxis,
@@ -9,13 +7,15 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  LineChart,
+  Line,
 } from "recharts";
 import { getDiaryProfit } from "../../services/dashboardService";
 import { useMemo } from "react";
 import LoadingIndicator from "../loadingIndicator";
 
 
-const ProfitChartBar = () => {
+const ProfitChartLine = () => {
 
   const { isLoading, data: responseData } = useQuery({
     queryKey: ["dash/diaryProfit"],
@@ -45,7 +45,7 @@ const ProfitChartBar = () => {
         style={{ width: "100%", height: "40dvh" }}
       >
         <ResponsiveContainer>
-          <BarChart
+          <LineChart
             width={500}
             height={300}
             data={data}
@@ -61,16 +61,16 @@ const ProfitChartBar = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar
+            <Line
               dataKey="value"
               fill="#82ca9d"
-              activeBar={<Rectangle fill="gold" stroke="purple" />}
+              activeDot={<Rectangle fill="gold" stroke="purple" />}
             />
-          </BarChart>
+          </LineChart>
         </ResponsiveContainer>
       </div>
     </div>
   );
 };
 
-export default ProfitChartBar;
+export default ProfitChartLine;

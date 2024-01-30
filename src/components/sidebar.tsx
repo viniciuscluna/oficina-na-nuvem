@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 import { useServiceStore } from "../stores/servicosStore";
 import { useMemo, useState } from "react";
@@ -8,6 +8,7 @@ import { STORAGE_KEY } from "../constants/key";
 
 const Sidebar = () => {
   const [, setLocalStorage] = useLocalStorage<string>(STORAGE_KEY, "");
+  const navigate = useNavigate();
   const [menuOpened, setMenuOpened] = useState<boolean>(false);
   const [recordsClicked, setRecordsClicked] = useState<boolean>(false);
   const location = useLocation();
@@ -28,6 +29,11 @@ const Sidebar = () => {
     ];
     return servicos.filter((f) => abertos.includes(f.status));
   }, [servicos]);
+
+  const onLeaving = () => {
+    setLocalStorage('');
+    navigate('/login');
+  }
 
   return (
     <>
@@ -85,16 +91,16 @@ const Sidebar = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M10 6a7.5 7.5 0 1 0 8 8h-8V6Z"
                   />
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M13.5 3H13v8h8v-.5A7.5 7.5 0 0 0 13.5 3Z"
                   />
                 </svg>
@@ -269,7 +275,7 @@ const Sidebar = () => {
             <li>
               <a
                 href="#"
-                onClick={() => setLocalStorage("")}
+                onClick={onLeaving}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg

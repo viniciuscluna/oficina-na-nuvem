@@ -10,6 +10,7 @@ export interface Prestador extends Base {
     nomeRepresentante: string;
     telefone: string;
     emailEmpresa: string;
+    logo?: string;
     emailRepresentante?: string;
     situacaoCadastral?: number;
     endereco?: string;

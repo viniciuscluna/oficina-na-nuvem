@@ -1,11 +1,13 @@
 import { forwardRef, useMemo } from "react";
 
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
-
-import "./componentPrint.scss";
 import { Produto } from "../../../domain/produto";
 import { ETipoMedidaItem } from "../../../domain/ETipoMedidaItem";
 import { currencyFormat } from "../../../utils/currencyFormater";
+
+import "./componentPrint.scss";
+
+const DEFAULT_LOGO = 'https://i.imgur.com/Xbxq1f2.png';
 
 type ComponentPrintProp = {
   prestacao: PrestacaoServico;
@@ -50,7 +52,7 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
         <main>
           <section className="header_document">
             <img
-              src={`/logos/${prestacao.prestadorId}.png`}
+              src={prestacao.prestador?.logo ?? DEFAULT_LOGO}
               alt="Logo da Minha Empresa"
               className="logo"
             />

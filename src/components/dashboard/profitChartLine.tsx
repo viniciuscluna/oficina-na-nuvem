@@ -13,7 +13,7 @@ import {
 import { getDiaryProfit } from "../../services/dashboardService";
 import { useMemo } from "react";
 import LoadingIndicator from "../loadingIndicator";
-
+import { currencyFormat } from "../../utils/currencyFormater";
 
 const ProfitChartLine = () => {
 
@@ -25,10 +25,10 @@ const ProfitChartLine = () => {
   const data = useMemo(
     () =>
       responseData ?
-      responseData.map((item) => ({
-        name: item.key,
-        value: Number(item.count),
-      })) : [],
+        responseData.map((item) => ({
+          name: item.key,
+          Valor: Number(item.count),
+        })) : [],
     [responseData]
   );
 
@@ -59,10 +59,10 @@ const ProfitChartLine = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
-            <Tooltip />
+            <Tooltip formatter={(number: number) => currencyFormat(number)} />
             <Legend />
             <Line
-              dataKey="value"
+              dataKey="Valor"
               fill="#82ca9d"
               activeDot={<Rectangle fill="gold" stroke="purple" />}
             />

@@ -1,3 +1,5 @@
+import { currencyFormat } from "../../utils/currencyFormater";
+
 type GenericCardPros = {
   label: string;
   amount: number;
@@ -16,12 +18,7 @@ const GenericCard = ({
       </h5>
       <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         {useCurrency
-          ? new Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            }).format(amount)
+          ? currencyFormat(amount)
           : amount}
       </h2>
     </div>

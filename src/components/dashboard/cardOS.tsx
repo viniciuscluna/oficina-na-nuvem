@@ -4,11 +4,11 @@ import GenericCard from "./genericCard";
 import { getOS } from "../../services/dashboardService";
 
 const CardOS = () => {
-    const { isLoading, data } = useQuery({
+    const { isPending, data } = useQuery({
         queryKey: ["dash/os"],
         queryFn: getOS,
       });
-      if (isLoading) return <LoadingIndicator />;
+      if (isPending) return <LoadingIndicator />;
 
   return <GenericCard label="OS nesse mês" amount={data?.valor ?? 0} useCurrency={false} />;
 };

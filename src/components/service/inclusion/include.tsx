@@ -92,7 +92,7 @@ const Include = () => {
           <span className="sr-only">Close menu</span>
         </button>
 
-        {addPrestacaoServicoMut.isLoading ? (
+        {addPrestacaoServicoMut.isPending ? (
           <Loader />
         ) : (
           <FormInclude

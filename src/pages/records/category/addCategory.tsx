@@ -40,7 +40,7 @@ const AddCategory = () => {
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
         Incluir Categoria
       </h3>
-      {categoriaResult.isLoading ? (
+      {categoriaResult.isPending ? (
         <Loader />
       ) : (
         <CategoryForm

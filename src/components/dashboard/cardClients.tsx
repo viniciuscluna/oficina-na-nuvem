@@ -4,11 +4,11 @@ import LoadingIndicator from "../loadingIndicator";
 import GenericCard from "./genericCard";
 
 const CardClients = () => {
-  const { isLoading, data } = useQuery({
+  const { isPending, data } = useQuery({
     queryKey: ["dash/client"],
     queryFn: getClient,
   });
-  if (isLoading) return <LoadingIndicator />;
+  if (isPending) return <LoadingIndicator />;
 
   return <GenericCard label="Novos clientes" amount={data?.valor ?? 0} useCurrency={false} />;
 };

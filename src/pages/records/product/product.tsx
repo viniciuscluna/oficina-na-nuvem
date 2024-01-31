@@ -20,7 +20,7 @@ const Product = () => {
   const addNotification = useNotificationStore(
     (state) => state.addNotification
   );
-  const { data, isLoading, mutateAsync } = useMutation({
+  const { data, isPending: isPending, mutateAsync } = useMutation({
     mutationFn: (fields: ProductFields) =>
       getAll(fields.nome, fields.marca, fields.modelo),
   });
@@ -50,7 +50,7 @@ const Product = () => {
     mutateAsync(fields);
   };
 
-  if (isLoading) <Loader />;
+  if (isPending) <Loader />;
 
   return (<>
     <ConfirmModal

@@ -4,11 +4,11 @@ import { getProduct } from "../../services/dashboardService";
 import LoadingIndicator from "../loadingIndicator";
 
 const CardSoldProducts = () => {
-  const { isLoading, data } = useQuery({
+  const { isPending, data } = useQuery({
     queryKey: ["dash/products"],
     queryFn: getProduct,
   });
-  if (isLoading) return <LoadingIndicator />;
+  if (isPending) return <LoadingIndicator />;
 
   return <GenericCard label="Produtos vendidos nesse mês" amount={data?.valor ?? 0}  useCurrency={false} />;
 };

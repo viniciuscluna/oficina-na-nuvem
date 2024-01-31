@@ -44,9 +44,9 @@ const EditCliente = () => {
     editCustomerResult.mutateAsync(cliente);
   };
 
-  const isLoading = useMemo(
-    () => editCustomerResult.isLoading || customerResult.isLoading,
-    [editCustomerResult.isLoading, customerResult.isLoading]
+  const isPending = useMemo(
+    () => editCustomerResult.isPending || customerResult.isPending,
+    [editCustomerResult.isPending, customerResult.isPending]
   );
 
   return (
@@ -54,7 +54,7 @@ const EditCliente = () => {
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
         Editar Categoria
       </h3>
-      {isLoading ? (
+      {isPending ? (
         <Loader />
       ) : (
         <CustomerForm

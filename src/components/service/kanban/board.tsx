@@ -35,15 +35,17 @@ const Board = () => {
 
   const {
     data: prestacaoData,
-    isLoading,
+    isPending,
+    isSuccess,
     refetch,
   } = useQuery({
     queryKey: ["getAllInProgressPrestador"],
     queryFn: () => getAllInProgress(),
-    onSuccess: (resp) => {
-      setServicos(resp);
-    },
   });
+
+  useEffect(() => {
+    if (isSuccess) setServicos(prestacaoData);
+  }, [isSuccess, setServicos, prestacaoData])
 
   useEffect(() => {
     if (updateQuery) {
@@ -55,7 +57,7 @@ const Board = () => {
     }
   }, [updateQuery, queryClient, refetch, setUpdateQuery]);
 
-  const { mutateAsync: mutateStatusAsync, isLoading: isStatusLoading } =
+  const { mutateAsync: mutateStatusAsync, isPending: isStatusLoading } =
     useMutation({
       mutationFn: ({ id, status }: ChangeStatus) => changeStatus(id, status),
       onSuccess: () => {
@@ -116,7 +118,7 @@ const Board = () => {
     setPendingConfirm(null);
   };
 
-  if (isLoading || isStatusLoading) return <Loader />;
+  if (isPending || isStatusLoading) return <Loader />;
 
   return (
     <>

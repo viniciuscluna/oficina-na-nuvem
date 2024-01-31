@@ -43,13 +43,13 @@ const AddSubService = () => {
     subServicoResult.mutateAsync(subServico);
   };
 
-  const isLoading = useMemo(
+  const isPending = useMemo(
     () =>
-      categoriaResult.isLoading ||
-      subServicoResult.isLoading ,
+      categoriaResult.isPending ||
+      subServicoResult.isPending ,
     [
-      categoriaResult.isLoading,
-      subServicoResult.isLoading,
+      categoriaResult.isPending,
+      subServicoResult.isPending,
     ]
   );
 
@@ -58,7 +58,7 @@ const AddSubService = () => {
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
         Incluir SubServiço
       </h3>
-      {isLoading ? (
+      {isPending ? (
         <Loader />
       ) : (
         <SubServiceForm

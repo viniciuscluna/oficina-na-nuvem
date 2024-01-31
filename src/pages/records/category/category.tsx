@@ -20,7 +20,7 @@ const Category = () => {
   const addNotification = useNotificationStore(
     (state) => state.addNotification
   );
-  const { data, isLoading, mutateAsync } = useMutation({
+  const { data, isPending, mutateAsync } = useMutation({
     mutationFn: (fields: CategoryFields) =>
       getAll(fields.titulo, fields.descricao),
   });
@@ -49,7 +49,7 @@ const Category = () => {
     mutateAsync(fields);
   };
 
-  if (isLoading) <Loader />;
+  if (isPending) <Loader />;
 
   return (
     <>

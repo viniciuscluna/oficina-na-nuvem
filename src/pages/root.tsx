@@ -15,7 +15,7 @@ const Root = () => {
 
   useEffect(() => {
     if (apiKey === '""' || apiKey === null) navigate('/login');
-  }, []);
+  }, [apiKey, navigate]);
 
   return <Outlet />;
 };

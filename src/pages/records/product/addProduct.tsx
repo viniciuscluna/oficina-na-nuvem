@@ -41,7 +41,7 @@ const AddProduct = () => {
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
         Incluir Produto
       </h3>
-      {produtoResult.isLoading ? (
+      {produtoResult.isPending ? (
         <Loader />
       ) : (
         <ProductForm

@@ -16,16 +16,16 @@ const PrintContainer = ({prestacaoId} : PrintContainerProps) => {
     content: () => componentRef.current,
   });
 
-  const { isLoading, data } = useQuery({
+  const { isPending, data } = useQuery({
     queryKey: ["prestacaoById", prestacaoId],
     queryFn: () => getId(prestacaoId || ""),
   });
 
   useEffect(() => {
-    if (!isLoading) document.title = `OS: ${data?.referencia}`;
-  }, [isLoading, data?.referencia]);
+    if (!isPending) document.title = `OS: ${data?.referencia}`;
+  }, [isPending, data?.referencia]);
 
-  if (isLoading && data) return <Loader />;
+  if (isPending && data) return <Loader />;
   else
     return (
       <section className="flex flex-col gap-5 w-full items-center">

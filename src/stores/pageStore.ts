@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 type PageProps = {
-  isLoading: boolean;
-  changeIsLoading: (isLoading: boolean) => void;
+  isPending: boolean;
+  changeisPending: (isPending: boolean) => void;
 };
 
 export const usePageStore = create<PageProps>((set) => ({
-  isLoading: false,
-  changeIsLoading: (isLoading: boolean) => set({ isLoading: isLoading }),
+  isPending: false,
+  changeisPending: (isPending: boolean) => set({ isPending: isPending }),
 }));

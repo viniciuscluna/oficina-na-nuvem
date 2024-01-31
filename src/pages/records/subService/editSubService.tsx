@@ -53,15 +53,15 @@ const EditSubService = () => {
     editSubServicoResult.mutateAsync(subServico);
   };
 
-  const isLoading = useMemo(
+  const isPending = useMemo(
     () =>
-      categoriaResult.isLoading ||
-      subServicoResult.isLoading ||
-      editSubServicoResult.isLoading,
+      categoriaResult.isPending ||
+      subServicoResult.isPending ||
+      editSubServicoResult. isPending,
     [
-      categoriaResult.isLoading,
-      subServicoResult.isLoading,
-      editSubServicoResult.isLoading,
+      categoriaResult.isPending,
+      subServicoResult.isPending,
+      editSubServicoResult.isPending,
     ]
   );
   return (
@@ -69,7 +69,7 @@ const EditSubService = () => {
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
         Editar SubServiço
       </h3>
-      {isLoading ? (
+      {isPending ? (
         <Loader />
       ) : (
         <SubServiceForm

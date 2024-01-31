@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,13 +14,14 @@ const Reports = () => {
   const [refFilter, setRefFilter] = useState<string>("");
   const setServicos = useServiceStore((state) => state.setServicos);
 
-  const { data: prestacaoData, isLoading, refetch } = useQuery({
+  const { data: prestacaoData, isPending, refetch, isSuccess } = useQuery({
     queryKey: ["prestacaoServico"],
     queryFn: () => getAllInDone(),
-    onSuccess: (resp) => {
-      setServicos(resp);
-    },
   });
+
+  useEffect(() => {
+    if (isSuccess) setServicos(prestacaoData);
+  }, [isSuccess, setServicos, prestacaoData])
 
   const concluidas = useMemo(
     () =>
@@ -34,7 +35,7 @@ const Reports = () => {
     [prestacaoData, refFilter]
   );
 
-  if (isLoading) return <Loader />;
+  if (isPending) return <Loader />;
   return (
     <div className="flex flex-col">
       <h2 className="text-3xl font-extrabold dark:text-white mt-6 mb-4">

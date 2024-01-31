@@ -43,7 +43,7 @@ const renderCustomizedLabel = ({
 const SubCategoryChartPie = () => {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-  const { isLoading, data: responseData } = useQuery({
+  const { isPending, data: responseData } = useQuery({
     queryKey: ["dash/subCategory"],
     queryFn: getSubCategory,
   });
@@ -58,7 +58,7 @@ const SubCategoryChartPie = () => {
     [responseData]
   );
 
-  if (isLoading) return <LoadingIndicator />;
+  if (isPending) return <LoadingIndicator />;
  
   return (
     <div className="p-2 w-full">

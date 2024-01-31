@@ -44,21 +44,21 @@ const Logged = () => {
     }
   }, [subServicoResult.isError, setLocalStorage]);
 
-  const isLoading = useMemo(
+  const isPending = useMemo(
     () =>
-      clienteResult.isLoading ||
-      subServicoResult.isLoading ||
-      veiculoResult.isLoading ||
-      funcionarioResult.isLoading,
+      clienteResult.isPending ||
+      subServicoResult.isPending ||
+      veiculoResult.isPending ||
+      funcionarioResult.isPending,
     [
-      clienteResult.isLoading,
-      subServicoResult.isLoading,
-      veiculoResult.isLoading,
-      funcionarioResult.isLoading
+      clienteResult.isPending,
+      subServicoResult.isPending,
+      veiculoResult.isPending,
+      funcionarioResult.isPending
     ]
   );
 
-  if (isLoading) return <Loader />;
+  if (isPending) return <Loader />;
   return (
     <main className="dark:bg-gray-900 h-full flex flex-col sm:flex-row">
       <Sidebar />

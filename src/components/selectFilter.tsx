@@ -13,9 +13,11 @@ type SelectFilterProps = {
   searchPlaceholder: string;
   emptyPlaceholder: string;
   search: string;
+  // eslint-disable-next-line
   control: Control<any>;
   name: string;
   rules?: Omit<
+    // eslint-disable-next-line
     RegisterOptions<any, string>,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
   >;

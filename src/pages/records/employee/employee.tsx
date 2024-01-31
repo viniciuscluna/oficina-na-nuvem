@@ -20,7 +20,7 @@ const Employee = () => {
   const addNotification = useNotificationStore(
     (state) => state.addNotification
   );
-  const { data, isLoading, mutateAsync } = useMutation({
+  const { data, isPending, mutateAsync } = useMutation({
     mutationFn: (fields: EmployeFields) =>
       getAll(fields.nome, fields.cpf, fields.email),
   });
@@ -49,7 +49,7 @@ const Employee = () => {
     mutateAsync(fields);
   };
 
-  if (isLoading) <Loader />;
+  if (isPending) <Loader />;
 
   return (
     <> 

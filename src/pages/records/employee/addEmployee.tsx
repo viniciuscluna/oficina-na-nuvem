@@ -27,6 +27,7 @@ const AddEmployee = () => {
     onError: (error: AxiosError) => {
 
       if (error.response?.status === 400) {
+        // eslint-disable-next-line
         const errordata = error.response?.data as any[]
         addNotification({
           message: errordata?.map(errors=>errors.errorMensagem).join(","),
@@ -52,7 +53,7 @@ const AddEmployee = () => {
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
         Incluir Funcionário
       </h3>
-      {funcionarioResult.isLoading ? (
+      {funcionarioResult.isPending ? (
         <Loader />
       ) : (
         <EmployeeForm

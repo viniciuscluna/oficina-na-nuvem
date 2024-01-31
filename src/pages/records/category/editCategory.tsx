@@ -44,9 +44,9 @@ const EditCategory = () => {
     editCategoriaResult.mutateAsync(categoria);
   };
 
-  const isLoading = useMemo(
-    () => editCategoriaResult.isLoading || categoriaResult.isLoading,
-    [editCategoriaResult.isLoading, categoriaResult.isLoading]
+  const isPending = useMemo(
+    () => editCategoriaResult.isPending || categoriaResult.isPending,
+    [editCategoriaResult.isPending, categoriaResult.isPending]
   );
 
   return (
@@ -54,7 +54,7 @@ const EditCategory = () => {
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
         Editar Categoria
       </h3>
-      {isLoading ? (
+      {isPending ? (
         <Loader />
       ) : (
         <CategoryForm

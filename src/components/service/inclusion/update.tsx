@@ -62,7 +62,7 @@ const Update = () => {
   const onEdit: SubmitHandler<PrestacaoServico> = (data) =>
     editPrestacaoServicoMut.mutateAsync(syncGroupedWithProducts(data));
 
-  const { isLoading: isGetLoading, mutateAsync: getMutateAsync, data: getData } = useMutation({
+  const { isPending: isGetLoading, mutateAsync: getMutateAsync, data: getData } = useMutation({
     mutationFn: (id: string) => getId(id),
   });
 
@@ -72,9 +72,9 @@ const Update = () => {
     }
   }, [prestacaoServicoId, getMutateAsync]);
 
-  const isLoading = useMemo(
-    () => isGetLoading || editPrestacaoServicoMut.isLoading || getData === undefined,
-    [isGetLoading, editPrestacaoServicoMut.isLoading, getData]
+  const isPending = useMemo(
+    () => isGetLoading || editPrestacaoServicoMut.isPending || getData === undefined,
+    [isGetLoading, editPrestacaoServicoMut.isPending, getData]
   );
 
   return (
@@ -118,7 +118,7 @@ const Update = () => {
           <span className="sr-only">Close menu</span>
         </button>
 
-        {isLoading || !getData ? (
+        {isPending || !getData ? (
           <Loader />
         ) : (
           <FormUpdate

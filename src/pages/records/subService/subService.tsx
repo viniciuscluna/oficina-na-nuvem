@@ -20,7 +20,7 @@ const SubService = () => {
   const addNotification = useNotificationStore(
     (state) => state.addNotification
   );
-  const { data, isLoading, mutateAsync } = useMutation({
+  const { data, isPending: isPending, mutateAsync } = useMutation({
     mutationFn: (fields: SubServiceFields) =>
       getAll(fields.titulo, fields.descricao),
   });
@@ -50,7 +50,7 @@ const SubService = () => {
   };
 
 
-  if (isLoading) <Loader />;
+  if (isPending) <Loader />;
 
   return (
     <>

@@ -17,7 +17,7 @@ import { currencyFormat } from "../../utils/currencyFormater";
 
 const ProfitChartLine = () => {
 
-  const { isLoading, data: responseData } = useQuery({
+  const { isPending, data: responseData } = useQuery({
     queryKey: ["dash/diaryProfit"],
     queryFn: getDiaryProfit,
   });
@@ -32,7 +32,7 @@ const ProfitChartLine = () => {
     [responseData]
   );
 
-  if (isLoading) return <LoadingIndicator />;
+  if (isPending) return <LoadingIndicator />;
 
   return (
     <div className="p-2 w-full">

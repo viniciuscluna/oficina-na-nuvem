@@ -44,9 +44,9 @@ const EditEmployee = () => {
     editEmployeeResult.mutateAsync(funcionario);
   };
 
-  const isLoading = useMemo(
-    () => editEmployeeResult.isLoading || employeeResult.isLoading,
-    [editEmployeeResult.isLoading, employeeResult.isLoading]
+  const isPending = useMemo(
+    () => editEmployeeResult.isPending || employeeResult.isPending,
+    [editEmployeeResult.isPending, employeeResult.isPending]
   );
 
   return (
@@ -54,7 +54,7 @@ const EditEmployee = () => {
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
         Editar Funcionário
       </h3>
-      {isLoading ? (
+      {isPending ? (
         <Loader />
       ) : (
         <EmployeeForm

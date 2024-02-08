@@ -211,7 +211,7 @@ const ComponentPrint = forwardRef<HTMLElement, ComponentPrintProp>(
             </div>
 
             <footer className="footer">
-              <p>Documento gerado pelo Smart Oficina 😎</p>
+              <p>Documento gerado pelo Oficina na Nuvem 😎</p>
             </footer>
           </div>
         </main>

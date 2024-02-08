@@ -11,7 +11,7 @@ export const instanceApi = axios.create({
 });
 
 export const instanceAuthApi = axios.create({
-  baseURL: import.meta.env.PROD ? "prestacao-nuvem-auth-api.azurewebsites.net/api" : "http://localhost:7056/api",
+  baseURL: import.meta.env.PROD ? "https://prestacao-nuvem-auth-api.azurewebsites.net/api" : "http://localhost:7056/api",
 });
 
 export const instanceFipe = axios.create({

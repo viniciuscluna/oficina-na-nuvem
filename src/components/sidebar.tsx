@@ -160,7 +160,7 @@ const Sidebar = () => {
                   />
                 </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">
-                  Concluídos
+                  Ordens De Serviços
                 </span>
               </NavLink>
             </li>

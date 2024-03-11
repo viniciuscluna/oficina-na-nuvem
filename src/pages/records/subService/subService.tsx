@@ -79,6 +79,7 @@ const SubService = () => {
                     id="titulo"
                     {...register("titulo")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Entre com o título aqui"
                   />
                 </div>
                 <div className="mb-6">
@@ -93,6 +94,7 @@ const SubService = () => {
                     id="descricao"
                     {...register("descricao")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Entre com a descrição aqui"
                   />
                 </div>
                 <button
@@ -127,6 +129,9 @@ const SubService = () => {
                     Categoria
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Valor
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Ações
                   </th>
                 </tr>
@@ -145,6 +150,7 @@ const SubService = () => {
                     </th>
                     <td className="px-6 py-4">{subServico.desc}</td>
                     <td className="px-6 py-4">{subServico.categoria.titulo}</td>
+                    <td className="px-6 py-4">{subServico.valorServico}</td>
                     <td className="px-6 py-4">
                       <div className="flex gap-1"><NavLink title="Editar" to={`edit/${subServico.id}`}>
                         <svg

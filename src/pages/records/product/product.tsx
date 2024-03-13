@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
-import { getAll, desabled } from "../../../services/produtoService";
+import { getAllGroupByProduct, desabled } from "../../../services/produtoService";
 import Loader from "../../../components/loader";
 import Filter from "../../../components/filter";
 import { useForm } from "react-hook-form";
@@ -22,7 +22,7 @@ const Product = () => {
   );
   const { data, isPending: isPending, mutateAsync } = useMutation({
     mutationFn: (fields: ProductFields) =>
-      getAll(fields.nome, fields.marca, fields.modelo),
+    getAllGroupByProduct(fields.nome, fields.marca, fields.modelo),
   });
 
   const { register, handleSubmit, getValues } = useForm<ProductFields>();

@@ -3,8 +3,8 @@ import { onlyNumber } from "../utils/numberFormater";
 import { instanceApi } from "./axiosConfig";
 
 export const getAll = async (
-  cpf: string,
   nome: string,
+  cpf: string,
   email: string
 ): Promise<FuncionarioPrestador[] | string> => {
   return (

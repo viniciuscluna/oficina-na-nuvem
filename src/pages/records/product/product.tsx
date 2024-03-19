@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useNotificationStore } from "../../../stores/notificationStore";
 import ConfirmModal from "../../../components/confirmModal";
+import { currencyFormat } from "../../../utils/currencyFormater";
 
 type ProductFields = {
   nome: string;
@@ -27,6 +28,7 @@ const Product = () => {
 
   const { register, handleSubmit, getValues } = useForm<ProductFields>();
 
+  const formatMoeda = currencyFormat;
 
   const { mutateAsync: mutateDisableAsync } = useMutation({
     mutationFn: (id: string) =>
@@ -170,12 +172,12 @@ const Product = () => {
                   </th>
                   <td className="px-6 py-4">{produto.marca}</td>
                   <td className="px-6 py-4">{produto.modelo}</td>
-                  <td className="px-6 py-4">{produto.valor_Venda}</td>
-                  <td className="px-6 py-4">{produto.valor_Compra}</td>
+                  <td className="px-6 py-4">{formatMoeda(produto.valor_Venda)}</td>
+                  <td className="px-6 py-4">{formatMoeda(produto.valor_Compra)}</td>
                   <td className="px-6 py-4">{produto.qtd}</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-1">
-                      <NavLink title="Editar" to={`edit/${produto.id}`}>
+                      <NavLink title="Editar" to={`ProdutoInfo/${produto.nome}/${produto.marca}/${produto.modelo}`}>
                         <svg
                           className="w-4 h-4 text-green-800 dark:text-green-400"
                           aria-hidden="true"

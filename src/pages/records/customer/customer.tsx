@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { useHookFormMask } from "use-mask-input";
 import { useNotificationStore } from "../../../stores/notificationStore";
 import ConfirmModal from "../../../components/confirmModal";
+import { cpfFormater } from "../../../utils/cpfFormater";
+import { dateTimeFormarter } from "../../../utils/dateTimeFormarter";
 
 type CustomerFields = {
   nome: string;
@@ -28,7 +30,9 @@ const Customer = () => {
   });
   const { register, handleSubmit, getValues } = useForm<CustomerFields>();
   const registerWithMask = useHookFormMask(register);
-
+  const formatCpf = cpfFormater;
+  const formatDate = dateTimeFormarter;
+  
   const { mutateAsync: mutateDisableAsync } = useMutation({
     mutationFn: (id: string) =>
       desabled(id),
@@ -92,7 +96,7 @@ const Customer = () => {
                 <input
                   type="text"
                   id="cpf"
-                  {...register("cpf")}
+                  {...registerWithMask("cpf", "cpf")}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Entre com o Cpf aqui"
                 />
@@ -167,10 +171,10 @@ const Customer = () => {
                   >
                     {cliente.nome}
                   </th>
-                  <td>{cliente.cpf}</td>
-                  <td>{cliente.email}</td>
-                  <td>{cliente.endereco}</td>
-                  <td>{cliente.dataCadastro?.substring(0, 10)}</td>
+                  <td className="px-6 py-4">{formatCpf(cliente.cpf)}</td>
+                  <td className="px-6 py-4">{cliente.email}</td>
+                  <td className="px-6 py-4">{cliente.endereco}</td>
+                  <td className="px-6 py-4">{cliente.dataCadastro ? formatDate(cliente.dataCadastro) : 'Data não disponível'}</td>
                   <td className="px-6 py-4">
                     <div className="flex gap-1">
                       <NavLink title="Editar" to={`edit/${cliente.id}`}>

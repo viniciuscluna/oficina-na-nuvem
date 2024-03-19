@@ -33,6 +33,16 @@ export const getAllGroupByProduct = async (
   ).data;
 };
 
+export const getInfoProduto = async (
+  nome: string,
+  marca: string,
+  modelo: string
+): Promise<Produto | string> => {
+  return (
+    await instanceApi.get<Produto | string>(`/produto/ProdutoInfo/${nome}/${marca}/${modelo}/`)
+  ).data;
+};
+
 export const add = async (produto: Produto): Promise<Produto> => {
   return (await instanceApi.post<Produto>("/produto", produto)).data;
 };

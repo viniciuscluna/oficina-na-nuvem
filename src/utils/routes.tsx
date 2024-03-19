@@ -85,6 +85,10 @@ export const routes =  createBrowserRouter([
                   element: <EditProduct />,
                 },
                 {
+                  path: "/logged/records/product/ProdutoInfo/:nome/:marca/:modelo",
+                  element: <EditProduct />,
+                },
+                {
                   path: "/logged/records/employee",
                   element: <Employee />,
                 },

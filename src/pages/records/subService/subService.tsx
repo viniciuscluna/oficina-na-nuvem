@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import Filter from "../../../components/filter";
 import { useNotificationStore } from "../../../stores/notificationStore";
 import ConfirmModal from "../../../components/confirmModal";
+import { currencyFormat } from "../../../utils/currencyFormater";
 
 
 type SubServiceFields = {
@@ -26,7 +27,7 @@ const SubService = () => {
   });
 
   const { register, handleSubmit, getValues } = useForm<SubServiceFields>();
-
+  const formatMoeda = currencyFormat;
   const { mutateAsync: mutateDisableAsync } = useMutation({
     mutationFn: (id: string) =>
       desabled(id),
@@ -150,7 +151,7 @@ const SubService = () => {
                     </th>
                     <td className="px-6 py-4">{subServico.desc}</td>
                     <td className="px-6 py-4">{subServico.categoria.titulo}</td>
-                    <td className="px-6 py-4">{subServico.valorServico}</td>
+                    <td className="px-6 py-4">{formatMoeda(subServico.valorServico)}</td>
                     <td className="px-6 py-4">
                       <div className="flex gap-1"><NavLink title="Editar" to={`edit/${subServico.id}`}>
                         <svg

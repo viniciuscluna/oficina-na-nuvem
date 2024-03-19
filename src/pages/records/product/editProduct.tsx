@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Loader from "../../../components/loader";
-import { getId, edit } from "../../../services/produtoService";
+import { getInfoProduto, edit } from "../../../services/produtoService";
 import { Produto } from "../../../domain/produto";
 import ProductForm from "../../../components/records/productForm";
 import { PathCrudProps } from "../../../types/pathCrudProps";
@@ -37,7 +37,7 @@ const EditProduct = () => {
 
   const produtoResult = useQuery({
     queryKey: ["produto", params.id],
-    queryFn: () => getId(params.id || ""),
+    queryFn: () => getInfoProduto(params.nome ? params.nome : "", params.marca ? params.marca : "", params.modelo ? params.modelo : ""),
   });
 
   const onSubmit = (produto: Produto) => {
@@ -54,13 +54,13 @@ const EditProduct = () => {
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
         Incluir Produto
       </h3>
-      {isPending ? (
+      {isPending && !produtoResult.data? (
         <Loader />
       ) : (
         <ProductForm
           backCallback={() => navigate(backPage)}
           submitCallback={onSubmit}
-          defaultValues={produtoResult.data}
+          defaultValues={produtoResult.data as Produto}
           label="Editar"
           editMode={true}
         />

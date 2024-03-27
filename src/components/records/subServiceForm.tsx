@@ -28,7 +28,7 @@ const SubServiceForm = ({
           htmlFor="nome"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Nome
+          Nome*
         </label>
         <input
           {...register("titulo", { required: true })}
@@ -43,7 +43,7 @@ const SubServiceForm = ({
           htmlFor="descricao"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Descrição
+          Descrição*
         </label>
         <input
           type="text"
@@ -57,7 +57,7 @@ const SubServiceForm = ({
           htmlFor="valorServico"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Valor Serviço
+          Valor Serviço*
         </label>
         <input
           type="number"
@@ -72,7 +72,7 @@ const SubServiceForm = ({
           htmlFor="categoria"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Categoria
+          Categoria*
         </label>
         <select
           id="categoria"

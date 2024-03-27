@@ -1,21 +1,20 @@
 import { useForm } from "react-hook-form";
-import { Produto } from "../../domain/produto";
+import { FilialServico } from "../../domain/filialServico";
 
-type ProductFormProps = {
-  submitCallback: (produto: Produto) => void;
+type OfficeFormProps = {
+  submitCallback: (filial: FilialServico) => void;
   backCallback: () => void;
-  defaultValues?: Produto;
+  defaultValues?: FilialServico;
   label: string;
-  editMode: boolean;
 };
 
-const ProdutoForm = ({
+const OfficeForm = ({
   submitCallback,
   backCallback,
   defaultValues,
   label,
-}: ProductFormProps) => {
-  const { register, handleSubmit } = useForm<Produto>({
+}: OfficeFormProps) => {
+  const { register, handleSubmit } = useForm<FilialServico>({
     defaultValues: defaultValues,
   });
 
@@ -30,129 +29,79 @@ const ProdutoForm = ({
         </label>
         <input
           {...register("nome", { required: true })}
+          maxLength={250}
           type="text"
           id="nome"
-          maxLength={150}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
       <div className="mb-6">
         <label
-          htmlFor="marca"
+          htmlFor="logradouro"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Marca*
-        </label>
-        <input
-          {...register("marca", { required: true })}
-          type="text"
-          id="marca"
-          maxLength={150}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
-      </div>
-      <div className="mb-6">
-        <label
-          htmlFor="modelo"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Modelo*
+          Logradouro*
         </label>
         <input
           type="text"
-          id="modelo"
-          {...register("modelo")}
-          maxLength={200}
+          id="logradouro"
+          {...register("logradouro", { required: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
       <div className="mb-6">
         <label
-          htmlFor="garantia"
+          htmlFor="cep"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Garantia
+          CEP*
         </label>
         <input
           type="text"
-          id="garantia"
-          maxLength={200}
-          {...register("garantia")}
+          id="cep"
+          {...register("cep", { required: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
       <div className="mb-6">
         <label
-          htmlFor="valor_Compra"
+          htmlFor="numero"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Valor Compra*
+          Número*
         </label>
         <input
-          type="number"
-          id="valor_Compra"
-          min={0}
-          {...register("valor_Compra", { valueAsNumber: true, required: true })}
+          type="text"
+          id="numero"
+          {...register("numero", { required: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
       <div className="mb-6">
         <label
-          htmlFor="valor_Venda"
+          htmlFor="matriz"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Valor Venda*
+          Matriz?
         </label>
-        <input
-          type="number"
-          id="valor_Venda"
-          {...register("valor_Venda")}
-          min={0}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
-      </div>
-      <div className="mb-6">
-        <label
-          htmlFor="tipoMedida"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Tipo Medida*
-        </label>
-        <select
-          id="tipoMedida"
-          {...register("tipoMedidaItem", { valueAsNumber: true })}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="0">Litro</option>
-          <option value="1">Peça</option>
-        </select>
-      </div>      
-      <div className="mb-6">
-          <label
-            htmlFor="quantidade"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Quantidade*
-          </label>
+        <div className="flex items-center">
           <input
-            type="number"
-            min={1}
-            id="quantidade"
-            {...register("qtd", { required: true, valueAsNumber: true })}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
+            {...register("matriz", { setValueAs: Boolean })}
+            type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+
         </div>
+      </div>
       <div className="mb-6">
         <label
-          htmlFor="data_validade"
+          htmlFor="observacao"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Data Validade
+          Observação*
         </label>
         <input
-          type="date"
-          id="data_validade"
-          {...register("data_validade", { valueAsDate: true })}
+          type="text"
+          id="observacao"
+          {...register("observacao", { required: true })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
@@ -175,4 +124,4 @@ const ProdutoForm = ({
   );
 };
 
-export default ProdutoForm;
+export default OfficeForm;

@@ -25,7 +25,7 @@ const CategoryForm = ({
           htmlFor="nome"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Nome
+          Nome*
         </label>
         <input
           {...register("titulo", { required: true })}
@@ -40,7 +40,7 @@ const CategoryForm = ({
           htmlFor="descricao"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Descrição
+          Descrição*
         </label>
         <input
           type="text"

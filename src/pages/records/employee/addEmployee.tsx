@@ -45,6 +45,7 @@ const AddEmployee = () => {
   });
 
   const onSubmit = (funcionario: FuncionarioPrestador) => {
+    console.log(funcionario);
     funcionarioResult.mutateAsync(funcionario);
   };
 

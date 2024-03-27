@@ -8,4 +8,5 @@ export interface FuncionarioPrestador extends Base {
     cpf: string;
     endereco: string;
     cargo: string;
+    filialId: string;
 }

@@ -28,7 +28,7 @@ const CustomerForm = ({
           htmlFor="nome"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Nome
+          Nome*
         </label>
         <input
           {...register("nome", {
@@ -59,7 +59,7 @@ const CustomerForm = ({
           htmlFor="cpf"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          CPF
+          CPF*
         </label>
         <input
           {...registerWithMask("cpf", "cpf", {
@@ -75,7 +75,7 @@ const CustomerForm = ({
           htmlFor="endereco"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Endereço
+          Endereço*
         </label>
         <input
           {...register("endereco", {
@@ -92,7 +92,7 @@ const CustomerForm = ({
           htmlFor="telefone"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Telefone
+          Telefone*
         </label>
         <input
           {...registerWithMask("telefone", ["(99) [9]9999-9999"], {
@@ -108,7 +108,7 @@ const CustomerForm = ({
           htmlFor="email"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          Email
+          Email*
         </label>
         <input
           {...registerWithMask("email", "email", {

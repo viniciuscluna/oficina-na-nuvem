@@ -13,6 +13,7 @@ const Records = () => {
     if (location.pathname.startsWith(`${base}employee`)) return "Funcionário";
     if (location.pathname.startsWith(`${base}customer`)) return "Cliente";
     if (location.pathname.startsWith(`${base}office`)) return "Filial";
+    if (location.pathname.startsWith(`${base}serviceProvider`)) return "Prestador";
     else return "Cadastro";
   }, [location.pathname]);
 

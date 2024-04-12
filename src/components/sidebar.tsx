@@ -8,6 +8,8 @@ import { STORAGE_KEY } from "../constants/key";
 
 const Sidebar = () => {
   const [, setLocalStorage] = useLocalStorage<string>(STORAGE_KEY, "");
+  const [userName,] = useLocalStorage<string>("UserName", "");
+  const [roles,] = useLocalStorage<string[]>("Roles", []);
   const navigate = useNavigate();
   const [menuOpened, setMenuOpened] = useState<boolean>(false);
   const [recordsClicked, setRecordsClicked] = useState<boolean>(false);
@@ -16,6 +18,8 @@ const Sidebar = () => {
     () => location.pathname.startsWith("/logged/records") || recordsClicked,
     [location.pathname, recordsClicked]
   );
+
+  const isAdmin = useMemo(() => roles.find(f => f === "Administrador") ? true : false, [roles]);
 
   const servicos = useServiceStore((state) => state.servicos);
 
@@ -70,6 +74,10 @@ const Sidebar = () => {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
+            <li>
+              <h1 className="h-full px-3 py-4 text-gray-200">Bem-vindo, {userName}
+              </h1>
+            </li>
             <li>
               <NavLink
                 end
@@ -256,6 +264,21 @@ const Sidebar = () => {
                     Funcionário
                   </NavLink>
                 </li>
+                {isAdmin ?
+                  <li>
+                    <NavLink
+                      to="records/serviceProvider"
+                      className={(props) =>
+                        classNames(
+                          "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-[#1a3a31] dark:text-white dark:hover:bg-[#1a3a31]",
+                          props.isActive ? "hover:bg-[#1a3a31] dark:bg-[#1a3a31]" : ""
+                        )
+                      }
+                    >
+                      Prestador
+                    </NavLink>
+                  </li>
+                  : <></>}
                 <li>
                   <NavLink
                     to="records/product"

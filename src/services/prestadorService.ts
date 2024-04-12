@@ -1,6 +1,49 @@
 import { FuncionarioPrestador } from "../domain/funcionarioPrestador";
+import { Prestador } from "../domain/prestador";
 import { onlyNumber } from "../utils/numberFormater";
 import { instanceApi } from "./axiosConfig";
+
+
+export const getAllPrestador = async (
+  ): Promise<Prestador[] | string> => {
+    return (
+      await instanceApi.get<Prestador[] | string>("/prestador")
+    ).data;
+  };
+  
+  export const addPrestador = async (
+    prestador : Prestador
+  ): Promise<Prestador> =>
+    (
+      await instanceApi.post<Prestador>(
+        "/prestador",
+        prestador
+      )
+    ).data;
+  
+  export const editPrestador = async (
+    prestador: Prestador
+  ): Promise<Prestador> =>
+    (
+      await instanceApi.put<Prestador>(
+        "/prestador",
+        prestador
+      )
+    ).data;
+  
+  export const getIdPrestador = async (id: string): Promise<Prestador> => {
+    return (
+      await instanceApi.get<Prestador>(`/prestador/${id}`)
+    ).data;
+  };
+  
+  export const desabledPrestador = async (
+    id: string
+  ): Promise<Prestador> =>
+    (
+      await instanceApi.put<Prestador>(
+        `/prestador/DesativarPrestador?id=${id}`)
+    ).data;
 
 export const getAll = async (
   nome: string,

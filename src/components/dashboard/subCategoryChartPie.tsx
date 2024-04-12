@@ -41,7 +41,7 @@ const renderCustomizedLabel = ({
 
 
 const SubCategoryChartPie = () => {
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = ["#0a6cc2", "#17bf9f", "#dba021", "#c76332", "#30b837", "#db3939"];
 
   const { isPending, data: responseData } = useQuery({
     queryKey: ["dash/subCategory"],

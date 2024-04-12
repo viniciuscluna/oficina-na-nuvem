@@ -1,6 +1,7 @@
 import { Base } from "./base";
 
 export interface Prestador extends Base {
+    tipoCadastro?: number;
     nome: string;
     cpf: string;
     cpfRepresentante?: string;
@@ -14,4 +15,5 @@ export interface Prestador extends Base {
     emailRepresentante?: string;
     situacaoCadastral?: number;
     endereco?: string;
+    dataAbertura?: string;
 }

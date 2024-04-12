@@ -3,7 +3,6 @@ import {
   Rectangle,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer,
@@ -14,6 +13,20 @@ import { getDiaryProfit } from "../../services/dashboardService";
 import { useMemo } from "react";
 import LoadingIndicator from "../loadingIndicator";
 import { currencyFormat } from "../../utils/currencyFormater";
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip bg-green-300 p-3 shadow rounded-md dark:text-white" >
+        <p className="label">Data: {`${label}`}</p>
+        <p className="label">Valor: {` ${currencyFormat(payload[0].value)}`}</p>
+        <p className="desc">Valores faturados no dia.</p>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 const ProfitChartLine = () => {
 
@@ -58,11 +71,12 @@ const ProfitChartLine = () => {
           >
             <XAxis dataKey="name" />
             <YAxis />
-            <Tooltip formatter={(number: number) => currencyFormat(number)} />
+            <Tooltip formatter={(number: number) => currencyFormat(number)} content={<CustomTooltip />} />
             <Legend />
             <Line
-              dataKey="Valor"
-              fill="#82ca9d"
+              type="monotone"
+              dataKey="Faturamento"
+              fill="#ffffff"
               activeDot={<Rectangle fill="gold" stroke="purple" />}
             />
           </LineChart>

@@ -58,3 +58,15 @@ export const getId = async (id: string): Promise<Produto> => {
 export const desabled = async (id: string): Promise<Produto> => {
   return (await instanceApi.put<Produto>(`/produto/DesativarProduto?id=${id}`)).data;
 };
+
+export const uploadProduct = async (files: FileList) => {
+  const formData = new FormData();
+
+  formData.append("file", files[0]);
+  
+  return (await instanceApi.post(`/produto/AddFromExcel`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+  })).data;
+}

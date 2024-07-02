@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { useNotificationStore } from "../../../stores/notificationStore";
 import ConfirmModal from "../../../components/confirmModal";
 import { currencyFormat } from "../../../utils/currencyFormater";
+import FileImport from "./fileImport";
+
 
 type ProductFields = {
   nome: string;
@@ -29,6 +31,11 @@ const Product = () => {
   const { register, handleSubmit, getValues } = useForm<ProductFields>();
 
   const formatMoeda = currencyFormat;
+
+  const onUpload = () => {
+    const formValues = getValues();
+    mutateAsync(formValues);
+  }
 
   const { mutateAsync: mutateDisableAsync } = useMutation({
     mutationFn: (id: string) =>
@@ -131,6 +138,9 @@ const Product = () => {
             Incluir
           </button>
         </div>
+
+        <FileImport onUploadCallback={onUpload} />
+
         <div className="relative overflow-x-auto">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

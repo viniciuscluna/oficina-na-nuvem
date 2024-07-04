@@ -294,6 +294,19 @@ const Sidebar = () => {
                 </li>
                 <li>
                   <NavLink
+                    to="records/serviceProvider"
+                    className={(props) =>
+                      classNames(
+                        "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700",
+                        props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
+                      )
+                    }
+                  >
+                    Prestador
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
                     to="records/subService"
                     className={(props) =>
                       classNames(
@@ -307,6 +320,7 @@ const Sidebar = () => {
                 </li>
               </ul>
             </li>
+          
             <li>
               <a
                 href="#"

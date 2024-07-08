@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 import { useServiceStore } from "../stores/servicosStore";
 import { useMemo, useState } from "react";
@@ -75,7 +75,7 @@ const Sidebar = () => {
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
-              <h1 className="h-full px-3 py-4 text-gray-200">Bem-vindo, {userName}
+              <h1 className="h-full px-3 py-4 text-gray-200">Bem-vindo, <Link to="/components/profile">{userName}</Link>
               </h1>
             </li>
             <li>

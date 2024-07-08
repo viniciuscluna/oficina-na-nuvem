@@ -52,7 +52,7 @@ const EditCliente = () => {
   return (
     <div>
       <h3 className="text-2xl font-extrabold dark:text-white my-6">
-        Editar Categoria
+        Editar Cliente
       </h3>
       {isPending ? (
         <Loader />

@@ -28,6 +28,7 @@ import EditOffice from "../pages/records/office/editOffice";
 import ServiceProvider from "../pages/records/serviceProvider/serviceProvider";
 import AddServiceProvider from "../pages/records/serviceProvider/addServiceProvider";
 import EditServiceProvider from "../pages/records/serviceProvider/editServiceProvider";
+import Profile from "../components/profile";
 
 export const routes =  createBrowserRouter([
     {
@@ -37,6 +38,10 @@ export const routes =  createBrowserRouter([
         {
           path: "/login",
           element: <Login />,
+        },
+        {
+          path: "/components/profile",
+          element: <Profile />,
         },
         {
           path: "/logged",
@@ -110,6 +115,7 @@ export const routes =  createBrowserRouter([
                   path: "/logged/records/customer",
                   element: <Customer />,
                 },
+                
                 {
                   path: "/logged/records/customer/add",
                   element: <AddCustomer />,

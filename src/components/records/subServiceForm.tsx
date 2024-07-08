@@ -23,68 +23,72 @@ const SubServiceForm = ({
 
   return (
     <form onSubmit={handleSubmit(submitCallback)}>
-      <div className="mb-6">
-        <label
-          htmlFor="nome"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Nome*
-        </label>
-        <input
-          {...register("titulo", { required: true })}
-          maxLength={250}
-          type="text"
-          id="nome"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
+      <div className="grid gap-2 mb-6 md:grid-cols-2 w-full">
+        <div className="mr-3">
+          <label
+            htmlFor="nome"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Nome*
+          </label>
+          <input
+            {...register("titulo", { required: true })}
+            maxLength={250}
+            type="text"
+            id="nome"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div className="mr-3">
+          <label
+            htmlFor="descricao"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Descrição*
+          </label>
+          <input
+            type="text"
+            id="descricao"
+            {...register("desc", { required: true })}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
       </div>
-      <div className="mb-6">
-        <label
-          htmlFor="descricao"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Descrição*
-        </label>
-        <input
-          type="text"
-          id="descricao"
-          {...register("desc", { required: true })}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
-      </div>
-      <div className="mb-6">
-        <label
-          htmlFor="valorServico"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Valor Serviço*
-        </label>
-        <input
-          type="number"
-          id="valorServico"
-          min={0}
-          {...register("valorServico", { valueAsNumber: true, required: true })}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
-      </div>
-      <div className="mb-6">
-        <label
-          htmlFor="categoria"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Categoria*
-        </label>
-        <select
-          id="categoria"
-          {...register("categoriaId")}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          {categorias.map((categoria, index) => (
-            <option key={index} value={categoria.id}>
-              {categoria.titulo}
-            </option>
-          ))}
-        </select>
+      <div className="grid gap-2 mb-6 md:grid-cols-2 w-full">
+        <div className="mr-3">
+          <label
+            htmlFor="valorServico"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Valor Serviço*
+          </label>
+          <input
+            type="number"
+            id="valorServico"
+            min={0}
+            {...register("valorServico", { valueAsNumber: true, required: true })}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div className="mr-3">
+          <label
+            htmlFor="categoria"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Categoria*
+          </label>
+          <select
+            id="categoria"
+            {...register("categoriaId")}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            {categorias.map((categoria, index) => (
+              <option key={index} value={categoria.id}>
+                {categoria.titulo}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="flex gap-4">
         <button

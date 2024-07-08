@@ -23,6 +23,7 @@ const CustomerForm = ({
 
   return (
     <form onSubmit={handleSubmit(submitCallback)}>
+     <div className="grid gap-4 mb-6 md:grid-cols-4 w-full">
       <div className="mb-6">
         <label
           htmlFor="nome"
@@ -45,7 +46,7 @@ const CustomerForm = ({
           htmlFor="rg"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          RG
+          RG 
         </label>
         <input
           {...registerWithMask("rg", ["99999999-9"])}
@@ -72,23 +73,6 @@ const CustomerForm = ({
       </div>
       <div className="mb-6">
         <label
-          htmlFor="endereco"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Endereço*
-        </label>
-        <input
-          {...register("endereco", {
-            required: true,
-          })}
-          type="text"
-          id="endereco"
-          maxLength={250}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
-      </div>
-      <div className="mb-6">
-        <label
           htmlFor="telefone"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
@@ -103,6 +87,25 @@ const CustomerForm = ({
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
+      </div>
+      <div className="grid gap-2 mb-6 md:grid-cols-2 w-full">
+       <div className="mb-6">
+        <label
+          htmlFor="endereco"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Endereço*
+        </label>
+        <input
+          {...register("endereco", {
+            required: true,
+          })}
+          type="text"
+          id="endereco"
+          maxLength={250}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+       </div>
       <div className="mb-6">
         <label
           htmlFor="email"
@@ -120,6 +123,7 @@ const CustomerForm = ({
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
       </div>
+     </div>
       <div className="flex gap-4">
         <button
           type="button"

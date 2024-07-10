@@ -75,8 +75,38 @@ const Sidebar = () => {
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
-              <h1 className="h-full px-3 py-4 text-gray-200">Bem-vindo, <Link to="/components/profile">{userName}</Link>
+              <h1 className="h-full px-3 py-4 text-gray-200">Bem-vindo, {userName}
               </h1>
+            </li>
+            <li>
+              <NavLink
+                end
+                to="/components/profile"
+                className={(props) =>
+                  classNames(
+                    "flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group",
+                    props.isActive ? "bg-gray-100 dark:bg-gray-700" : ""
+                  )
+                }
+              >
+                <svg
+                  className="w-5 h-5 text-gray-500 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="white"
+                  viewBox="0 0 418 512"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
+                  />
+                </svg>
+
+                <span className="flex-1 ml-3 whitespace-nowrap">Gerenciamento</span>
+              </NavLink>
             </li>
             <li>
               <NavLink

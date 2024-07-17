@@ -2,6 +2,7 @@ import { Base } from "./base";
 import { Cliente } from "./cliente";
 import { EPrestacaoServicoStatus } from "./ePrestacaoServicoStatus";
 import { FuncionarioPrestador } from "./funcionarioPrestador";
+import { PagamentoServico } from "./pagamento";
 import { Prestador } from "./prestador";
 import { Produto } from "./produto";
 import { Servico } from "./servico";
@@ -22,4 +23,5 @@ export interface PrestacaoServico extends Base {
     servicos: Servico[];
     produtos: Produto[];
     groupedProducts: Produto[];
+    methodPayment: PagamentoServico;
 }

@@ -40,9 +40,10 @@ const ProfitChartLine = () => {
       responseData ?
         responseData.map((item) => ({
           name: item.key,
-          Valor: Number(item.count),
+          faturamento: Number(item.count),
         })) : [],
     [responseData]
+
   );
 
   if (isPending) return <LoadingIndicator />;
@@ -75,12 +76,12 @@ const ProfitChartLine = () => {
             <Legend />
             <Line
               type="monotone"
-              dataKey="Faturamento"
+              dataKey="faturamento"
               fill="#ffffff"
               activeDot={<Rectangle fill="gold" stroke="purple" />}
             />
           </LineChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer>      
       </div>
     </div>
   );

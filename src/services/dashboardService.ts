@@ -49,3 +49,11 @@ export const getDiaryProfit = async (): Promise<PieResponse[]> => {
     )
   ).data;
 };
+
+export const getBarProfitMonth = async (): Promise<PieResponse[]> => {
+  return (
+    await instanceApi.get<PieResponse[]>(
+      "/dashboard/dashboardbarvendameses"
+    )
+  ).data;
+};

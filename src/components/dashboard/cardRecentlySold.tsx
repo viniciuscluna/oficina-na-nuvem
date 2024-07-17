@@ -1,10 +1,8 @@
-import React from 'react';
-
 const RecentlySold = () => {
     return(
        <div className='p-2 w-full overflow-auto'>
             <h5 className='text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
-                Vendidos Recentes
+                Ultimos Serviços
             </h5>
             <br />
             <table className='w-full text-left rtl:text-right border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-gray-700 text-gray-500 dark:text-gray-400'>

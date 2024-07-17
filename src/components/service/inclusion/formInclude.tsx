@@ -87,11 +87,8 @@ const FormInclude = ({
   };
 
   const submit = (form: PrestacaoServico) => {
-    console.log(form);
 
     const result = ValidationFormServico(form);
-
-    console.log("resultado validação " + result);
 
     if (result != null && !result.validation) {
       addNotification({
@@ -218,10 +215,10 @@ const FormInclude = ({
             </label>
             <div className="flex gap-2 flex-col">
               <ProdutoForm
+                produtos={produtos}
+                register={register}
                 arrayName="produtos"
                 removeServicoCallback={removeProduto}
-                register={register}
-                produtos={produtos}
               />
             </div>
             <button

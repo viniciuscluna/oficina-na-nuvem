@@ -15,7 +15,6 @@ import { useServiceStore } from "../../../stores/servicosStore";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import ConfirmModal from "../../confirmModal";
 import { useNotificationStore } from "../../../stores/notificationStore";
-
 const Board = () => {
   const [pendingConfirm, setPendingConfirm] = useState<ChangeStatus | null>(
     null
@@ -128,6 +127,7 @@ const Board = () => {
         onYesCallback={confirmRemoval}
         isOpened={pendingConfirm !== null}
       />
+      {/* <FormOsServiceConfirme register={}/> */}
       <div className="flex flex-col grow md:flex-row gap-3 w-full">
         <div className="border rounded border-gray-200 dark:border-gray-700 w-full">
           <h3 className="text-2xl text-center my-5 font-bold dark:text-white">

@@ -22,17 +22,18 @@ const Dashboard = () => {
         <CardClients />
         <CardSoldProducts />
       </div>
+      <div className="flex-nowrap">
+        <ProfitChartLine />
+      </div>
       <div className="flex-wrap lg:flex-nowrap flex gap-2">
-      <RecentlySold />
+        <RecentlySold />
+        <MonthProfitChartBar />
       </div>
       <div className="flex-wrap lg:flex-nowrap flex gap-2">
         <CategoryChartPie />
         <SubCategoryChartPie />
       </div>
-      <div className="flex-nowrap">
-        <ProfitChartLine />
-        <MonthProfitChartBar />
-      </div>
+
     </>
   );
 };

@@ -13,7 +13,7 @@ const ProdutoForm = ({
   produtos,
   register,
   arrayName,
-  removeServicoCallback,
+  removeServicoCallback
 }: ProdutoFormProps) => {
   return (
     <>

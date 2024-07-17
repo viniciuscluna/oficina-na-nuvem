@@ -62,7 +62,7 @@ export const getBarProfitMonth = async (): Promise<PieResponse[]> => {
 export const getDashUltimosOs = async (): Promise<ListLastOs[]> => {
   return (
     await instanceApi.get<ListLastOs[]>(
-      "/dashboard/dashboardultimosos/10"
+      "/dashboard/dashboardultimosos/5"
     )
   ).data;
 };

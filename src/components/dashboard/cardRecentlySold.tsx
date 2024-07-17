@@ -1,6 +1,6 @@
 const RecentlySold = () => {
-    return(
-       <div className='p-2 w-full overflow-auto'>
+    return (
+        <div className='p-2 w-full overflow-auto'>
             <h5 className='text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
                 Ultimos Serviços
             </h5>
@@ -29,28 +29,190 @@ const RecentlySold = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <td className='text-center py-2'>
-                        Motor
-                    </td>
-                    <td className='text-center py-2'>
-                       R$ 5000,00
-                    </td>
-                    <td className='text-center py-2'>
-                        R$ 10500,00
-                    </td>
-                    <td className='text-center py-2'>
-                        369
-                    </td>
-                    <td className='text-center py-2'>
-                         1
-                    </td>
-                    <td className='text-center py-2'>
-                        R$ 11,00
-                    </td>
+                    <tr>
+                        <td className='text-center py-2'>
+                            Motor
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 5000,00
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 10500,00
+                        </td>
+                        <td className='text-center py-2'>
+                            369
+                        </td>
+                        <td className='text-center py-2'>
+                            1
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 11,00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className='text-center py-2'>
+                            Motor
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 5000,00
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 10500,00
+                        </td>
+                        <td className='text-center py-2'>
+                            369
+                        </td>
+                        <td className='text-center py-2'>
+                            1
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 11,00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className='text-center py-2'>
+                            Motor
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 5000,00
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 10500,00
+                        </td>
+                        <td className='text-center py-2'>
+                            369
+                        </td>
+                        <td className='text-center py-2'>
+                            1
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 11,00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className='text-center py-2'>
+                            Motor
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 5000,00
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 10500,00
+                        </td>
+                        <td className='text-center py-2'>
+                            369
+                        </td>
+                        <td className='text-center py-2'>
+                            1
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 11,00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className='text-center py-2'>
+                            Motor
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 5000,00
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 10500,00
+                        </td>
+                        <td className='text-center py-2'>
+                            369
+                        </td>
+                        <td className='text-center py-2'>
+                            1
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 11,00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className='text-center py-2'>
+                            Motor
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 5000,00
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 10500,00
+                        </td>
+                        <td className='text-center py-2'>
+                            369
+                        </td>
+                        <td className='text-center py-2'>
+                            1
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 11,00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className='text-center py-2'>
+                            Motor
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 5000,00
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 10500,00
+                        </td>
+                        <td className='text-center py-2'>
+                            369
+                        </td>
+                        <td className='text-center py-2'>
+                            1
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 11,00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className='text-center py-2'>
+                            Motor
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 5000,00
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 10500,00
+                        </td>
+                        <td className='text-center py-2'>
+                            369
+                        </td>
+                        <td className='text-center py-2'>
+                            1
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 11,00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className='text-center py-2'>
+                            Motor
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 5000,00
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 10500,00
+                        </td>
+                        <td className='text-center py-2'>
+                            369
+                        </td>
+                        <td className='text-center py-2'>
+                            1
+                        </td>
+                        <td className='text-center py-2'>
+                            R$ 11,00
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
-       </div>
+        </div>
 
     );
 };

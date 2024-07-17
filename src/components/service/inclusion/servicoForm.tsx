@@ -7,7 +7,7 @@ import { PrestacaoServico } from "../../../domain/prestacaoServico";
 import { SubServico } from "../../../domain/subServico";
 
 type ServicoFormProps = {
-  servicos: FieldArrayWithId<PrestacaoServico, "servicos" | "produtos", "id">[];
+  servicos: FieldArrayWithId<PrestacaoServico, "servicos" | "produtos" | "groupedProducts" | "cliente.carros", "id">[];
   subServicos: SubServico[];
   register: UseFormRegister<PrestacaoServico>;
   removeServicoCallback: (index: number) => void;
@@ -74,9 +74,10 @@ const ServicoForm = ({
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Forma de Pagamento
             </label>
-            <select className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            {/* TODO: Adicionar select no hook form */}
+            {/* <select className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
-            </select>
+            </select> */}
           </div>
           <div className="w-[30%]">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

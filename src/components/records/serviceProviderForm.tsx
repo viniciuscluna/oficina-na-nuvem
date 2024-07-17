@@ -21,7 +21,7 @@ const ServiceProviderForm = ({
     defaultValues: defaultValues,
   });
 
-  const { } = useQuery({
+  useQuery({
     queryKey: ["employee"],
     queryFn: () => getAll("", ""),
   });

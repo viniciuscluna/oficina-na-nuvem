@@ -52,7 +52,7 @@ const Login = () => {
       setUserName(data.userName);
       setRoles(data.roles);
     }
-  }, [data, isSuccess, setBearer]);
+  }, [data, isSuccess, setBearer, setRoles, setUserName]);
 
   const onSubmit = async (data: FormData) => {
     await mutateAsync({

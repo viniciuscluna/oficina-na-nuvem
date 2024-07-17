@@ -3,7 +3,7 @@ import { FieldArrayWithId, UseFormRegister } from "react-hook-form";
 import { PrestacaoServico } from "../../../domain/prestacaoServico";
 
 type ProdutoFormProps = {
-  produtos: FieldArrayWithId<PrestacaoServico, "servicos" | "produtos", "id">[];
+  produtos: FieldArrayWithId<PrestacaoServico, "servicos" | "produtos" | "groupedProducts" | "cliente.carros", "id">[];
   register: UseFormRegister<PrestacaoServico>;
   removeServicoCallback: (index: number) => void;
   arrayName: "groupedProducts" | "produtos";

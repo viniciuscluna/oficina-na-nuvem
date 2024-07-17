@@ -8,18 +8,22 @@ import {
   ResponsiveContainer,
   LineChart,
   Line,
+  TooltipProps,
 } from "recharts";
 import { getDiaryProfit } from "../../services/dashboardService";
 import { useMemo } from "react";
 import LoadingIndicator from "../loadingIndicator";
 import { currencyFormat } from "../../utils/currencyFormater";
+import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip bg-green-300 p-3 shadow rounded-md dark:text-white" >
         <p className="label">Data: {`${label}`}</p>
-        <p className="label">Valor: {` ${currencyFormat(payload[0].value)}`}</p>
+        <p className="label">Valor: {` ${currencyFormat(Number(payload[0].value))}`}</p>
         <p className="desc">Valores faturados no dia.</p>
       </div>
     );
@@ -81,7 +85,7 @@ const ProfitChartLine = () => {
               activeDot={<Rectangle fill="gold" stroke="purple" />}
             />
           </LineChart>
-        </ResponsiveContainer>      
+        </ResponsiveContainer>
       </div>
     </div>
   );

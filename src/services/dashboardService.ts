@@ -1,4 +1,5 @@
 import { CardResponse } from "../domain/dashboard/cardResponse";
+import { ListLastOs } from "../domain/dashboard/listLastOsResponse";
 import { PieResponse } from "../domain/dashboard/pieResponse";
 import { instanceApi } from "./axiosConfig";
 
@@ -58,6 +59,7 @@ export const getBarProfitMonth = async (): Promise<PieResponse[]> => {
   ).data;
 };
 
+
 export const getBarBrands = async (): Promise<PieResponse[]> => {
   return (
     await instanceApi.get<PieResponse[]>(
@@ -70,6 +72,14 @@ export const getTypesvehicle = async (): Promise<PieResponse[]> => {
   return (
     await instanceApi.get<PieResponse[]>(
       "/dashboard/dashboardtypesvehicles"
+    )
+  ).data
+};
+
+export const getDashUltimosOs = async (): Promise<ListLastOs[]> => {
+  return (
+    await instanceApi.get<ListLastOs[]>(
+      "/dashboard/dashboardultimosos/5"
     )
   ).data;
 };

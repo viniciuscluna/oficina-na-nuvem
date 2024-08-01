@@ -57,3 +57,19 @@ export const getBarProfitMonth = async (): Promise<PieResponse[]> => {
     )
   ).data;
 };
+
+export const getBarBrands = async (): Promise<PieResponse[]> => {
+  return (
+    await instanceApi.get<PieResponse[]>(
+      "/dashboard/dashboardbrands"
+    )
+  ).data;
+};
+
+export const getTypesvehicle = async (): Promise<PieResponse[]> => {
+  return (
+    await instanceApi.get<PieResponse[]>(
+      "/dashboard/dashboardtypesvehicles"
+    )
+  ).data;
+};

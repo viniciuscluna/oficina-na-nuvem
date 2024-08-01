@@ -7,7 +7,6 @@ import CategoryChartPie from "../components/dashboard/categoryChartPie";
 import MonthProfitChartBar from "../components/dashboard/monthProfitChartBar";
 import ProfitChartLine from "../components/dashboard/profitChartLine";
 import SubCategoryChartPie from "../components/dashboard/subCategoryChartPie";
-import MostUsedBrands from "../components/dashboard/brandsServed";
 import TypesOfVehicles from "../components/dashboard/typesOfVehicles";
 import BrandsServed from "../components/dashboard/brandsServed";
 

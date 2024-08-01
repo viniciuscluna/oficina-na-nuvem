@@ -17,7 +17,7 @@ import LoadingIndicator from "../loadingIndicator";
 const MonthProfitChartBar = () => {
 
     const { isPending, data: responseData } = useQuery({
-        queryKey: ["dash/monthProfit"],
+        queryKey: ["dash/monthProfit" ],
         queryFn: getBarProfitMonth,
     });
 

@@ -8,9 +8,30 @@ import {
     BarChart,
     Bar
 } from "recharts";
+import LoadingIndicator from "../loadingIndicator";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getTypesvehicle } from "../../services/dashboardService";
 
 const TypesOfVehicles = () => {
+  const { isPending, data: responseData } = useQuery({
+    queryKey: ["dash/typeVehicles"],
+    queryFn: getTypesvehicle,
+  });
 
+  const data = useMemo(
+    () =>
+      responseData ?
+        responseData.map((item) => ({
+          name: item.key,
+          tipo: Number(item.count)
+        })) : [],
+    [responseData]
+
+  );
+
+  if (isPending) return <LoadingIndicator />;
+  
     return(
         <div className="p-2 w-full">
         <h5 className="text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -25,19 +46,19 @@ const TypesOfVehicles = () => {
           <BarChart
                 width={500}
                 height={300}
-                
+                data={data}
                 margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
                 }}
                 >
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="mes" fill="#00d583" activeBar={<Rectangle fill="#00d583" stroke="#22cc88" />} />
+                <Bar dataKey="tipo" fill="#00d583" activeBar={<Rectangle fill="#00d583" stroke="#22cc88" />} />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -9,7 +9,7 @@ const CardOS = () => {
         queryFn: getOS,
       });
       if (isPending) return <LoadingIndicator />;
-
+ 
   return <GenericCard label="OS nesse mês" amount={data?.valor ?? 0} useCurrency={false} />;
 };
 
